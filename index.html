@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PcPartRecommender</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="css/responsive.css">
+
+<!-- ChatBot -->
+<link rel="stylesheet" type="text/css" href="css/jquery.convform.css">
+<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="js/jquery.convform.js"></script>
+<script type="text/javascript" src="js/custom.js"></script>
+
+</head>
+<body>
+  <video autoplay muted loop id="myVideo">
+    <source src="assets/livewally.mp4" type="video/mp4">
+  </video>
+<!-- ChatBot -->
+<div class="chat_icon">
+	<i class="fa fa-comments-o" aria-hidden="true"></i>
+</div>
+
+<div class="chat_box">
+	<div class="my-conv-form-wrapper">
+		<form action="" method="GET" class="hidden">
+
+      <select data-conv-question="Hello! Are you here to find out a setup for your PC?" name="category">
+        <option value="YES">YES</option>
+        <option value="NO">NO</option>
+      </select>
+
+      <div data-conv-fork="category">
+        <div data-conv-case="YES">
+          <input type="text" name="name" data-conv-question="Please, Enter your name">
+          <select data-conv-question="Hi {name}, What is your range options?" name="subcategory">
+            <option value="LOW">LOW(Ranges under 50K)</option>
+            <option value="MID">MID(Ranges from 50K to 70K)</option>
+            <option value="MODEST">MODEST(Ranges from 70K to 1 Lakh)</option>
+            <option value="HIGH">HIGH(Ranges from 1 lakh to 1.5 lakh)</option>
+            <option value="EXTREME">EXTREME(Ranges above 1.5 lakh)</option>
+          </select>
+        </div>
+      </div>
+      <div data-conv-fork="subcategory">
+        <div data-conv-case="LOW">
+          <input type="text" data-conv-question="Hi {name}, <br> It's a pleasure to meet you.<br> 
+          The MotherBoard you will be buying is ASRock B660M Pro RS.<br>
+          The CPU you will be buying is Intel Core i3-12100F.<br>
+          The GPU you will be buying is Radeon RX 6600.<br>
+          The RAM stick you will be buying is Silicon Power SP016GXLZU320BDAAD 16 GB.<br>
+          The Storage ssd you will be buying is Patriot P310 480 GB M.2-2280 PCIe.<br>
+          The Power unit you will be buying is SeaSonic S12III 500 W 80+ Bronze Certified.<br>" data-no-answer="true">
+        </div>
+        <div data-conv-case="MID">
+          <input type="text" data-conv-question="Hi {name}, <br> It's a pleasure to meet you.<br> 
+          The MotherBoard you will be buying is ASRock B660M Pro RS.<br>
+          The CPU you will be buying is Intel Core i5-12400.<br>
+          The GPU you will be buying is Radeon RX 6600 XT.<br>
+          The RAM stick you will be buying is Silicon Power SP016GXLZU320BDAAD 16 GB.<br>
+          The Storage ssd you will be buying is Timetec 35TTFP6PCIE 1 TB M.2-2280 PCIe.<br>
+          The Power unit you will be buying is Antec NeoECO Gold ZEN 600 W 80+ Gold Certified.<br>" data-no-answer="true">
+        </div>
+        <div data-conv-case="MODEST">
+          <input type="text" data-conv-question="Hi {name}, <br> It's a pleasure to meet you.<br> 
+          The MotherBoard you will be buying is ASRock Z690 PG Riptide.<br>
+          The CPU you will be buying is Intel Core i7-12700K.<br>
+          The GPU you will be buying is GeForce RTX 3070 Ti.<br>
+          The RAM stick you will be buying is Silicon Power XPOWER Turbine 32 GB.<br>
+          The Storage ssd you will be buying is Timetec 35TTFP6PCIE 1 TB M.2-2280 PCIe.<br>
+          The Power unit you will be buying is Thermaltake Toughpower GF1 PE 850 W 80+ Gold Certified.<br>" data-no-answer="true">
+        </div>
+        <div data-conv-case="HIGH">
+          <input type="text" data-conv-question="Hi {name}, <br> It's a pleasure to meet you.<br> 
+          The MotherBoard you will be buying is MSI PRO B550-VC.<br>
+          The CPU you will be buying is AMD Ryzen 5 5600X.<br>
+          The GPU you will be buying is Radeon RX 6700 XT.<br>
+          The RAM stick you will be buying is Silicon Power SP016GXLZU320BDAAD 16 GB.<br>
+          The Storage ssd you will be buying is Timetec 35TTFP6PCIE 1 TB M.2-2280 PCIe.<br>
+          The Power unit you will be buying is EVGA SuperNOVA 650 G+ 650 W 80+ Gold Certified.<br>" data-no-answer="true">
+        </div>
+        <div data-conv-case="EXTREME">
+          <input type="text" data-conv-question="Hi {name}, <br> It's a pleasure to meet you.<br> 
+          The MotherBoard you will be buying is MSI PRO Z690-A ATX.<br>
+          The CPU you will be buying is Intel Core i9-12900K.<br>
+          The GPU you will be buying is GeForce RTX 3090.<br>
+          The RAM stick you will be buying is TEAMGROUP Elite Plus 32 GB.<br>
+          The Storage ssd you will be buying is Samsung 970 Evo Plus 2 TB.<br>
+          The Power unit you will be buying is Enermax Revolution D.F. 850 W 80+ Gold Certified.<br>" data-no-answer="true">
+        </div>
+      </div>
+      <select data-conv-question="Please Confirm">
+        <option value="Yes">Confirm</option>
+      </select>
+  	</form>
+	</div>
+</div>
+<!-- ChatBot end -->
+
+<script type="text/javascript">
+	portfolioList = document.querySelectorAll('.portfolio-box');
+	portfolioList.forEach(function(portfolioPic) {
+		portfolioPic.addEventListener('click',function(){
+			bg = this.style.backgroundImage;
+			document.getElementById('port_pop_pic_bg').classList.add("active")
+			document.getElementById('port_pop_pic').style.backgroundImage = bg
+			document.getElementById('port_pop_pic').classList.add("active")
+		});	
+	})
+	document.getElementById('port_pop_pic_bg').addEventListener('click',function(){
+			document.getElementById('port_pop_pic_bg').classList.remove("active")
+			document.getElementById('port_pop_pic').classList.remove("active")
+	})
+</script>
+
+</body>
+</html>
