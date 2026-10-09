@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,500;600;700&display=swap");
+
 :root {
   color-scheme: light;
   --ink: #1d2924;
@@ -10,6 +12,37 @@
   --line: #e8ebe6;
   --font-body: "Segoe UI", Arial, sans-serif;
   --font-display: "Segoe UI", Arial, sans-serif;
+
+  /* Shiny CTA Tokens */
+  --shiny-cta-bg: #000000;
+  --shiny-cta-bg-subtle: #1a1818;
+  --shiny-cta-fg: #ffffff;
+  --shiny-cta-highlight: #10b981;
+  --shiny-cta-highlight-subtle: #6ee7b7;
+}
+
+@property --gradient-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@property --gradient-angle-offset {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@property --gradient-percent {
+  syntax: "<percentage>";
+  initial-value: 5%;
+  inherits: false;
+}
+
+@property --gradient-shine {
+  syntax: "<color>";
+  initial-value: white;
+  inherits: false;
 }
 
 * {
@@ -185,6 +218,46 @@ p {
   color: var(--muted);
   font-size: 14px;
   line-height: 1.8;
+}
+
+.hero-quick-tags {
+  margin-top: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.hero-quick-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: #7f8b82;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin-right: 2px;
+}
+
+.hero-quick-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  border: 1px solid #d8e2d9;
+  background: #ffffff;
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 160ms ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.hero-quick-pill:hover {
+  border-color: var(--green);
+  background: var(--mint);
+  color: var(--green-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(33, 122, 87, 0.12);
 }
 
 .text-link {
@@ -1199,6 +1272,27 @@ p {
   border-radius: 50%;
   background: #55a478;
   box-shadow: 0 0 0 3px #55a47820;
+}
+
+.builder-preferences-strip {
+  border: 1px solid #e1e7e1;
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin: 14px 0 6px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  background: #ffffff;
+}
+
+.builder-preferences-strip legend {
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  padding: 0 6px;
 }
 
 .builder-step-count {
@@ -2714,6 +2808,46 @@ p {
 
 .recommendations-heading .section-intro {
   max-width: 315px;
+}
+
+.tier-filter-bar {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  background: #eef2ed;
+  border: 1px solid #dfe5df;
+  border-radius: 9999px;
+  padding: 4px;
+  margin-bottom: 22px;
+}
+
+.tier-filter-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 18px;
+  border-radius: 9999px;
+  border: none;
+  background: transparent;
+  color: #58635d;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 180ms ease;
+  user-select: none;
+}
+
+.tier-filter-btn:hover {
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.tier-filter-btn.is-active {
+  background: var(--green);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(33, 122, 87, 0.28);
 }
 
 .tier-grid {
@@ -4274,6 +4408,653 @@ main {
   line-height: 1.7;
   border-top: 1px solid #f0f4f0;
   padding-top: 12px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SHINY CTA BUTTON SYSTEM (@property and Modern Shimmer Architecture)
+   ═══════════════════════════════════════════════════════════ */
+
+.shiny-cta {
+  --animation: gradient-angle linear infinite;
+  --duration: 3s;
+  --shadow-size: 2px;
+  isolation: isolate;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  outline-offset: 4px;
+  padding: 1.15rem 2.25rem;
+  font-family: "Inter", var(--font-body), sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.2;
+  border: 1px solid transparent;
+  border-radius: 360px;
+  color: var(--shiny-cta-fg) !important;
+  text-decoration: none !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(var(--shiny-cta-bg), var(--shiny-cta-bg))
+      padding-box,
+    conic-gradient(
+        from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
+        transparent,
+        var(--shiny-cta-highlight) var(--gradient-percent),
+        var(--gradient-shine) calc(var(--gradient-percent) * 2),
+        var(--shiny-cta-highlight) calc(var(--gradient-percent) * 3),
+        transparent calc(var(--gradient-percent) * 4)
+      )
+      border-box !important;
+  box-shadow: inset 0 0 0 1px var(--shiny-cta-bg-subtle), 0 8px 24px -4px rgba(0, 0, 0, 0.45);
+  --transition: 800ms cubic-bezier(0.25, 1, 0.5, 1);
+  transition: var(--transition);
+  transition-property: --gradient-angle-offset, --gradient-percent, --gradient-shine, transform, box-shadow;
+  animation: var(--animation) var(--duration),
+    var(--animation) calc(var(--duration) / 0.4) reverse paused;
+  animation-composition: add;
+}
+
+.shiny-cta::before,
+.shiny-cta::after,
+.shiny-cta span::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset-inline-start: 50%;
+  inset-block-start: 50%;
+  translate: -50% -50%;
+  z-index: -1;
+}
+
+.shiny-cta:active {
+  translate: 0 1px;
+}
+
+/* Dots pattern */
+.shiny-cta::before {
+  --size: calc(100% - var(--shadow-size) * 3);
+  --position: 2px;
+  --space: calc(var(--position) * 2);
+  width: var(--size);
+  height: var(--size);
+  background: radial-gradient(
+      circle at var(--position) var(--position),
+      white calc(var(--position) / 4),
+      transparent 0
+    )
+    padding-box;
+  background-size: var(--space) var(--space);
+  background-repeat: space;
+  mask-image: conic-gradient(
+    from calc(var(--gradient-angle) + 45deg),
+    black,
+    transparent 10% 90%,
+    black
+  );
+  -webkit-mask-image: conic-gradient(
+    from calc(var(--gradient-angle) + 45deg),
+    black,
+    transparent 10% 90%,
+    black
+  );
+  border-radius: inherit;
+  opacity: 0.35;
+  z-index: -1;
+  animation: var(--animation) var(--duration),
+    var(--animation) calc(var(--duration) / 0.4) reverse paused;
+  animation-composition: add;
+}
+
+/* Inner shimmer */
+.shiny-cta::after {
+  --animation: shimmer linear infinite;
+  width: 100%;
+  aspect-ratio: 1;
+  background: linear-gradient(
+    -50deg,
+    transparent,
+    var(--shiny-cta-highlight),
+    transparent
+  );
+  mask-image: radial-gradient(circle at bottom, transparent 40%, black);
+  -webkit-mask-image: radial-gradient(circle at bottom, transparent 40%, black);
+  opacity: 0.6;
+  animation: shimmer 3s linear infinite,
+    shimmer calc(3s / 0.4) reverse paused;
+  animation-composition: add;
+}
+
+.shiny-cta span {
+  z-index: 1;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.shiny-cta span::before {
+  --size: calc(100% + 1rem);
+  width: var(--size);
+  height: var(--size);
+  box-shadow: inset 0 -1ex 2rem 4px var(--shiny-cta-highlight);
+  opacity: 0;
+  transition: opacity var(--transition);
+  animation: calc(var(--duration) * 1.5) breathe linear infinite;
+}
+
+.shiny-cta:is(:hover, :focus-visible) {
+  --gradient-percent: 20%;
+  --gradient-angle-offset: 95deg;
+  --gradient-shine: var(--shiny-cta-highlight-subtle);
+  color: var(--shiny-cta-fg) !important;
+  box-shadow: inset 0 0 0 1px var(--shiny-cta-bg-subtle), 0 12px 30px -4px rgba(16, 185, 129, 0.45);
+}
+
+.shiny-cta:is(:hover, :focus-visible),
+.shiny-cta:is(:hover, :focus-visible)::before,
+.shiny-cta:is(:hover, :focus-visible)::after {
+  animation-play-state: running;
+}
+
+.shiny-cta:is(:hover, :focus-visible) span::before {
+  opacity: 1;
+}
+
+/* Modifiers for inline / card sizes */
+.shiny-cta.shiny-cta-compact,
+.shiny-cta.shiny-cta-sm {
+  padding: 0.62rem 1.35rem;
+  font-size: 0.88rem;
+}
+
+.shiny-cta.shiny-cta-amber {
+  --shiny-cta-highlight: #ff7a1a;
+  --shiny-cta-highlight-subtle: #ffb066;
+}
+
+.shiny-cta.shiny-cta-amber:is(:hover, :focus-visible) {
+  box-shadow: inset 0 0 0 1px var(--shiny-cta-bg-subtle), 0 12px 30px -4px rgba(255, 122, 26, 0.4);
+}
+
+@keyframes gradient-angle {
+  to {
+    --gradient-angle: 360deg;
+  }
+}
+
+@keyframes shimmer {
+  to {
+    rotate: 360deg;
+  }
+}
+
+@keyframes breathe {
+  from,
+  to {
+    scale: 1;
+  }
+  50% {
+    scale: 1.2;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ANIMATED CHIP CHECKBOX SYSTEM (Slide / Grow / Bounce)
+   ═══════════════════════════════════════════════════════════ */
+
+input:where(.chip[type="checkbox"]),
+input[type="checkbox"].chip {
+  --color: #2563eb;
+  font-size: 0.95rem;
+  appearance: none;
+  -webkit-appearance: none;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 100em;
+  overflow: clip;
+  margin: 0;
+  display: inline-block;
+  box-sizing: border-box;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.04);
+  color: #f4f1ea;
+  cursor: pointer;
+  transition: border-color 0.3s, background-color 0.3s;
+}
+
+input:where(.chip[type="checkbox"])::after,
+input[type="checkbox"].chip::after {
+  content: attr(value);
+  white-space: pre;
+  line-height: 1;
+  position: relative;
+  padding: 0.5em 1em 0.5em 2.1em;
+  display: block;
+  font-family: inherit;
+  font-size: 0.9em;
+  font-weight: 500;
+  color: inherit;
+}
+
+input:where(.chip[type="checkbox"])::before,
+input[type="checkbox"].chip::before {
+  content: "";
+  display: inline-block;
+  width: 0.75em;
+  aspect-ratio: 1;
+  background: linear-gradient(currentcolor 0 0), linear-gradient(currentcolor 0 0);
+  background-position: -200% -2em, 2em -200%, 50% 50%;
+  background-size: 1em 0.125em, 0.125em 1em;
+  background-repeat: no-repeat;
+  background-color: var(--color);
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 1.125em;
+  translate: -50% -50%;
+  rotate: 45deg;
+  transition: width 0.25s, background-position 0.5s;
+}
+
+input:where(.chip[type="checkbox"].grow)::before,
+input:where(.chip[type="checkbox"].bounce)::before,
+input[type="checkbox"].chip.grow::before,
+input[type="checkbox"].chip.bounce::before {
+  background-position: 50% 50%, 50% 50%, 50% 50%;
+  background-size: 0 0, 0 0;
+  transition: width 0.25s, background-size 0.5s;
+}
+
+input:where(.chip[type="checkbox"].bounce)::before,
+input[type="checkbox"].chip.bounce::before {
+  transition-timing-function: ease-in-out, cubic-bezier(0.75, 0, 0.5, 2);
+}
+
+input:where(.chip[type="checkbox"]):checked::before,
+input[type="checkbox"].chip:checked::before {
+  width: 200%;
+  background-position: 50% 50%, 50% 50%, 50% 50%;
+  background-size: 1em 0.125em, 0.125em 1em;
+}
+
+input:where(.chip[type="checkbox"]):checked,
+input[type="checkbox"].chip:checked {
+  color: #fff;
+  border-color: var(--color);
+}
+
+input:where(.chip[type="checkbox"]):disabled,
+input[type="checkbox"].chip:disabled {
+  --color: #eee !important;
+  color: #6c6c6c;
+  border-color: #0001;
+  cursor: not-allowed;
+}
+
+/* Light theme / workspace contextual styling */
+.workspace-main input:where(.chip[type="checkbox"]),
+.workspace-main input[type="checkbox"].chip,
+.shop-layout input:where(.chip[type="checkbox"]),
+.shop-layout input[type="checkbox"].chip,
+.builder-layout input:where(.chip[type="checkbox"]),
+.builder-layout input[type="checkbox"].chip {
+  color: var(--ink, #1f2937);
+  border-color: #cbd5cb;
+  background-color: #ffffff;
+}
+
+.workspace-main input:where(.chip[type="checkbox"]):hover:not(:disabled),
+.workspace-main input[type="checkbox"].chip:hover:not(:disabled),
+.shop-layout input:where(.chip[type="checkbox"]):hover:not(:disabled),
+.shop-layout input[type="checkbox"].chip:hover:not(:disabled),
+.builder-layout input:where(.chip[type="checkbox"]):hover:not(:disabled),
+.builder-layout input[type="checkbox"].chip:hover:not(:disabled) {
+  border-color: var(--color);
+  background-color: #f4f8f4;
+}
+
+.workspace-main input:where(.chip[type="checkbox"]):checked,
+.workspace-main input[type="checkbox"].chip:checked,
+.shop-layout input:where(.chip[type="checkbox"]):checked,
+.shop-layout input[type="checkbox"].chip:checked,
+.builder-layout input:where(.chip[type="checkbox"]):checked,
+.builder-layout input[type="checkbox"].chip:checked {
+  color: #ffffff;
+  border-color: var(--color);
+}
+
+input:where(.chip[type="checkbox"]):hover:not(:disabled),
+input[type="checkbox"].chip:hover:not(:disabled) {
+  border-color: var(--color);
+  background-color: rgba(255, 255, 255, 0.08);
+  transition: 0.4s;
+}
+
+@supports (color: rgb(from red r g b / 10%)) {
+  input:where(.chip[type="checkbox"]):hover:not(:disabled),
+  input[type="checkbox"].chip:hover:not(:disabled) {
+    background-color: rgb(from var(--color) r g b / 14%);
+  }
+}
+
+@media print {
+  input:where(.chip[type="checkbox"]),
+  input[type="checkbox"].chip {
+    &, &::before, &::after {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+  }
+}
+
+@media (prefers-reduced-motion) {
+  input:where(.chip[type="checkbox"]),
+  input[type="checkbox"].chip {
+    &, &::before, &::after {
+      transition: none !important;
+    }
+  }
+}
+
+@media (prefers-contrast: more) {
+  input:where(.chip[type="checkbox"]),
+  input[type="checkbox"].chip {
+    &::before {
+      background: highlight;
+    }
+    
+    &:disabled {
+      border-color: gray-text;
+      
+      &::before {
+        background: graytext;
+      }
+      
+      &::after {
+        color: graytext;
+      }
+    }
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   GOOEY SEARCH SYSTEM (SVG Fluid Filter & Spring Bubbles)
+   Inspired by oguzhantufenk/gooey-search
+   ═══════════════════════════════════════════════════════════ */
+
+.gooey-search-box {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  user-select: none;
+  isolation: isolate;
+  vertical-align: middle;
+}
+
+.gooey-search-box.no-goo .gooey-inner {
+  filter: none !important;
+}
+
+.gooey-inner {
+  filter: url(#goo-effect);
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.gooey-search-btn {
+  background-color: #000000;
+  color: #dddddd;
+  border-radius: 9999px;
+  height: 38px;
+  width: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.28);
+  transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.25s ease, background-color 0.2s ease, border-color 0.2s ease;
+  position: relative;
+  z-index: 2;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.gooey-search-box:not(.is-open) .gooey-search-btn:hover {
+  transform: scale(1.05);
+  border-color: rgba(255, 255, 255, 0.35);
+  background-color: #0a0a0a;
+}
+
+.gooey-search-box.is-open .gooey-search-btn {
+  width: 250px;
+  justify-content: flex-start;
+  padding-left: 14px;
+  padding-right: 36px;
+  transform: translateX(-16px);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.gooey-search-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #eeeeee;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.gooey-search-label svg {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+
+.gooey-search-box.is-open .gooey-search-label {
+  display: none;
+}
+
+.gooey-search-input,
+.shop-search-field .gooey-search-input,
+.header-gooey-search .gooey-search-input {
+  display: none;
+  width: 100% !important;
+  height: auto !important;
+  min-height: unset !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
+  color: #ffffff !important;
+  font-size: 12px !important;
+  font-family: inherit !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.gooey-search-input::placeholder {
+  color: #888888;
+}
+
+.gooey-search-box.is-open .gooey-search-input {
+  display: block;
+}
+
+.gooey-search-bubble {
+  position: absolute;
+  right: -8px;
+  width: 38px;
+  height: 38px;
+  background-color: #000000;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  opacity: 0;
+  transform: translateX(-35px) scale(0.3);
+  transition: opacity 0.35s ease, transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.2s ease;
+  pointer-events: none;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+}
+
+.gooey-search-box.is-open .gooey-search-bubble {
+  opacity: 1;
+  transform: translateX(16px) scale(1);
+  pointer-events: auto;
+}
+
+.gooey-search-bubble svg {
+  width: 15px;
+  height: 15px;
+  fill: #dddddd;
+  transition: transform 0.2s ease, fill 0.2s ease;
+}
+
+.gooey-search-bubble:hover {
+  background-color: #1a1a1a;
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.gooey-search-bubble:hover svg {
+  fill: #ffffff;
+  transform: scale(1.15);
+}
+
+.gooey-results-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: -16px;
+  width: 270px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  pointer-events: none;
+  z-index: 999;
+}
+
+.gooey-search-box.is-open .gooey-results-dropdown {
+  pointer-events: auto;
+}
+
+.gooey-result-item {
+  background: #000000;
+  color: #eeeeee;
+  border-radius: 9999px;
+  padding: 8px 14px;
+  font-size: 11px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  transform: translateY(-8px) scale(0.88);
+  opacity: 0;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease, background-color 0.2s ease, border-color 0.2s ease;
+  white-space: nowrap;
+}
+
+.gooey-result-item.is-visible {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+.gooey-result-item:hover {
+  background: #1c1c1c;
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+  transform: translateY(-1px) scale(1.02);
+}
+
+.gooey-result-item span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Header variant adaptation */
+.header-gooey-search .gooey-search-btn {
+  height: 34px;
+  width: 86px;
+  padding: 0 12px;
+}
+
+.header-gooey-search.is-open .gooey-search-btn {
+  width: 220px;
+}
+
+.header-gooey-search .gooey-search-bubble {
+  width: 34px;
+  height: 34px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   OSMO RANDOM DRAW UNDERLINE SYSTEM [https://osmo.supply/]
+   ═══════════════════════════════════════════════════════════ */
+
+.text-draw {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: stretch;
+  text-decoration: none;
+}
+
+.text-draw__p {
+  margin-bottom: 0;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.text-draw__box {
+  color: var(--accent-orange, #ff7a1a);
+  width: 100%;
+  height: 8px;
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.text-draw__box-svg {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: visible !important;
+}
+
+/* Nav links adaptation */
+.site-nav-link.text-draw {
+  position: relative;
+  padding-bottom: 3px;
+}
+
+.site-nav-link .text-draw__box {
+  color: var(--green, #217a57);
+  bottom: -2px;
+  height: 6px;
+}
+
+.footer-build-link .text-draw__box {
+  color: var(--accent-orange, #ff7a1a);
+  bottom: -4px;
+  height: 8px;
 }
 
 /* ═══════════════════════════════════════════════════════════

@@ -25,6 +25,21 @@
       <a class="site-nav-link" href="shop-parts.html">Shop Parts</a>
     </nav>
     <div class="nav-actions">
+      <div class="gooey-search-box header-gooey-search" id="header-gooey-search">
+        <div class="gooey-inner">
+          <div class="gooey-search-btn" id="header-gooey-btn" role="button" tabindex="0" aria-label="Search catalog">
+            <span class="gooey-search-label">
+              <svg width="12" height="12" viewBox="0 0 15 15" fill="none"><path d="M10 6.5C10 8.433 8.433 10 6.5 10C4.567 10 3 8.433 3 6.5C3 4.567 4.567 3 6.5 3C8.433 3 10 4.567 10 6.5ZM9.30884 10.0159C8.53901 10.6318 7.56251 11 6.5 11C4.01472 11 2 8.98528 2 6.5C2 4.01472 4.01472 2 6.5 2C8.98528 2 11 4.01472 11 6.5C11 7.56251 10.6318 8.53901 10.0159 9.30884L12.8536 12.1464C13.0488 12.3417 13.0488 12.6583 12.8536 12.8536C12.6583 13.0488 12.3417 13.0488 12.1464 12.8536L9.30884 10.0159Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></svg>
+              <span>Search</span>
+            </span>
+            <input class="gooey-search-input" id="header-search-input" type="search" placeholder="Search parts or builds…" autocomplete="off" aria-label="Search catalog">
+          </div>
+          <div class="gooey-search-bubble" id="header-gooey-bubble" aria-label="Submit search">
+            <svg viewBox="0 0 15 15" fill="none"><path d="M10 6.5C10 8.433 8.433 10 6.5 10C4.567 10 3 8.433 3 6.5C3 4.567 4.567 3 6.5 3C8.433 3 10 4.567 10 6.5ZM9.30884 10.0159C8.53901 10.6318 7.56251 11 6.5 11C4.01472 11 2 8.98528 2 6.5C2 4.01472 4.01472 2 6.5 2C8.98528 2 11 4.01472 11 6.5C11 7.56251 10.6318 8.53901 10.0159 9.30884L12.8536 12.1464C13.0488 12.3417 13.0488 12.6583 12.8536 12.8536C12.6583 13.0488 12.3417 13.0488 12.1464 12.8536L9.30884 10.0159Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></svg>
+          </div>
+        </div>
+        <div class="gooey-results-dropdown" id="header-gooey-results" role="listbox"></div>
+      </div>
       <a class="nav-cart-btn" href="shop-parts.html#demo-cart">Cart <span class="nav-cart-count" id="nav-cart-count">0</span></a>
       <a class="back-link" href="build-options.html">← Build options</a>
     </div>
@@ -37,6 +52,12 @@
           <h1 id="recommendations-title">Find your price point.</h1>
         </div>
         <p class="section-intro" id="recommendations-service-status" role="status" aria-live="polite">Loading build recommendations…</p>
+      </div>
+      <div class="tier-filter-bar" role="toolbar" aria-label="Filter builds by budget tier">
+        <button type="button" class="tier-filter-btn is-active" id="tier-filter-all" data-tier="all">All Budgets</button>
+        <button type="button" class="tier-filter-btn" id="tier-filter-entry" data-tier="entry">Entry · Under ₹70k</button>
+        <button type="button" class="tier-filter-btn" id="tier-filter-mid" data-tier="mid">Mid-Range · ₹80k–₹1.4L</button>
+        <button type="button" class="tier-filter-btn" id="tier-filter-enthusiast" data-tier="enthusiast">Enthusiast · ₹1.5L+</button>
       </div>
       <div class="tier-grid" id="tier-grid"></div>
       <section class="tier-detail" id="tier-detail" aria-live="polite" hidden>
@@ -56,11 +77,11 @@
         <div class="tier-parts" id="tier-parts"></div>
         <div class="tier-actions">
           <div class="tier-price-controls">
-            <button class="live-price-refresh" id="refresh-tier-prices" type="button">Refresh this build's prices</button>
+            <button class="live-price-refresh shiny-cta shiny-cta-compact" id="refresh-tier-prices" type="button"><span>Refresh this build's prices</span></button>
             <span id="tier-price-status" class="live-price-status" role="status" aria-live="polite">Catalog estimates shown until live prices are refreshed.</span>
           </div>
           <div class="summary-actions-grid" style="grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); width: 100%; max-width: 480px;">
-            <a class="primary-button tier-custom-link" id="tier-custom-link" href="custom-build.html">Customize this build <span aria-hidden="true">→</span></a>
+            <a class="primary-button tier-custom-link shiny-cta" id="tier-custom-link" href="custom-build.html"><span>Customize this build <span aria-hidden="true">→</span></span></a>
             <button class="summary-action-btn" id="copy-tier-specs" type="button">📋 Copy specs</button>
             <button class="summary-action-btn" id="print-tier-quotation" type="button">🖨️ Print quotation</button>
           </div>
@@ -75,6 +96,10 @@
     <p>Refresh retailer offers before buying; prices and stock can change.</p>
     <a class="footer-build-link" href="custom-build.html">Build your own <span aria-hidden="true">→</span></a>
   </footer>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/DrawSVGPlugin.min.js"></script>
   <script type="module" src="js/ui-enhancements.js"></script>
+  <script type="module" src="js/gooey-search.js"></script>
+  <script type="module" src="js/draw-underline.js"></script>
 </body>
 </html>

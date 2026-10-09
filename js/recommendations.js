@@ -39,8 +39,36 @@ function totalFor(build) {
   return build.parts.reduce((sum, part, index) => sum + partPrice(build, index), 0);
 }
 
+let activeBudgetTier = "all";
+
+function filterBuilds() {
+  if (activeBudgetTier === "entry") {
+    return recommendedBuilds.filter((b) => b.budget <= 70000);
+  }
+  if (activeBudgetTier === "mid") {
+    return recommendedBuilds.filter((b) => b.budget > 70000 && b.budget <= 140000);
+  }
+  if (activeBudgetTier === "enthusiast") {
+    return recommendedBuilds.filter((b) => b.budget > 140000);
+  }
+  return recommendedBuilds;
+}
+
+function setupTierFilterChips() {
+  const buttons = document.querySelectorAll(".tier-filter-btn");
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      buttons.forEach((b) => b.classList.remove("is-active"));
+      btn.classList.add("is-active");
+      activeBudgetTier = btn.dataset.tier || "all";
+      renderTierCards();
+    });
+  });
+}
+
 function renderTierCards() {
-  tierGrid.replaceChildren(...recommendedBuilds.map((build, index) => {
+  const visibleBuilds = filterBuilds();
+  tierGrid.replaceChildren(...visibleBuilds.map((build, index) => {
     const card = document.createElement("a");
     card.className = `tier-card${index === 1 ? " is-popular" : ""}`;
     card.href = `recommended-builds.html?tier=${encodeURIComponent(build.id)}#tier-detail`;
@@ -224,6 +252,7 @@ async function initializeRecommendations() {
   try {
     const response = await listBuilds();
     recommendedBuilds = response.builds;
+    setupTierFilterChips();
     renderTierCards();
     if (response.source === "recommendation-service") {
       serviceStatus.textContent = `${recommendedBuilds.length} builds loaded from the recommendations service.`;

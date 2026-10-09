@@ -363,10 +363,12 @@ function renderStepNavigation() {
   stepNav.replaceChildren(...items);
   stepCount.textContent = `COMPONENT ${String(activeStep + 1).padStart(2, "0")} OF ${String(partOrder.length).padStart(2, "0")}`;
   setStepLink(previousStepButton, activeStep - 1);
+  previousStepButton.innerHTML = "<span>← Previous</span>";
   setStepLink(nextStepButton, activeStep + 1);
-  nextStepButton.textContent = activeStep === partOrder.length - 1
+  const nextLabel = activeStep === partOrder.length - 1
     ? "All components selected"
     : "Next component →";
+  nextStepButton.innerHTML = `<span>${nextLabel}</span>`;
 }
 
 function getComponentUrl(stepIndex) {

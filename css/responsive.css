@@ -588,6 +588,53 @@
 }
 
 @media (max-width: 600px) {
+  .nav-actions {
+    gap: 6px;
+  }
+
+  .nav-cart-btn {
+    padding: 6px 10px;
+    font-size: 11px;
+  }
+
+  .header-cta.shiny-cta-compact {
+    padding: 0.5rem 0.9rem;
+    font-size: 0.8rem;
+  }
+
+  .header-gooey-search .gooey-search-btn {
+    width: 36px;
+    padding: 0 10px;
+  }
+
+  .header-gooey-search:not(.is-open) .gooey-search-label span {
+    display: none;
+  }
+
+  .header-gooey-search.is-open .gooey-search-btn {
+    width: min(200px, 60vw);
+  }
+
+  .hero-quick-tags {
+    margin-top: 14px;
+    gap: 6px;
+  }
+
+  .hero-quick-pill {
+    padding: 4px 10px;
+    font-size: 10px;
+  }
+
+  .tier-filter-bar {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .tier-filter-btn {
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+
   .summary-actions-grid {
     grid-template-columns: 1fr;
   }

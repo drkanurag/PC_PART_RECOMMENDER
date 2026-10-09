@@ -21,6 +21,21 @@
       <a class="site-nav-link" href="shop-parts.html">Shop Parts</a>
     </nav>
     <div class="nav-actions">
+      <div class="gooey-search-box header-gooey-search" id="header-gooey-search">
+        <div class="gooey-inner">
+          <div class="gooey-search-btn" id="header-gooey-btn" role="button" tabindex="0" aria-label="Search catalog">
+            <span class="gooey-search-label">
+              <svg width="12" height="12" viewBox="0 0 15 15" fill="none"><path d="M10 6.5C10 8.433 8.433 10 6.5 10C4.567 10 3 8.433 3 6.5C3 4.567 4.567 3 6.5 3C8.433 3 10 4.567 10 6.5ZM9.30884 10.0159C8.53901 10.6318 7.56251 11 6.5 11C4.01472 11 2 8.98528 2 6.5C2 4.01472 4.01472 2 6.5 2C8.98528 2 11 4.01472 11 6.5C11 7.56251 10.6318 8.53901 10.0159 9.30884L12.8536 12.1464C13.0488 12.3417 13.0488 12.6583 12.8536 12.8536C12.6583 13.0488 12.3417 13.0488 12.1464 12.8536L9.30884 10.0159Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></svg>
+              <span>Search</span>
+            </span>
+            <input class="gooey-search-input" id="header-search-input" type="search" placeholder="Search parts or builds…" autocomplete="off" aria-label="Search catalog">
+          </div>
+          <div class="gooey-search-bubble" id="header-gooey-bubble" aria-label="Submit search">
+            <svg viewBox="0 0 15 15" fill="none"><path d="M10 6.5C10 8.433 8.433 10 6.5 10C4.567 10 3 8.433 3 6.5C3 4.567 4.567 3 6.5 3C8.433 3 10 4.567 10 6.5ZM9.30884 10.0159C8.53901 10.6318 7.56251 11 6.5 11C4.01472 11 2 8.98528 2 6.5C2 4.01472 4.01472 2 6.5 2C8.98528 2 11 4.01472 11 6.5C11 7.56251 10.6318 8.53901 10.0159 9.30884L12.8536 12.1464C13.0488 12.3417 13.0488 12.6583 12.8536 12.8536C12.6583 13.0488 12.3417 13.0488 12.1464 12.8536L9.30884 10.0159Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></svg>
+          </div>
+        </div>
+        <div class="gooey-results-dropdown" id="header-gooey-results" role="listbox"></div>
+      </div>
       <a class="nav-cart-btn" href="shop-parts.html#demo-cart">Cart <span class="nav-cart-count" id="nav-cart-count">0</span></a>
       <a class="back-link" href="index.html">← Home</a>
     </div>
@@ -38,7 +53,7 @@
         <strong>Custom PC build</strong>
         <span class="choice-description">Pick your processor, graphics, memory, storage and every other part. Filter by brand and keep an eye on compatibility and your total.</span>
         <span class="choice-tags"><span>Choose every part</span><span>Compare brands</span><span>Running total</span></span>
-        <span class="choice-action">Open custom builder <span aria-hidden="true">↗</span></span>
+        <span class="choice-action shiny-cta shiny-cta-compact"><span>Open custom builder <span aria-hidden="true">↗</span></span></span>
       </a>
       <a class="build-choice-card recommended-choice" href="recommended-builds.html">
         <span class="choice-number">02 / START WITH A BUDGET</span>
@@ -46,7 +61,7 @@
         <strong>Recommended PC builds</strong>
         <span class="choice-description">Browse thoughtfully balanced example builds at popular price points, then see the parts, estimate and current shopping searches.</span>
         <span class="choice-tags"><span>Choose a price point</span><span>See full parts list</span><span>Easy to compare</span></span>
-        <span class="choice-action">Browse recommendations <span aria-hidden="true">↗</span></span>
+        <span class="choice-action shiny-cta shiny-cta-compact"><span>Browse recommendations <span aria-hidden="true">↗</span></span></span>
       </a>
       <a class="build-choice-card parts-choice" href="shop-parts.html">
         <span class="choice-number">03 / SHOP INDIVIDUAL ITEMS</span>
@@ -54,7 +69,7 @@
         <strong>Shop PC parts</strong>
         <span class="choice-description">Browse graphics cards, cabinets, processors, RAM, storage, power supplies, cooling and accessories. Add the items you want to a demo cart.</span>
         <span class="choice-tags"><span>Shop by category</span><span>Compare brands</span><span>Build a cart</span></span>
-        <span class="choice-action">Browse individual parts <span aria-hidden="true">↗</span></span>
+        <span class="choice-action shiny-cta shiny-cta-compact"><span>Browse individual parts <span aria-hidden="true">↗</span></span></span>
       </a>
     </div>
     <div class="options-features-strip">
@@ -82,6 +97,10 @@
     <p>Choose a build path that works for you.</p>
     <a class="footer-build-link" href="index.html">Back to home <span aria-hidden="true">↑</span></a>
   </footer>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/DrawSVGPlugin.min.js"></script>
   <script type="module" src="js/ui-enhancements.js"></script>
+  <script type="module" src="js/gooey-search.js"></script>
+  <script type="module" src="js/draw-underline.js"></script>
 </body>
 </html>

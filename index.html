@@ -21,8 +21,23 @@
       <a class="site-nav-link" href="shop-parts.html">Shop Parts</a>
     </nav>
     <div class="nav-actions">
+      <div class="gooey-search-box header-gooey-search" id="header-gooey-search">
+        <div class="gooey-inner">
+          <div class="gooey-search-btn" id="header-gooey-btn" role="button" tabindex="0" aria-label="Search catalog">
+            <span class="gooey-search-label">
+              <svg width="12" height="12" viewBox="0 0 15 15" fill="none"><path d="M10 6.5C10 8.433 8.433 10 6.5 10C4.567 10 3 8.433 3 6.5C3 4.567 4.567 3 6.5 3C8.433 3 10 4.567 10 6.5ZM9.30884 10.0159C8.53901 10.6318 7.56251 11 6.5 11C4.01472 11 2 8.98528 2 6.5C2 4.01472 4.01472 2 6.5 2C8.98528 2 11 4.01472 11 6.5C11 7.56251 10.6318 8.53901 10.0159 9.30884L12.8536 12.1464C13.0488 12.3417 13.0488 12.6583 12.8536 12.8536C12.6583 13.0488 12.3417 13.0488 12.1464 12.8536L9.30884 10.0159Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></svg>
+              <span>Search</span>
+            </span>
+            <input class="gooey-search-input" id="header-search-input" type="search" placeholder="Search parts or builds…" autocomplete="off" aria-label="Search catalog">
+          </div>
+          <div class="gooey-search-bubble" id="header-gooey-bubble" aria-label="Submit search">
+            <svg viewBox="0 0 15 15" fill="none"><path d="M10 6.5C10 8.433 8.433 10 6.5 10C4.567 10 3 8.433 3 6.5C3 4.567 4.567 3 6.5 3C8.433 3 10 4.567 10 6.5ZM9.30884 10.0159C8.53901 10.6318 7.56251 11 6.5 11C4.01472 11 2 8.98528 2 6.5C2 4.01472 4.01472 2 6.5 2C8.98528 2 11 4.01472 11 6.5C11 7.56251 10.6318 8.53901 10.0159 9.30884L12.8536 12.1464C13.0488 12.3417 13.0488 12.6583 12.8536 12.8536C12.6583 13.0488 12.3417 13.0488 12.1464 12.8536L9.30884 10.0159Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></svg>
+          </div>
+        </div>
+        <div class="gooey-results-dropdown" id="header-gooey-results" role="listbox"></div>
+      </div>
       <a class="nav-cart-btn" href="shop-parts.html#demo-cart">Cart <span class="nav-cart-count" id="nav-cart-count">0</span></a>
-      <a class="header-cta" href="build-options.html">Start building <span aria-hidden="true">↗</span></a>
+      <a class="header-cta shiny-cta shiny-cta-compact" href="build-options.html"><span>Start building <span aria-hidden="true">↗</span></span></a>
     </div>
   </header>
   <main class="landing-main">
@@ -31,8 +46,14 @@
         <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> YOUR BUILD STARTS HERE</p>
         <h1 id="hero-title">A PC that fits<br><span>your kind of you.</span></h1>
         <p class="hero-description">Build a complete PC your way, start from a budget recommendation, or shop only the parts you need. Your choices, your pace.</p>
-        <a class="primary-button landing-button" href="build-options.html">Choose how to build <span aria-hidden="true">→</span></a>
-        <p class="form-footnote landing-note">Choose a path and continue in this tab.</p>
+        <a class="primary-button landing-button shiny-cta" href="build-options.html"><span>Choose how to build <span aria-hidden="true">→</span></span></a>
+        <div class="hero-quick-tags" aria-label="Popular budget targets">
+          <span class="hero-quick-label">POPULAR BUDGETS:</span>
+          <a class="hero-quick-pill" href="recommended-builds.html?tier=starter#tier-detail">₹50k · Everyday Starter</a>
+          <a class="hero-quick-pill" href="recommended-builds.html?tier=esports#tier-detail">₹80k · 1080p Gaming</a>
+          <a class="hero-quick-pill" href="recommended-builds.html?tier=balanced#tier-detail">₹1L · 1440p All-Rounder</a>
+          <a class="hero-quick-pill" href="recommended-builds.html?tier=enthusiast#tier-detail">₹2.5L · 4K Enthusiast</a>
+        </div>
       </div>
       <div class="hero-art" aria-label="Illustration of a desktop computer">
         <div class="orbit orbit-one"></div>
@@ -119,6 +140,10 @@
     <p>Thoughtful PC builds, built around you.</p>
     <a class="footer-build-link" href="build-options.html">Choose a build <span aria-hidden="true">↗</span></a>
   </footer>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/DrawSVGPlugin.min.js"></script>
   <script type="module" src="js/ui-enhancements.js"></script>
+  <script type="module" src="js/gooey-search.js"></script>
+  <script type="module" src="js/draw-underline.js"></script>
 </body>
 </html>

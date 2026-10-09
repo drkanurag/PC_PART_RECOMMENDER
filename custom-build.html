@@ -25,6 +25,21 @@
       <a class="site-nav-link" href="shop-parts.html">Shop Parts</a>
     </nav>
     <div class="nav-actions">
+      <div class="gooey-search-box header-gooey-search" id="header-gooey-search">
+        <div class="gooey-inner">
+          <div class="gooey-search-btn" id="header-gooey-btn" role="button" tabindex="0" aria-label="Search catalog">
+            <span class="gooey-search-label">
+              <svg width="12" height="12" viewBox="0 0 15 15" fill="none"><path d="M10 6.5C10 8.433 8.433 10 6.5 10C4.567 10 3 8.433 3 6.5C3 4.567 4.567 3 6.5 3C8.433 3 10 4.567 10 6.5ZM9.30884 10.0159C8.53901 10.6318 7.56251 11 6.5 11C4.01472 11 2 8.98528 2 6.5C2 4.01472 4.01472 2 6.5 2C8.98528 2 11 4.01472 11 6.5C11 7.56251 10.6318 8.53901 10.0159 9.30884L12.8536 12.1464C13.0488 12.3417 13.0488 12.6583 12.8536 12.8536C12.6583 13.0488 12.3417 13.0488 12.1464 12.8536L9.30884 10.0159Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></svg>
+              <span>Search</span>
+            </span>
+            <input class="gooey-search-input" id="header-search-input" type="search" placeholder="Search parts or builds…" autocomplete="off" aria-label="Search catalog">
+          </div>
+          <div class="gooey-search-bubble" id="header-gooey-bubble" aria-label="Submit search">
+            <svg viewBox="0 0 15 15" fill="none"><path d="M10 6.5C10 8.433 8.433 10 6.5 10C4.567 10 3 8.433 3 6.5C3 4.567 4.567 3 6.5 3C8.433 3 10 4.567 10 6.5ZM9.30884 10.0159C8.53901 10.6318 7.56251 11 6.5 11C4.01472 11 2 8.98528 2 6.5C2 4.01472 4.01472 2 6.5 2C8.98528 2 11 4.01472 11 6.5C11 7.56251 10.6318 8.53901 10.0159 9.30884L12.8536 12.1464C13.0488 12.3417 13.0488 12.6583 12.8536 12.8536C12.6583 13.0488 12.3417 13.0488 12.1464 12.8536L9.30884 10.0159Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></svg>
+          </div>
+        </div>
+        <div class="gooey-results-dropdown" id="header-gooey-results" role="listbox"></div>
+      </div>
       <a class="nav-cart-btn" href="shop-parts.html#demo-cart">Cart <span class="nav-cart-count" id="nav-cart-count">0</span></a>
       <a class="back-link" href="build-options.html">← Build options</a>
     </div>
@@ -58,15 +73,15 @@
             <div><span class="builder-live-dot" aria-hidden="true"></span><span>YOUR BUILD</span></div>
             <div class="live-price-controls">
               <span id="live-price-status" class="live-price-status" role="status" aria-live="polite">Catalog estimates shown until live prices are refreshed.</span>
-              <button class="live-price-refresh" id="refresh-build-prices" type="button">Refresh selected prices</button>
+              <button class="live-price-refresh shiny-cta shiny-cta-compact" id="refresh-build-prices" type="button"><span>Refresh selected prices</span></button>
             </div>
           </div>
           <div class="builder-step-count" id="builder-step-count" aria-live="polite"></div>
           <nav class="builder-step-nav" id="builder-step-nav" aria-label="PC component steps"></nav>
           <div class="builder-parts" id="builder-parts" aria-describedby="builder-price-note"></div>
           <div class="builder-step-controls">
-            <a class="step-button step-previous" id="previous-step">← Previous</a>
-            <a class="step-button step-next" id="next-step">Next component →</a>
+            <a class="step-button step-previous shiny-cta shiny-cta-compact" id="previous-step"><span>← Previous</span></a>
+            <a class="step-button step-next shiny-cta" id="next-step"><span>Next component →</span></a>
           </div>
           <p class="builder-price-note" id="builder-price-note">Refresh to compare current Google Shopping offers from Indian retailers. Live listings can be out of date or refer to a different variant; verify the exact model, stock and delivery cost before buying.</p>
         </div>
@@ -103,7 +118,7 @@
             </div>
           </div>
           <div class="summary-actions-grid">
-            <button class="summary-action-btn summary-action-btn-primary" id="add-build-to-cart" type="button">🛒 Add all to Demo Cart</button>
+            <button class="summary-action-btn summary-action-btn-primary shiny-cta shiny-cta-compact" id="add-build-to-cart" type="button"><span>🛒 Add all to Demo Cart</span></button>
             <button class="summary-action-btn" id="copy-build-specs" type="button">📋 Copy specs</button>
             <button class="summary-action-btn" id="print-build-quotation" type="button">🖨️ Print quotation</button>
           </div>
@@ -122,6 +137,10 @@
     <p>Build at your own pace. Your selections are saved in this browser.</p>
     <a class="footer-build-link" href="recommended-builds.html">See budget builds <span aria-hidden="true">→</span></a>
   </footer>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/DrawSVGPlugin.min.js"></script>
   <script type="module" src="js/ui-enhancements.js"></script>
+  <script type="module" src="js/gooey-search.js"></script>
+  <script type="module" src="js/draw-underline.js"></script>
 </body>
 </html>

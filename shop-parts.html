@@ -59,10 +59,24 @@
     <div class="shop-layout">
       <section class="shop-products-panel" aria-label="PC parts catalog">
         <div class="shop-toolbar">
-          <label class="shop-search-field">
+          <div class="shop-search-field" style="display: flex; flex-direction: column; gap: 4px;">
             <span>Search parts</span>
-            <input id="shop-search" type="search" placeholder="Try RTX, Ryzen, cabinet…" autocomplete="off">
-          </label>
+            <div class="gooey-search-box" id="shop-gooey-search">
+              <div class="gooey-inner">
+                <div class="gooey-search-btn" id="shop-gooey-btn" role="button" tabindex="0" aria-label="Open search">
+                  <span class="gooey-search-label">
+                    <svg width="13" height="13" viewBox="0 0 15 15" fill="none"><path d="M10 6.5C10 8.433 8.433 10 6.5 10C4.567 10 3 8.433 3 6.5C3 4.567 4.567 3 6.5 3C8.433 3 10 4.567 10 6.5ZM9.30884 10.0159C8.53901 10.6318 7.56251 11 6.5 11C4.01472 11 2 8.98528 2 6.5C2 4.01472 4.01472 2 6.5 2C8.98528 2 11 4.01472 11 6.5C11 7.56251 10.6318 8.53901 10.0159 9.30884L12.8536 12.1464C13.0488 12.3417 13.0488 12.6583 12.8536 12.8536C12.6583 13.0488 12.3417 13.0488 12.1464 12.8536L9.30884 10.0159Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></svg>
+                    <span>Search</span>
+                  </span>
+                  <input id="shop-search" class="gooey-search-input" type="search" placeholder="Try RTX, Ryzen, cabinet…" autocomplete="off" aria-label="Search parts">
+                </div>
+                <div class="gooey-search-bubble" id="shop-gooey-bubble" aria-label="Submit search">
+                  <svg viewBox="0 0 15 15" fill="none"><path d="M10 6.5C10 8.433 8.433 10 6.5 10C4.567 10 3 8.433 3 6.5C3 4.567 4.567 3 6.5 3C8.433 3 10 4.567 10 6.5ZM9.30884 10.0159C8.53901 10.6318 7.56251 11 6.5 11C4.01472 11 2 8.98528 2 6.5C2 4.01472 4.01472 2 6.5 2C8.98528 2 11 4.01472 11 6.5C11 7.56251 10.6318 8.53901 10.0159 9.30884L12.8536 12.1464C13.0488 12.3417 13.0488 12.6583 12.8536 12.8536C12.6583 13.0488 12.3417 13.0488 12.1464 12.8536L9.30884 10.0159Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></svg>
+                </div>
+              </div>
+              <div class="gooey-results-dropdown" id="shop-gooey-results" role="listbox"></div>
+            </div>
+          </div>
           <label class="shop-sort-field">
             <span>Sort</span>
             <select id="shop-sort">
@@ -129,7 +143,7 @@
           <button class="summary-action-btn" id="copy-cart-specs" type="button">📋 Copy list</button>
           <button class="summary-action-btn" id="print-cart-quotation" type="button">🖨️ Print quotation</button>
         </div>
-        <button class="demo-cart-clear" id="demo-cart-clear" type="button" disabled>Clear demo cart</button>
+        <button class="demo-cart-clear shiny-cta shiny-cta-compact" id="demo-cart-clear" type="button" disabled><span>Clear demo cart</span></button>
       </aside>
     </div>
   </main>
@@ -138,6 +152,10 @@
     <p>Demo shopping list only. Verify retailer price, stock and part compatibility.</p>
     <a class="footer-build-link" href="custom-build.html">Configure a complete PC <span aria-hidden="true">→</span></a>
   </footer>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/DrawSVGPlugin.min.js"></script>
   <script type="module" src="js/ui-enhancements.js"></script>
+  <script type="module" src="js/gooey-search.js"></script>
+  <script type="module" src="js/draw-underline.js"></script>
 </body>
 </html>

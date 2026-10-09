@@ -2,6 +2,7 @@ import { listProducts, categories } from "./services/catalog-service.js";
 import { addItem, clearCart, getCart, updateQuantity } from "./services/cart-service.js";
 import { findOffers } from "./services/pricing-service.js";
 import { showToast, copyQuotationToClipboard, printQuotationView } from "./ui-enhancements.js";
+import { initGooeySearch } from "./gooey-search.js";
 
 const currency = new Intl.NumberFormat("en-IN", {
   style: "currency",
@@ -39,6 +40,17 @@ const CATEGORY_ICONS = {
   Memory: "🧠"
 };
 
+const CATEGORY_COLORS = {
+  all: "#217a57",
+  Processor: "#2563eb",
+  "Graphic Cards": "#10b981",
+  "Internal SSD": "#06b6d4",
+  Cabinets: "#f59e0b",
+  "CPU Cooler": "#0ea5e9",
+  Motherboard: "#ff7a1a",
+  "Power Supply": "#e11d48"
+};
+
 function renderQuickPills() {
   const container = document.querySelector("#shop-quick-pills");
   if (!container) return;
@@ -56,8 +68,9 @@ function renderQuickPills() {
     const pill = document.createElement("button");
     pill.type = "button";
     pill.className = `shop-quick-pill${activeCategory === cat.id ? " is-active" : ""}`;
+    pill.setAttribute("aria-pressed", String(activeCategory === cat.id));
     const icon = CATEGORY_ICONS[cat.id] || "📦";
-    pill.innerHTML = `<span>${icon}</span><span>${cat.label}</span>`;
+    pill.innerHTML = `<span aria-hidden="true">${icon}</span><span>${cat.label}</span>`;
     pill.addEventListener("click", () => {
       activeCategory = cat.id;
       activeBrand = "all";
@@ -182,19 +195,19 @@ function makeProductCard(product) {
   actions.className = "shop-product-actions";
   const addButton = document.createElement("button");
   addButton.type = "button";
-  addButton.className = "shop-add-button";
-  addButton.textContent = "Add to cart";
+  addButton.className = "shop-add-button shiny-cta shiny-cta-compact";
+  addButton.innerHTML = "<span>Add to cart</span>";
   addButton.addEventListener("click", () => {
     try {
       const offer = livePriceByProduct.get(product.id) || null;
       addItem(product, currentPrice(product), offer);
-      addButton.textContent = "Added ✓";
+      addButton.innerHTML = "<span>Added ✓</span>";
       showToast(`Added ${product.brand} ${product.model} to Demo Cart!`, "success", {
         label: "View Cart",
         href: "#demo-cart"
       });
       window.setTimeout(() => {
-        addButton.textContent = "Add to cart";
+        addButton.innerHTML = "<span>Add to cart</span>";
       }, 1200);
     } catch (error) {
       document.querySelector("#shop-catalog-status").textContent = error.message;
@@ -206,11 +219,11 @@ function makeProductCard(product) {
   if (product.price > 0) {
     const refreshButton = document.createElement("button");
     refreshButton.type = "button";
-    refreshButton.className = "shop-refresh-button";
-    refreshButton.textContent = "Check live price";
+    refreshButton.className = "shop-refresh-button shiny-cta shiny-cta-compact";
+    refreshButton.innerHTML = "<span>Check live price</span>";
     refreshButton.addEventListener("click", async () => {
       refreshButton.disabled = true;
-      refreshButton.textContent = "Checking…";
+      refreshButton.innerHTML = "<span>Checking…</span>";
       const categoryLabel = getCategoryLabel(product.category);
       try {
         const offers = await findOffers(product, categoryLabel);
@@ -223,7 +236,7 @@ function makeProductCard(product) {
         document.querySelector("#shop-catalog-status").textContent = `Found ${offers.length} offers for ${product.brand} ${product.model}; showing the lowest listed offer.`;
       } catch (error) {
         refreshButton.disabled = false;
-        refreshButton.textContent = "Check live price";
+        refreshButton.innerHTML = "<span>Check live price</span>";
         document.querySelector("#shop-catalog-status").textContent = error.message;
       }
     });
@@ -390,6 +403,37 @@ async function initializeShop() {
     renderCart();
     if (result.source === "catalog-service") {
       document.querySelector("#shop-catalog-status").textContent = `${products.length} products loaded from the catalog service.`;
+    }
+
+    const urlSearch = new URLSearchParams(window.location.search).get("search");
+    if (urlSearch) {
+      const searchInput = document.querySelector("#shop-search");
+      if (searchInput) {
+        searchInput.value = urlSearch;
+        document.querySelector("#shop-gooey-search")?.classList.add("is-open");
+        renderProducts();
+      }
+    }
+
+    const shopGooey = document.querySelector("#shop-gooey-search");
+    if (shopGooey) {
+      initGooeySearch(shopGooey, {
+        data: products.map((p) => `${p.brand} ${p.model}`),
+        onSelect: (selected) => {
+          const input = document.querySelector("#shop-search");
+          if (input) input.value = selected;
+          currentPage = 1;
+          renderProducts();
+        },
+        onSearch: () => {
+          currentPage = 1;
+          renderProducts();
+        },
+        onSubmit: () => {
+          currentPage = 1;
+          renderProducts();
+        }
+      });
     }
   } catch (error) {
     document.querySelector("#shop-catalog-status").textContent = error.message;
