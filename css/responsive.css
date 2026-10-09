@@ -553,3 +553,48 @@
     justify-self: start;
   }
 }
+
+
+@media (max-width: 900px) {
+  .site-header {
+    height: auto;
+    padding-block: 14px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .site-nav {
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+  }
+
+  .site-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .site-nav-link {
+    white-space: nowrap;
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+
+  .faq-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .summary-actions-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .specs-inspector-title {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+}

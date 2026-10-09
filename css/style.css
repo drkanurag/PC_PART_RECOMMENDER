@@ -3716,3 +3716,616 @@ main {
     font-size: 26px;
   }
 }
+
+
+/* ═══════════════════════════════════════════════════════════
+   MODERN UNIFIED NAVIGATION & GLOBAL HEADER
+   ═══════════════════════════════════════════════════════════ */
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.site-nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  color: #4b5850;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 180ms ease;
+}
+
+.site-nav-link:hover {
+  color: var(--green-dark);
+  background: rgba(33, 122, 87, 0.08);
+  transform: translateY(-1px);
+}
+
+.site-nav-link.is-active {
+  color: var(--green-dark);
+  background: #e6f1e8;
+  font-weight: 700;
+  box-shadow: inset 0 0 0 1px rgba(33, 122, 87, 0.18);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-cart-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border: 1px solid #d4dfd6;
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--green-dark);
+  font-size: 12px;
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(29, 41, 36, 0.04);
+  transition: all 180ms ease;
+}
+
+.nav-cart-btn:hover {
+  border-color: #9dbca6;
+  background: #f4f8f4;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(29, 41, 36, 0.08);
+}
+
+.nav-cart-count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 20px;
+  height: 20px;
+  padding-inline: 4px;
+  border-radius: 10px;
+  background: var(--green);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TOAST NOTIFICATION SYSTEM
+   ═══════════════════════════════════════════════════════════ */
+
+.rigwise-toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+  max-width: 380px;
+  width: calc(100% - 48px);
+}
+
+.rigwise-toast {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: rgba(29, 41, 36, 0.94);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18), 0 2px 6px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  animation: toast-slide-in 280ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.rigwise-toast.is-hiding {
+  animation: toast-slide-out 220ms ease forwards;
+}
+
+.rigwise-toast-icon {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  font-size: 13px;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.rigwise-toast-success .rigwise-toast-icon {
+  background: #34b373;
+  color: #fff;
+}
+
+.rigwise-toast-warning .rigwise-toast-icon {
+  background: #f5a623;
+  color: #fff;
+}
+
+.rigwise-toast-error .rigwise-toast-icon {
+  background: #e65151;
+  color: #fff;
+}
+
+.rigwise-toast-msg {
+  flex: 1;
+  line-height: 1.45;
+}
+
+.rigwise-toast-action {
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  border: 0;
+  transition: background 150ms ease;
+  white-space: nowrap;
+}
+
+.rigwise-toast-action:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.rigwise-toast-close {
+  background: transparent;
+  border: 0;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+  transition: color 150ms ease;
+}
+
+.rigwise-toast-close:hover {
+  color: #fff;
+}
+
+@keyframes toast-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes toast-slide-out {
+  to {
+    opacity: 0;
+    transform: translateY(12px) scale(0.92);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FLOATING BACK TO TOP BUTTON
+   ═══════════════════════════════════════════════════════════ */
+
+.rigwise-back-to-top {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 999;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid #d4dfd6;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--green-dark);
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(29, 41, 36, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(12px) scale(0.85);
+  transition: opacity 220ms ease, transform 220ms ease, background 160ms ease, border-color 160ms ease;
+}
+
+.rigwise-back-to-top.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+.rigwise-back-to-top:hover {
+  background: var(--green);
+  color: #fff;
+  border-color: var(--green);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 10px 24px rgba(21, 90, 64, 0.25);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   QUICK CATEGORY PILLS & CLEAR FILTERS (SHOP PAGE)
+   ═══════════════════════════════════════════════════════════ */
+
+.shop-quick-pills {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 4px 2px 12px;
+  margin-bottom: 12px;
+  scrollbar-width: thin;
+  scrollbar-color: #c4d4c7 transparent;
+}
+
+.shop-quick-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border: 1px solid #e1e7e1;
+  border-radius: 20px;
+  background: #ffffff;
+  color: #556258;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 180ms ease;
+  flex-shrink: 0;
+}
+
+.shop-quick-pill:hover {
+  border-color: #a8c7b1;
+  background: #f4f8f4;
+  color: var(--green-dark);
+  transform: translateY(-1px);
+}
+
+.shop-quick-pill.is-active {
+  border-color: var(--green);
+  background: var(--green);
+  color: #ffffff;
+  box-shadow: 0 3px 8px rgba(33, 122, 87, 0.25);
+}
+
+.shop-clear-filters-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: 1px solid #e8d0d0;
+  border-radius: 6px;
+  background: #fff8f8;
+  color: #b64141;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 160ms ease;
+}
+
+.shop-clear-filters-btn:hover {
+  background: #ffebeb;
+  border-color: #df9b9b;
+  transform: translateY(-1px);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   QUOTATION & ACTION BUTTONS IN SUMMARY
+   ═══════════════════════════════════════════════════════════ */
+
+.summary-actions-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.summary-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 38px;
+  padding: 8px 12px;
+  border: 1px solid #d8e2d8;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #3b4941;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 180ms ease;
+  text-align: center;
+}
+
+.summary-action-btn:hover {
+  border-color: #a8c7b1;
+  background: #f4f8f4;
+  color: var(--green-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(29, 41, 36, 0.06);
+}
+
+.summary-action-btn-primary {
+  grid-column: 1 / -1;
+  border-color: var(--green);
+  background: var(--green);
+  color: #ffffff;
+}
+
+.summary-action-btn-primary:hover {
+  border-color: var(--green-dark);
+  background: var(--green-dark);
+  color: #ffffff;
+  box-shadow: 0 6px 16px rgba(21, 90, 64, 0.22);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ESTIMATED WATTAGE & COMPATIBILITY INSPECTOR WIDGET
+   ═══════════════════════════════════════════════════════════ */
+
+.builder-specs-inspector {
+  margin: 16px 0;
+  padding: 14px 16px;
+  border: 1px solid #e1e8e1;
+  border-radius: 8px;
+  background: #f9fbf9;
+}
+
+.specs-inspector-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.specs-inspector-title strong {
+  font-size: 11px;
+  letter-spacing: 0.6px;
+  color: #4b5850;
+  text-transform: uppercase;
+}
+
+.specs-inspector-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 12px;
+  background: #e4f0e8;
+  color: var(--green-dark);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.wattage-meter-wrap {
+  margin: 8px 0 12px;
+}
+
+.wattage-meter-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  margin-bottom: 5px;
+}
+
+.wattage-meter-labels strong {
+  color: var(--green-dark);
+  font-family: var(--font-display);
+  font-size: 14px;
+}
+
+.wattage-bar {
+  height: 8px;
+  border-radius: 4px;
+  background: #e6eae6;
+  overflow: hidden;
+  position: relative;
+}
+
+.wattage-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #48a371, #217a57);
+  transition: width 350ms ease, background 200ms ease;
+}
+
+.wattage-bar.is-overloaded .wattage-bar-fill {
+  background: linear-gradient(90deg, #e67e22, #d63031);
+}
+
+.compatibility-checklist {
+  display: grid;
+  gap: 6px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #e8eee8;
+}
+
+.compat-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: #4a574e;
+}
+
+.compat-item-icon {
+  width: 16px;
+  height: 16px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-size: 9px;
+  font-weight: 800;
+  flex-shrink: 0;
+  background: #e1efe5;
+  color: var(--green-dark);
+}
+
+.compat-item.is-issue .compat-item-icon {
+  background: #ffe8e8;
+  color: #c93b3b;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FAQ ACCORDION & BUYING GUIDE (HOMEPAGE)
+   ═══════════════════════════════════════════════════════════ */
+
+.faq-section {
+  padding: 68px 0 74px;
+  border-top: 1px solid #e7e9e5;
+}
+
+.faq-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.35fr;
+  gap: 40px;
+  align-items: start;
+}
+
+.faq-copy h2 {
+  font-family: var(--font-display);
+  font-size: clamp(30px, 3.6vw, 42px);
+  letter-spacing: -1.6px;
+  line-height: 1.2;
+  margin-bottom: 14px;
+}
+
+.faq-copy p {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.faq-accordion {
+  display: grid;
+  gap: 12px;
+}
+
+.faq-item {
+  border: 1px solid #e5eae4;
+  border-radius: 10px;
+  background: #ffffff;
+  overflow: hidden;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.faq-item:hover {
+  border-color: #bad3c0;
+  box-shadow: 0 4px 16px rgba(29, 41, 36, 0.05);
+}
+
+.faq-item summary {
+  padding: 16px 20px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  user-select: none;
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item summary::after {
+  content: "+";
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--green);
+  transition: transform 200ms ease;
+}
+
+.faq-item[open] summary::after {
+  transform: rotate(45deg);
+}
+
+.faq-item[open] {
+  border-color: #a8c7b1;
+  box-shadow: 0 8px 24px rgba(29, 41, 36, 0.06);
+}
+
+.faq-answer {
+  padding: 0 20px 18px;
+  color: #556258;
+  font-size: 13px;
+  line-height: 1.7;
+  border-top: 1px solid #f0f4f0;
+  padding-top: 12px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PRINT STYLESHEET (PROFESSIONAL QUOTATION PRINT)
+   ═══════════════════════════════════════════════════════════ */
+
+@media print {
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 12pt;
+  }
+
+  .site-header,
+  .site-footer,
+  .shop-toolbar,
+  .shop-filter-sidebar,
+  .shop-pagination,
+  .shop-info-strip,
+  .builder-toolbar,
+  .builder-step-nav,
+  .builder-step-controls,
+  .builder-budget-strip,
+  .rigwise-toast-container,
+  .rigwise-back-to-top,
+  .summary-actions-grid,
+  .summary-reset,
+  .tier-actions,
+  .header-cta,
+  .primary-button {
+    display: none !important;
+  }
+
+  .shop-main,
+  .workspace-main,
+  .options-main {
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .shop-layout,
+  .builder-layout {
+    display: block !important;
+  }
+
+  .demo-cart,
+  .build-summary,
+  .tier-detail {
+    box-shadow: none !important;
+    border: 1px solid #ccc !important;
+    position: static !important;
+    page-break-inside: avoid;
+  }
+}

@@ -19,7 +19,15 @@
       <span class="brand-mark" aria-hidden="true">R</span>
       <span>rigwise<span class="brand-period">.</span></span>
     </a>
-    <a class="back-link" href="build-options.html">← Build options</a>
+    <nav class="site-nav" aria-label="Main Navigation">
+      <a class="site-nav-link is-active" href="custom-build.html" aria-current="page">Custom Builder</a>
+      <a class="site-nav-link" href="recommended-builds.html">Budget Builds</a>
+      <a class="site-nav-link" href="shop-parts.html">Shop Parts</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="nav-cart-btn" href="shop-parts.html#demo-cart">Cart <span class="nav-cart-count" id="nav-cart-count">0</span></a>
+      <a class="back-link" href="build-options.html">← Build options</a>
+    </div>
   </header>
   <main class="workspace-main">
     <section class="custom-builder-section custom-workspace" id="custom-builder" aria-labelledby="custom-builder-title">
@@ -74,6 +82,31 @@
           <div class="summary-total-row"><span>PARTS TOTAL · LIVE + EST.</span><strong id="build-total">₹0</strong></div>
           <p class="budget-remaining" id="budget-remaining"></p>
           <p class="builder-alert" id="builder-alert" role="status" hidden></p>
+          <div class="builder-specs-inspector" id="builder-specs-inspector">
+            <div class="specs-inspector-title">
+              <strong>Power & Compatibility</strong>
+              <span class="specs-inspector-badge" id="compat-badge">✓ Compatible</span>
+            </div>
+            <div class="wattage-meter-wrap">
+              <div class="wattage-meter-labels">
+                <span>Estimated Draw: <strong id="compat-est-watts">350 W</strong></span>
+                <span>PSU: <strong id="compat-psu-watts">550 W</strong></span>
+              </div>
+              <div class="wattage-bar" id="compat-wattage-bar">
+                <div class="wattage-bar-fill" id="compat-wattage-fill" style="width: 63%;"></div>
+              </div>
+            </div>
+            <div class="compatibility-checklist" id="compat-checklist">
+              <div class="compat-item" id="compat-socket"><span class="compat-item-icon">✓</span><span>Socket & Motherboard matched</span></div>
+              <div class="compat-item" id="compat-gpu"><span class="compat-item-icon">✓</span><span>Display output verified</span></div>
+              <div class="compat-item" id="compat-psu"><span class="compat-item-icon">✓</span><span>Sufficient PSU headroom</span></div>
+            </div>
+          </div>
+          <div class="summary-actions-grid">
+            <button class="summary-action-btn summary-action-btn-primary" id="add-build-to-cart" type="button">🛒 Add all to Demo Cart</button>
+            <button class="summary-action-btn" id="copy-build-specs" type="button">📋 Copy specs</button>
+            <button class="summary-action-btn" id="print-build-quotation" type="button">🖨️ Print quotation</button>
+          </div>
           <details class="summary-details">
             <summary>Review selected parts <span aria-hidden="true">⌄</span></summary>
             <div class="summary-items" id="summary-items"></div>
@@ -89,5 +122,6 @@
     <p>Build at your own pace. Your selections are saved in this browser.</p>
     <a class="footer-build-link" href="recommended-builds.html">See budget builds <span aria-hidden="true">→</span></a>
   </footer>
+  <script type="module" src="js/ui-enhancements.js"></script>
 </body>
 </html>

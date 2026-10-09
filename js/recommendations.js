@@ -1,5 +1,6 @@
 import { recommendedBuilds as curatedBuilds } from "./services/recommendation-data.js";
 import { listBuilds } from "./services/recommendation-service.js";
+import { copyQuotationToClipboard, printQuotationView, showToast } from "./ui-enhancements.js";
 let recommendedBuilds = curatedBuilds;
 
 const currency = new Intl.NumberFormat("en-IN", {
@@ -127,6 +128,34 @@ function renderBuildDetails(build) {
   const customLink = document.querySelector(".tier-custom-link");
   customLink.href = `custom-build.html?budget=${build.budget}`;
   customLink.removeAttribute("target");
+
+  const copyBtn = document.querySelector("#copy-tier-specs");
+  if (copyBtn) {
+    copyBtn.onclick = () => {
+      const items = build.parts.map(([name, model, estimate], index) => {
+        const price = partPrice(build, index);
+        const liveOffer = livePrices.get(priceKey(build, index));
+        return {
+          category: name,
+          name: model,
+          price,
+          source: liveOffer ? `Live · ${liveOffer.source}` : "Catalog Estimate"
+        };
+      });
+      copyQuotationToClipboard({
+        title: `${build.name} (${build.label})`,
+        budget: build.budget,
+        total: totalFor(build),
+        items
+      });
+    };
+  }
+
+  const printBtn = document.querySelector("#print-tier-quotation");
+  if (printBtn) {
+    printBtn.onclick = () => printQuotationView();
+  }
+
   document.querySelector(".recommendations-section").classList.add("has-detail");
   detail.hidden = false;
   detail.scrollIntoView({ behavior: "smooth", block: "start" });

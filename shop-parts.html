@@ -19,10 +19,15 @@
       <span class="brand-mark" aria-hidden="true">R</span>
       <span>rigwise<span class="brand-period">.</span></span>
     </a>
-    <nav class="shop-header-links" aria-label="Main navigation">
-      <a class="back-link" href="build-options.html">← Build options</a>
-      <a class="shop-cart-shortcut" href="#demo-cart">Demo cart <span id="shop-cart-count">0</span></a>
+    <nav class="site-nav" aria-label="Main Navigation">
+      <a class="site-nav-link" href="custom-build.html">Custom Builder</a>
+      <a class="site-nav-link" href="recommended-builds.html">Budget Builds</a>
+      <a class="site-nav-link is-active" href="shop-parts.html" aria-current="page">Shop Parts</a>
     </nav>
+    <div class="nav-actions">
+      <a class="nav-cart-btn" href="#demo-cart">Cart <span class="nav-cart-count" id="shop-cart-count">0</span></a>
+      <a class="back-link" href="build-options.html">← Build options</a>
+    </div>
   </header>
   <main class="shop-main">
     <section class="shop-heading" aria-labelledby="shop-title">
@@ -95,9 +100,13 @@
             </section>
           </aside>
           <div class="shop-results">
+            <div class="shop-quick-pills" id="shop-quick-pills" role="toolbar" aria-label="Quick category selection"></div>
             <div class="shop-results-header">
               <h2 id="shop-category-title">All parts</h2>
-              <span id="shop-result-count" aria-live="polite"></span>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <button class="shop-clear-filters-btn" id="shop-clear-filters" type="button" hidden>✕ Clear filters</button>
+                <span id="shop-result-count" aria-live="polite"></span>
+              </div>
             </div>
             <p class="shop-catalog-status" id="shop-catalog-status" role="status" aria-live="polite"></p>
             <div class="shop-product-grid" id="shop-product-grid"></div>
@@ -116,6 +125,10 @@
         <div class="demo-cart-empty" id="demo-cart-empty">Your cart is empty. Add an individual part to start a list.</div>
         <div class="demo-cart-total"><span>PARTS TOTAL · EST. + LIVE</span><strong id="demo-cart-total">₹0</strong></div>
         <p class="demo-cart-price-note">Items use the price shown when added. Refresh product prices before making a buying decision.</p>
+        <div class="summary-actions-grid" style="margin-bottom: 8px;">
+          <button class="summary-action-btn" id="copy-cart-specs" type="button">📋 Copy list</button>
+          <button class="summary-action-btn" id="print-cart-quotation" type="button">🖨️ Print quotation</button>
+        </div>
         <button class="demo-cart-clear" id="demo-cart-clear" type="button" disabled>Clear demo cart</button>
       </aside>
     </div>
@@ -125,5 +138,6 @@
     <p>Demo shopping list only. Verify retailer price, stock and part compatibility.</p>
     <a class="footer-build-link" href="custom-build.html">Configure a complete PC <span aria-hidden="true">→</span></a>
   </footer>
+  <script type="module" src="js/ui-enhancements.js"></script>
 </body>
 </html>

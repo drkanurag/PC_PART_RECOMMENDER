@@ -15,7 +15,15 @@
       <span class="brand-mark" aria-hidden="true">R</span>
       <span>rigwise<span class="brand-period">.</span></span>
     </a>
-    <a class="header-cta" href="build-options.html">Start building <span aria-hidden="true">↗</span></a>
+    <nav class="site-nav" aria-label="Main Navigation">
+      <a class="site-nav-link" href="custom-build.html">Custom Builder</a>
+      <a class="site-nav-link" href="recommended-builds.html">Budget Builds</a>
+      <a class="site-nav-link" href="shop-parts.html">Shop Parts</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="nav-cart-btn" href="shop-parts.html#demo-cart">Cart <span class="nav-cart-count" id="nav-cart-count">0</span></a>
+      <a class="header-cta" href="build-options.html">Start building <span aria-hidden="true">↗</span></a>
+    </div>
   </header>
   <main class="landing-main">
     <section class="hero landing-hero" aria-labelledby="hero-title">
@@ -70,11 +78,47 @@
         <span>Budget Range</span>
       </div>
     </section>
+    <section class="faq-section" aria-labelledby="faq-title">
+      <div class="faq-grid">
+        <div class="faq-copy">
+          <p class="eyebrow">HELP & BUYING GUIDE</p>
+          <h2 id="faq-title">Frequently asked questions.</h2>
+          <p>Everything you need to know about building, comparing live retailer prices, and selecting compatible PC parts.</p>
+        </div>
+        <div class="faq-accordion">
+          <details class="faq-item" open>
+            <summary>How does Rigwise check component compatibility?</summary>
+            <div class="faq-answer">
+              Rigwise cross-verifies processor sockets (e.g. AM4, LGA1700) with matching motherboards, checks memory generation (DDR4 vs DDR5), validates display outputs (APU vs dedicated GPU), and calculates real-time power draw against power supply ratings with a safe headroom margin.
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary>Where do the live prices come from?</summary>
+            <div class="faq-answer">
+              Our pricing service aggregates real-time product listings and shopping search results across premier Indian retailers such as MDComputers and Amazon. In addition, we maintain a baseline catalog estimate so you can design builds even offline.
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary>What budget should I target for gaming in 2026?</summary>
+            <div class="faq-answer">
+              For solid 1080p competitive esports gaming (CS2, Valorant, GTA V), ₹40,000–₹50,000 is a sweet spot. For AAA titles at high 1080p/1440p settings, target ₹70,000–₹1,00,000. Enthusiast 1440p/4K rigs typically range from ₹1,20,000 to ₹1,80,000+.
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary>Can I export or print my quotation to buy locally?</summary>
+            <div class="faq-answer">
+              Yes! You can copy a formatted specification sheet to your clipboard or print a clean quotation with a single click in both the Custom Builder and the Shop Demo Cart. Take it directly to Nehru Place, Lamington Road, SP Road, or order online.
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
   </main>
   <footer class="site-footer">
     <a class="brand footer-brand" href="index.html"><span class="brand-mark" aria-hidden="true">R</span><span>rigwise<span class="brand-period">.</span></span></a>
     <p>Thoughtful PC builds, built around you.</p>
     <a class="footer-build-link" href="build-options.html">Choose a build <span aria-hidden="true">↗</span></a>
   </footer>
+  <script type="module" src="js/ui-enhancements.js"></script>
 </body>
 </html>

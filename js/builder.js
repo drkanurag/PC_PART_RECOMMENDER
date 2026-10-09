@@ -1,4 +1,6 @@
 import { pcParts } from "./services/parts-data.js";
+import { copyQuotationToClipboard, printQuotationView, showToast } from "./ui-enhancements.js";
+import { addItem } from "./services/cart-service.js";
 const partOrder = ["processor", "motherboard", "memory", "storage", "graphics", "power", "case", "cooler"];
 const initialSelections = {
   processor: "amd-5600g",
@@ -449,6 +451,52 @@ function renderSummary() {
   } else {
     builderAlert.hidden = true;
   }
+
+  // Update dynamic Power & Compatibility Inspector
+  const estWattsEl = document.querySelector("#compat-est-watts");
+  const psuWattsEl = document.querySelector("#compat-psu-watts");
+  const fillEl = document.querySelector("#compat-wattage-fill");
+  const barEl = document.querySelector("#compat-wattage-bar");
+  const badgeEl = document.querySelector("#compat-badge");
+  const gpuCompatEl = document.querySelector("#compat-gpu");
+  const psuCompatEl = document.querySelector("#compat-psu");
+
+  if (estWattsEl && psuWattsEl && fillEl && barEl) {
+    estWattsEl.textContent = `~${requiredWatts} W`;
+    psuWattsEl.textContent = `${power.watts} W`;
+    const loadPercent = Math.min(100, Math.round((requiredWatts / Math.max(power.watts, 1)) * 100));
+    fillEl.style.width = `${loadPercent}%`;
+    const isPsuWarning = power.watts < requiredWatts;
+    barEl.classList.toggle("is-overloaded", isPsuWarning);
+
+    if (badgeEl) {
+      if (missingGpu || isPsuWarning) {
+        badgeEl.textContent = "⚠ Action Needed";
+        badgeEl.style.background = "#ffe8e8";
+        badgeEl.style.color = "#c93b3b";
+      } else {
+        badgeEl.textContent = "✓ Compatible";
+        badgeEl.style.background = "#e4f0e8";
+        badgeEl.style.color = "var(--green-dark)";
+      }
+    }
+
+    if (gpuCompatEl) {
+      gpuCompatEl.classList.toggle("is-issue", missingGpu);
+      gpuCompatEl.querySelector("span:last-child").textContent = missingGpu
+        ? "Display output required (select a GPU)"
+        : "Display output verified";
+      gpuCompatEl.querySelector(".compat-item-icon").textContent = missingGpu ? "✕" : "✓";
+    }
+
+    if (psuCompatEl) {
+      psuCompatEl.classList.toggle("is-issue", isPsuWarning);
+      psuCompatEl.querySelector("span:last-child").textContent = isPsuWarning
+        ? `PSU under-rated (${power.watts}W < ${requiredWatts}W required)`
+        : `PSU safe margin (+${power.watts - requiredWatts}W headroom)`;
+      psuCompatEl.querySelector(".compat-item-icon").textContent = isPsuWarning ? "✕" : "✓";
+    }
+  }
 }
 
 function renderBuilder() {
@@ -595,4 +643,52 @@ if (livePrices.size > 0) {
   livePriceStatus.textContent = `${livePrices.size} saved live offers restored for this tab. Refresh to check current prices.`;
 }
 renderBuilder();
+
+// Quotation & Cart Action Handlers
+document.querySelector("#copy-build-specs")?.addEventListener("click", () => {
+  const items = partOrder.map((category) => {
+    const product = getProduct(category);
+    const price = getCurrentPrice(product);
+    const offer = livePrices.get(product.id);
+    return {
+      category: pcParts[category].label,
+      name: `${product.brand} ${product.model}`,
+      price,
+      source: offer ? `Live · ${offer.source}` : "Catalog Estimate"
+    };
+  });
+  copyQuotationToClipboard({
+    title: "Custom PC Build",
+    budget: getBudget(),
+    wattage: getRequiredWattage(),
+    recommendedPsu: `${getProduct("power")?.watts || 550}W`,
+    total: getBuildTotal(),
+    items
+  });
+});
+
+document.querySelector("#print-build-quotation")?.addEventListener("click", () => {
+  printQuotationView();
+});
+
+document.querySelector("#add-build-to-cart")?.addEventListener("click", () => {
+  let count = 0;
+  partOrder.forEach((category) => {
+    const product = getProduct(category);
+    if (product && product.price > 0) {
+      const price = getCurrentPrice(product);
+      const offer = livePrices.get(product.id) || null;
+      try {
+        addItem(product, price, offer);
+        count += 1;
+      } catch (e) {
+        // Continue adding others
+      }
+    }
+  });
+  showToast(`Added ${count} custom build components to Demo Cart!`, "success", {
+    label: "View Cart ↗",
+    href: "shop-parts.html#demo-cart"
+  });
+});
 

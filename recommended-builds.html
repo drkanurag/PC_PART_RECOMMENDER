@@ -19,7 +19,15 @@
       <span class="brand-mark" aria-hidden="true">R</span>
       <span>rigwise<span class="brand-period">.</span></span>
     </a>
-    <a class="back-link" href="build-options.html">← Build options</a>
+    <nav class="site-nav" aria-label="Main Navigation">
+      <a class="site-nav-link" href="custom-build.html">Custom Builder</a>
+      <a class="site-nav-link is-active" href="recommended-builds.html" aria-current="page">Budget Builds</a>
+      <a class="site-nav-link" href="shop-parts.html">Shop Parts</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="nav-cart-btn" href="shop-parts.html#demo-cart">Cart <span class="nav-cart-count" id="nav-cart-count">0</span></a>
+      <a class="back-link" href="build-options.html">← Build options</a>
+    </div>
   </header>
   <main class="recommendations-main">
     <section class="recommendations-section" aria-labelledby="recommendations-title">
@@ -51,7 +59,11 @@
             <button class="live-price-refresh" id="refresh-tier-prices" type="button">Refresh this build's prices</button>
             <span id="tier-price-status" class="live-price-status" role="status" aria-live="polite">Catalog estimates shown until live prices are refreshed.</span>
           </div>
-          <a class="primary-button tier-custom-link" href="custom-build.html">Customize this build <span aria-hidden="true">→</span></a>
+          <div class="summary-actions-grid" style="grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); width: 100%; max-width: 480px;">
+            <a class="primary-button tier-custom-link" id="tier-custom-link" href="custom-build.html">Customize this build <span aria-hidden="true">→</span></a>
+            <button class="summary-action-btn" id="copy-tier-specs" type="button">📋 Copy specs</button>
+            <button class="summary-action-btn" id="print-tier-quotation" type="button">🖨️ Print quotation</button>
+          </div>
           <p>Offers are indicative and may change. Verify the exact part, stock, delivery and compatibility with the retailer.</p>
         </div>
       </section>
@@ -63,5 +75,6 @@
     <p>Refresh retailer offers before buying; prices and stock can change.</p>
     <a class="footer-build-link" href="custom-build.html">Build your own <span aria-hidden="true">→</span></a>
   </footer>
+  <script type="module" src="js/ui-enhancements.js"></script>
 </body>
 </html>

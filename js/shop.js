@@ -1,6 +1,7 @@
 import { listProducts, categories } from "./services/catalog-service.js";
 import { addItem, clearCart, getCart, updateQuantity } from "./services/cart-service.js";
 import { findOffers } from "./services/pricing-service.js";
+import { showToast, copyQuotationToClipboard, printQuotationView } from "./ui-enhancements.js";
 
 const currency = new Intl.NumberFormat("en-IN", {
   style: "currency",
@@ -25,7 +26,53 @@ function getCategoryLabel(id) {
   return categories.find((category) => category.id === id)?.label || id;
 }
 
+const CATEGORY_ICONS = {
+  all: "🔥",
+  Processor: "⚡",
+  "Graphic Cards": "🎮",
+  "Internal SSD": "💾",
+  Cabinets: "🖥️",
+  "CPU Cooler": "🧊",
+  Motherboard: "💻",
+  "Power Supply": "🔌",
+  "Case Fans": "💨",
+  Memory: "🧠"
+};
+
+function renderQuickPills() {
+  const container = document.querySelector("#shop-quick-pills");
+  if (!container) return;
+  const popular = [
+    { id: "all", label: "All Parts" },
+    { id: "Processor", label: "Processors" },
+    { id: "Graphic Cards", label: "Graphics Cards" },
+    { id: "Internal SSD", label: "SSDs" },
+    { id: "Cabinets", label: "Cabinets" },
+    { id: "CPU Cooler", label: "Coolers" },
+    { id: "Motherboard", label: "Motherboards" },
+    { id: "Power Supply", label: "Power Supplies" }
+  ];
+  container.replaceChildren(...popular.map((cat) => {
+    const pill = document.createElement("button");
+    pill.type = "button";
+    pill.className = `shop-quick-pill${activeCategory === cat.id ? " is-active" : ""}`;
+    const icon = CATEGORY_ICONS[cat.id] || "📦";
+    pill.innerHTML = `<span>${icon}</span><span>${cat.label}</span>`;
+    pill.addEventListener("click", () => {
+      activeCategory = cat.id;
+      activeBrand = "all";
+      currentPage = 1;
+      renderQuickPills();
+      renderCategoryNav();
+      renderBrandOptions();
+      renderProducts();
+    });
+    return pill;
+  }));
+}
+
 function renderCategoryNav() {
+  renderQuickPills();
   const buttons = [{ id: "all", label: "All parts" }, ...categories];
   categoryNav.replaceChildren(...buttons.map((category) => {
     const button = document.createElement("button");
@@ -49,6 +96,7 @@ function renderCategoryNav() {
       activeCategory = category.id;
       activeBrand = "all";
       currentPage = 1;
+      renderQuickPills();
       renderCategoryNav();
       renderBrandOptions();
       renderProducts();
@@ -141,11 +189,16 @@ function makeProductCard(product) {
       const offer = livePriceByProduct.get(product.id) || null;
       addItem(product, currentPrice(product), offer);
       addButton.textContent = "Added ✓";
+      showToast(`Added ${product.brand} ${product.model} to Demo Cart!`, "success", {
+        label: "View Cart",
+        href: "#demo-cart"
+      });
       window.setTimeout(() => {
         addButton.textContent = "Add to cart";
       }, 1200);
     } catch (error) {
       document.querySelector("#shop-catalog-status").textContent = error.message;
+      showToast(error.message, "error");
     }
   });
   actions.append(addButton);
@@ -231,6 +284,16 @@ function renderProducts() {
   document.querySelector("#shop-empty-state").hidden = filtered.length > 0;
   productGrid.replaceChildren(...pageProducts.map(makeProductCard));
   renderPagination(pageCount);
+
+  // Update Clear Filters button visibility
+  const search = document.querySelector("#shop-search").value.trim();
+  const minPrice = document.querySelector("#shop-min-price").value;
+  const maxPrice = document.querySelector("#shop-max-price").value;
+  const hasActiveFilters = activeCategory !== "all" || activeBrand !== "all" || search !== "" || minPrice !== "" || maxPrice !== "";
+  const clearBtn = document.querySelector("#shop-clear-filters");
+  if (clearBtn) {
+    clearBtn.hidden = !hasActiveFilters;
+  }
 }
 
 function renderPagination(pageCount) {
@@ -368,4 +431,49 @@ window.addEventListener("storage", (event) => {
     renderCart();
   }
 });
+document.querySelector("#shop-clear-filters")?.addEventListener("click", () => {
+  activeCategory = "all";
+  activeBrand = "all";
+  document.querySelector("#shop-search").value = "";
+  document.querySelector("#shop-min-price").value = "";
+  document.querySelector("#shop-max-price").value = "";
+  document.querySelector("#shop-sort").value = "featured";
+  currentPage = 1;
+  renderQuickPills();
+  renderCategoryNav();
+  renderBrandOptions();
+  renderProducts();
+  showToast("All catalog filters cleared.", "info");
+});
+
+document.querySelector("#copy-cart-specs")?.addEventListener("click", () => {
+  const cart = getCart();
+  if (!cart.length) {
+    showToast("Your cart is empty. Add parts to generate a quotation.", "warning");
+    return;
+  }
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const items = cart.map((item) => ({
+    category: getCategoryLabel(item.category),
+    name: item.name,
+    price: item.price,
+    quantity: item.quantity,
+    source: item.offer ? `Live · ${item.offer.source}` : "Catalog Estimate"
+  }));
+  copyQuotationToClipboard({
+    title: "Demo Cart Quotation",
+    total,
+    items
+  });
+});
+
+document.querySelector("#print-cart-quotation")?.addEventListener("click", () => {
+  const cart = getCart();
+  if (!cart.length) {
+    showToast("Your cart is empty.", "warning");
+    return;
+  }
+  printQuotationView();
+});
+
 initializeShop();
