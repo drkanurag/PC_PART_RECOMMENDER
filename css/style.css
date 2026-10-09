@@ -43,7 +43,7 @@ select {
 .site-header,
 main,
 .site-footer {
-  width: min(1120px, calc(100% - 64px));
+  width: min(1920px, calc(100% - 64px));
   margin-inline: auto;
 }
 
@@ -1722,7 +1722,7 @@ p {
 .options-main,
 .workspace-main,
 .recommendations-main {
-  width: min(1060px, calc(100% - 64px));
+  width: min(1920px, calc(100% - 64px));
   margin-inline: auto;
 }
 
@@ -2613,7 +2613,7 @@ p {
 }
 
 .workspace-header {
-  width: min(1120px, calc(100% - 64px));
+  width: min(1920px, calc(100% - 64px));
 }
 
 .workspace-main {
@@ -2699,7 +2699,7 @@ p {
 }
 
 .workspace-footer {
-  width: min(1120px, calc(100% - 64px));
+  width: min(1920px, calc(100% - 64px));
 }
 
 .recommendations-main {
@@ -3227,7 +3227,7 @@ body {
 .site-footer,
 .workspace-header,
 .workspace-footer {
-  width: min(1720px, calc(100% - 48px));
+  width: min(1920px, calc(100% - 48px));
 }
 
 .landing-main,
@@ -3235,7 +3235,7 @@ body {
 .workspace-main,
 .recommendations-main,
 .shop-main {
-  width: min(1720px, calc(100% - 48px));
+  width: min(1920px, calc(100% - 48px));
 }
 
 .site-header {
@@ -3391,13 +3391,13 @@ body {
 }
 
 .shop-layout {
-  grid-template-columns: minmax(0, 1fr) 340px;
-  gap: 26px;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 30px;
 }
 
 .shop-browse-layout {
-  grid-template-columns: 250px minmax(0, 1fr);
-  gap: 26px;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 30px;
 }
 
 .shop-filter-sidebar {
@@ -3428,8 +3428,8 @@ body {
 }
 
 .shop-product-grid {
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 215px), 1fr));
-  gap: 15px;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr));
+  gap: 18px;
 }
 
 .shop-product-card {
@@ -3549,5 +3549,170 @@ main {
   to {
     opacity: 1;
     translate: 0 0;
+  }
+}
+
+/* ─── Info strip on shop page ─── */
+
+.shop-info-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+  animation: card-enter 500ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  animation-delay: 150ms;
+}
+
+.info-strip-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 20px;
+  border: 1px solid #e5eae4;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #fff 0%, #f8faf8 100%);
+  box-shadow: 0 4px 14px rgba(29, 41, 36, 0.04);
+  transition: transform 250ms ease, border-color 250ms ease, box-shadow 250ms ease;
+}
+
+.info-strip-item:hover {
+  transform: translateY(-3px);
+  border-color: #bfd3c3;
+  box-shadow: 0 10px 24px rgba(29, 41, 36, 0.08);
+}
+
+.info-strip-icon {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #e4f0e8, #d5e8db);
+  font-size: 20px;
+}
+
+.info-strip-item strong {
+  display: block;
+  font-size: 13px;
+  letter-spacing: -0.2px;
+}
+
+.info-strip-item p {
+  margin: 3px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+/* ─── Landing page stats section ─── */
+
+.landing-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  padding: 36px 0 44px;
+  border-top: 1px solid #e7e9e5;
+  animation: card-enter 500ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  animation-delay: 400ms;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 28px 16px;
+  border: 1px solid #e5eae4;
+  border-radius: 14px;
+  background: #fff;
+  text-align: center;
+  transition: transform 250ms ease, border-color 250ms ease, box-shadow 250ms ease;
+}
+
+.stat-item:hover {
+  transform: translateY(-4px);
+  border-color: #a8c7b1;
+  box-shadow: 0 12px 28px rgba(29, 41, 36, 0.08);
+}
+
+.stat-number {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -1.5px;
+  background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.stat-item > span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* ─── Build options features strip ─── */
+
+.options-features-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-top: 28px;
+  animation: card-enter 450ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  animation-delay: 400ms;
+}
+
+.options-feature {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 18px;
+  border: 1px solid #e7ece7;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 3px 10px rgba(29, 41, 36, 0.04);
+  transition: transform 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
+}
+
+.options-feature:hover {
+  transform: translateY(-2px);
+  border-color: #a8c7b1;
+  box-shadow: 0 8px 20px rgba(29, 41, 36, 0.07);
+}
+
+.options-feature span {
+  font-size: 20px;
+}
+
+.options-feature strong {
+  font-size: 12px;
+  letter-spacing: -0.1px;
+}
+
+/* ─── Responsive for new sections ─── */
+
+@media (max-width: 800px) {
+  .shop-info-strip,
+  .landing-stats,
+  .options-features-strip {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .shop-info-strip,
+  .landing-stats,
+  .options-features-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-item {
+    padding: 20px 14px;
+  }
+
+  .stat-number {
+    font-size: 26px;
   }
 }

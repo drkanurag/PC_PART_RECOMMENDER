@@ -1,20 +1,20 @@
-@media (max-width: 1280px) {
+@media (max-width: 1440px) {
   .shop-layout {
-    grid-template-columns: minmax(0, 1fr) 280px;
-    gap: 16px;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    gap: 20px;
   }
 
   .shop-browse-layout {
-    grid-template-columns: 190px minmax(0, 1fr);
-    gap: 16px;
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 20px;
   }
 
   .shop-filter-sidebar {
-    padding-right: 14px;
+    padding-right: 16px;
   }
 
   .shop-product-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 210px), 1fr));
   }
 }
 
@@ -29,7 +29,7 @@
   .shop-main,
   .workspace-header,
   .workspace-footer {
-    width: min(calc(100% - 40px), 960px);
+    width: min(calc(100% - 40px), 1920px);
   }
 
   .shop-layout {
