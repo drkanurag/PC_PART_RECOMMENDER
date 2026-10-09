@@ -184,7 +184,9 @@ export default {
     const url = new URL(request.url);
     if (url.pathname === "/health" && request.method === "GET") {
       return jsonResponse({
+        service: "live-pricing",
         status: "ok",
+        version: "1.0.0",
         configured: Boolean(env.SERPAPI_API_KEY && env.PRICE_DATA)
       }, 200, origin === allowedOrigin ? allowedOrigin : null);
     }
@@ -204,7 +206,8 @@ export default {
       });
     }
 
-    if (url.pathname !== "/api/prices") {
+    const isPricesRoute = url.pathname === "/api/prices" || url.pathname === "/api/v1/prices";
+    if (!isPricesRoute) {
       return jsonResponse({ error: "Route not found." }, 404, allowedOrigin);
     }
     return handlePrices(request, env, allowedOrigin);

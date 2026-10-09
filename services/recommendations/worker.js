@@ -16,27 +16,53 @@ function json(body, status = 200, origin = "") {
 export default {
   async fetch(request, env) {
     const origin = request.headers.get("Origin") || "";
-    if (origin && origin !== env.ALLOWED_ORIGIN) {
+    const allowedOrigin = env.ALLOWED_ORIGIN || "*";
+    if (origin && allowedOrigin !== "*" && origin !== allowedOrigin) {
       return json({ error: "Origin is not allowed." }, 403);
     }
+    const effectiveOrigin = allowedOrigin === "*" ? origin || "*" : allowedOrigin;
+
+    if (request.method === "OPTIONS") {
+      return new Response(null, {
+        status: 204,
+        headers: {
+          "Access-Control-Allow-Origin": effectiveOrigin,
+          "Access-Control-Allow-Methods": "GET, OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type, Accept",
+          "Access-Control-Max-Age": "86400"
+        }
+      });
+    }
+
     const url = new URL(request.url);
     if (url.pathname === "/health" && request.method === "GET") {
-      return json({ service: "recommendations", status: "ok" }, 200, origin);
+      return json({ service: "recommendations", status: "ok", version: "1.0.0" }, 200, effectiveOrigin);
     }
-    if (request.method === "GET" && url.pathname === "/api/builds") {
-      return json({ builds: recommendedBuilds }, 200, origin);
+
+    const isBuildsRoute = url.pathname === "/api/builds" || url.pathname === "/api/v1/builds";
+    if (isBuildsRoute) {
+      if (request.method !== "GET") {
+        return json({ error: "Method not allowed. Use GET." }, 405, effectiveOrigin);
+      }
+      return json({ builds: recommendedBuilds }, 200, effectiveOrigin);
     }
-    if (request.method !== "GET" || url.pathname !== "/api/recommendations") {
-      return json({ error: "Route not found." }, 404, origin);
+
+    const isRecommendationsRoute = url.pathname === "/api/recommendations" || url.pathname === "/api/v1/recommendations";
+    if (isRecommendationsRoute) {
+      if (request.method !== "GET") {
+        return json({ error: "Method not allowed. Use GET." }, 405, effectiveOrigin);
+      }
+      const budget = Number(url.searchParams.get("budget"));
+      if (!Number.isFinite(budget) || budget < 20000 || budget > 1000000) {
+        return json({ error: "budget must be between 20000 and 1000000." }, 400, effectiveOrigin);
+      }
+      const recommendations = recommendedBuilds
+        .filter((build) => build.budget <= budget)
+        .sort((left, right) => right.budget - left.budget)
+        .slice(0, 3);
+      return json({ recommendations }, 200, effectiveOrigin);
     }
-    const budget = Number(url.searchParams.get("budget"));
-    if (!Number.isFinite(budget) || budget < 20000 || budget > 1000000) {
-      return json({ error: "budget must be between 20000 and 1000000." }, 400, origin);
-    }
-    const recommendations = recommendedBuilds
-      .filter((build) => build.budget <= budget)
-      .sort((left, right) => right.budget - left.budget)
-      .slice(0, 3);
-    return json({ recommendations }, 200, origin);
+
+    return json({ error: "Route not found." }, 404, effectiveOrigin);
   }
 };

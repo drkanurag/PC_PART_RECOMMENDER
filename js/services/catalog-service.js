@@ -13,18 +13,23 @@ export async function listProducts(filters = {}) {
       params.set(key, String(value));
     }
   });
-  const response = await fetch(`${endpoint}/api/products?${params.toString()}`, {
-    headers: { Accept: "application/json" },
-    signal: AbortSignal.timeout(10000)
-  });
-  if (!response.ok) {
-    throw new Error(`Catalog service request failed (${response.status}).`);
+  try {
+    const response = await fetch(`${endpoint}/api/products?${params.toString()}`, {
+      headers: { Accept: "application/json" },
+      signal: AbortSignal.timeout(8000)
+    });
+    if (!response.ok) {
+      throw new Error(`Catalog service request failed (${response.status}).`);
+    }
+    const result = await response.json();
+    if (!result || !Array.isArray(result.products)) {
+      throw new Error("Catalog service returned an invalid product list.");
+    }
+    return { products: result.products, source: "catalog-service" };
+  } catch (error) {
+    console.warn("Catalog microservice request failed; gracefully falling back to bundled data.", error);
+    return { products: getLocalProducts(filters), source: "local-catalog-fallback", warning: error.message };
   }
-  const result = await response.json();
-  if (!result || !Array.isArray(result.products)) {
-    throw new Error("Catalog service returned an invalid product list.");
-  }
-  return { products: result.products, source: "catalog-service" };
 }
 
 export { categories };

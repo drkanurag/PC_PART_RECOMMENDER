@@ -16,43 +16,54 @@ export async function listBuilds() {
   if (!endpoint) {
     return { source: "local-recommendations", builds: recommendedBuilds };
   }
-  const response = await fetch(`${endpoint}/api/builds`, {
-    headers: { Accept: "application/json" },
-    signal: AbortSignal.timeout(10000)
-  });
-  if (!response.ok) {
-    throw new Error(`Recommendation service request failed (${response.status}).`);
+  try {
+    const response = await fetch(`${endpoint}/api/builds`, {
+      headers: { Accept: "application/json" },
+      signal: AbortSignal.timeout(8000)
+    });
+    if (!response.ok) {
+      throw new Error(`Recommendation service request failed (${response.status}).`);
+    }
+    const result = await response.json();
+    if (!result || !isValidBuildList(result.builds)) {
+      throw new Error("Recommendation service returned an invalid build list.");
+    }
+    return { source: "recommendation-service", builds: result.builds };
+  } catch (error) {
+    console.warn("Recommendation microservice request failed; gracefully falling back to bundled builds.", error);
+    return { source: "local-recommendations-fallback", builds: recommendedBuilds, warning: error.message };
   }
-  const result = await response.json();
-  if (!result || !isValidBuildList(result.builds)) {
-    throw new Error("Recommendation service returned an invalid build list.");
-  }
-  return { source: "recommendation-service", builds: result.builds };
 }
 
 export async function getRecommendations(budget) {
   if (!Number.isFinite(budget) || budget < 20000 || budget > 1000000) {
     throw new Error("Choose a budget between ₹20,000 and ₹10,00,000.");
   }
-  if (!endpoint) {
-    return {
-      source: "local-recommendations",
-      recommendations: recommendedBuilds
-        .filter((build) => build.budget <= budget)
-        .sort((left, right) => right.budget - left.budget)
-        .slice(0, 3)
-    };
-  }
-  const response = await fetch(`${endpoint}/api/recommendations?budget=${encodeURIComponent(budget)}`, {
-    headers: { Accept: "application/json" },
-    signal: AbortSignal.timeout(10000)
+  const fallback = () => ({
+    source: "local-recommendations",
+    recommendations: recommendedBuilds
+      .filter((build) => build.budget <= budget)
+      .sort((left, right) => right.budget - left.budget)
+      .slice(0, 3)
   });
-  if (!response.ok) {
-    throw new Error(`Recommendation service request failed (${response.status}).`);
+  if (!endpoint) {
+    return fallback();
   }
-  const result = await response.json();
-  if (!result || !isValidBuildList(result.recommendations)) {
-    throw new Error("Recommendation service returned an invalid response.");
+  try {
+    const response = await fetch(`${endpoint}/api/recommendations?budget=${encodeURIComponent(budget)}`, {
+      headers: { Accept: "application/json" },
+      signal: AbortSignal.timeout(8000)
+    });
+    if (!response.ok) {
+      throw new Error(`Recommendation service request failed (${response.status}).`);
+    }
+    const result = await response.json();
+    if (!result || !isValidBuildList(result.recommendations)) {
+      throw new Error("Recommendation service returned an invalid response.");
+    }
+    return { source: "recommendation-service", recommendations: result.recommendations };
+  } catch (error) {
+    console.warn("Recommendation query microservice failed; falling back to local recommendation generator.", error);
+    return { ...fallback(), source: "local-recommendations-fallback", warning: error.message };
   }
-  return { source: "recommendation-service", recommendations: result.recommendations };
 }
