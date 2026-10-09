@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f5f2">
+  <meta name="description" content="Browse PC parts by category, brand and price, compare retailer listings, and build a demo cart.">
+  <title>Shop PC parts — Rigwise</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <script src="js/service-config.js"></script>
+  <script src="js/price-config.js"></script>
+  <script src="js/live-prices.js"></script>
+  <script type="module" src="js/shop.js"></script>
+</head>
+<body class="workspace-page shop-page">
+  <header class="site-header workspace-header">
+    <a class="brand" href="index.html">
+      <span class="brand-mark" aria-hidden="true">R</span>
+      <span>rigwise<span class="brand-period">.</span></span>
+    </a>
+    <nav class="shop-header-links" aria-label="Main navigation">
+      <a class="back-link" href="build-options.html">← Build options</a>
+      <a class="shop-cart-shortcut" href="#demo-cart">Demo cart <span id="shop-cart-count">0</span></a>
+    </nav>
+  </header>
+  <main class="shop-main">
+    <section class="shop-heading" aria-labelledby="shop-title">
+      <div>
+        <p class="eyebrow">INDIVIDUAL COMPONENTS</p>
+        <h1 id="shop-title">Choose just the parts you need.</h1>
+        <p>Browse components by category, search by brand or model, compare current offers where available, and collect your picks in a browser-saved demo cart.</p>
+      </div>
+      <div class="shop-disclaimer">Catalog prices are estimates until refreshed. The demo cart does not place orders or take payments.</div>
+    </section>
+    <div class="shop-layout">
+      <section class="shop-products-panel" aria-label="PC parts catalog">
+        <div class="shop-toolbar">
+          <label class="shop-search-field">
+            <span>Search parts</span>
+            <input id="shop-search" type="search" placeholder="Try RTX, Ryzen, cabinet…" autocomplete="off">
+          </label>
+          <label class="shop-sort-field">
+            <span>Sort</span>
+            <select id="shop-sort">
+              <option value="featured">Featured</option>
+              <option value="price-asc">Price: low to high</option>
+              <option value="price-desc">Price: high to low</option>
+              <option value="brand">Brand A–Z</option>
+            </select>
+          </label>
+        </div>
+        <div class="shop-browse-layout">
+          <aside class="shop-filter-sidebar" aria-label="Catalog filters">
+            <section class="shop-filter-section">
+              <h2>Product categories</h2>
+              <nav class="shop-category-nav" id="shop-category-nav" aria-label="PC part categories"></nav>
+            </section>
+            <section class="shop-filter-section">
+              <h2>Filter by price</h2>
+              <label class="shop-price-filter">
+                <span>Minimum price</span>
+                <span class="shop-max-price"><span aria-hidden="true">₹</span><input id="shop-min-price" type="number" min="0" step="500" placeholder="0" inputmode="numeric"></span>
+              </label>
+              <label class="shop-price-filter">
+                <span>Maximum price</span>
+                <span class="shop-max-price"><span aria-hidden="true">₹</span><input id="shop-max-price" type="number" min="0" step="500" placeholder="Any price" inputmode="numeric"></span>
+              </label>
+            </section>
+            <section class="shop-filter-section">
+              <label class="shop-brand-field" for="shop-brand">
+                <span>Brands</span>
+                <select id="shop-brand">
+                  <option value="all">Any Brand</option>
+                </select>
+              </label>
+            </section>
+          </aside>
+          <div class="shop-results">
+            <div class="shop-results-header">
+              <h2 id="shop-category-title">All parts</h2>
+              <span id="shop-result-count" aria-live="polite"></span>
+            </div>
+            <p class="shop-catalog-status" id="shop-catalog-status" role="status" aria-live="polite"></p>
+            <div class="shop-product-grid" id="shop-product-grid"></div>
+            <nav class="shop-pagination" id="shop-pagination" aria-label="Product pages"></nav>
+            <p class="shop-empty-state" id="shop-empty-state" hidden>No parts match those filters. Try another search or category.</p>
+          </div>
+        </div>
+      </section>
+      <aside class="demo-cart" id="demo-cart" aria-labelledby="demo-cart-title">
+        <div class="demo-cart-heading">
+          <div><p class="eyebrow">YOUR SELECTION</p><h2 id="demo-cart-title">Demo cart</h2></div>
+          <span class="demo-cart-count" id="demo-cart-count">0 items</span>
+        </div>
+        <p class="demo-cart-note">Saved only in this browser. No checkout or payment is available.</p>
+        <div class="demo-cart-items" id="demo-cart-items" aria-live="polite"></div>
+        <div class="demo-cart-empty" id="demo-cart-empty">Your cart is empty. Add an individual part to start a list.</div>
+        <div class="demo-cart-total"><span>PARTS TOTAL · EST. + LIVE</span><strong id="demo-cart-total">₹0</strong></div>
+        <p class="demo-cart-price-note">Items use the price shown when added. Refresh product prices before making a buying decision.</p>
+        <button class="demo-cart-clear" id="demo-cart-clear" type="button" disabled>Clear demo cart</button>
+      </aside>
+    </div>
+  </main>
+  <footer class="site-footer workspace-footer">
+    <a class="brand footer-brand" href="index.html"><span class="brand-mark" aria-hidden="true">R</span><span>rigwise<span class="brand-period">.</span></span></a>
+    <p>Demo shopping list only. Verify retailer price, stock and part compatibility.</p>
+    <a class="footer-build-link" href="custom-build.html">Configure a complete PC <span aria-hidden="true">→</span></a>
+  </footer>
+</body>
+</html>

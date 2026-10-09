@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f5f2">
+  <meta name="description" content="Browse example PC builds at different budgets and see their estimated component lists.">
+  <title>Budget PC recommendations — Rigwise</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <script src="js/service-config.js"></script>
+  <script src="js/price-config.js" defer></script>
+  <script src="js/live-prices.js" defer></script>
+  <script type="module" src="js/recommendations.js"></script>
+</head>
+<body class="workspace-page">
+  <header class="site-header workspace-header">
+    <a class="brand" href="index.html">
+      <span class="brand-mark" aria-hidden="true">R</span>
+      <span>rigwise<span class="brand-period">.</span></span>
+    </a>
+    <a class="back-link" href="build-options.html">← Build options</a>
+  </header>
+  <main class="recommendations-main">
+    <section class="recommendations-section" aria-labelledby="recommendations-title">
+      <div class="section-heading recommendations-heading">
+        <div>
+          <p class="eyebrow">BUILDS BY BUDGET</p>
+          <h1 id="recommendations-title">Find your price point.</h1>
+        </div>
+        <p class="section-intro" id="recommendations-service-status" role="status" aria-live="polite">Loading build recommendations…</p>
+      </div>
+      <div class="tier-grid" id="tier-grid"></div>
+      <section class="tier-detail" id="tier-detail" aria-live="polite" hidden>
+        <div class="tier-detail-header">
+          <div>
+            <a class="back-link detail-back" href="recommended-builds.html">← All price points</a>
+            <p class="eyebrow" id="tier-eyebrow"></p>
+            <h2 id="tier-title"></h2>
+            <p id="tier-description"></p>
+          </div>
+          <div class="tier-total">
+            <span>ESTIMATED PARTS TOTAL</span>
+            <strong id="tier-total"></strong>
+            <small id="tier-budget"></small>
+          </div>
+        </div>
+        <div class="tier-parts" id="tier-parts"></div>
+        <div class="tier-actions">
+          <div class="tier-price-controls">
+            <button class="live-price-refresh" id="refresh-tier-prices" type="button">Refresh this build's prices</button>
+            <span id="tier-price-status" class="live-price-status" role="status" aria-live="polite">Catalog estimates shown until live prices are refreshed.</span>
+          </div>
+          <a class="primary-button tier-custom-link" href="custom-build.html">Customize this build <span aria-hidden="true">→</span></a>
+          <p>Offers are indicative and may change. Verify the exact part, stock, delivery and compatibility with the retailer.</p>
+        </div>
+      </section>
+      <p class="recommendations-disclaimer">Builds use catalog estimates until you refresh live offers. Google Shopping results are indicative—not guaranteed prices, stock, compatibility or performance. Verify the exact part, seller, delivery and return terms before buying.</p>
+    </section>
+  </main>
+  <footer class="site-footer workspace-footer">
+    <a class="brand footer-brand" href="index.html"><span class="brand-mark" aria-hidden="true">R</span><span>rigwise<span class="brand-period">.</span></span></a>
+    <p>Refresh retailer offers before buying; prices and stock can change.</p>
+    <a class="footer-build-link" href="custom-build.html">Build your own <span aria-hidden="true">→</span></a>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f5f2">
+  <meta name="description" content="Configure a custom PC component by component, compare brands and track your build estimate.">
+  <title>Custom PC builder — Rigwise</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <script src="js/service-config.js"></script>
+  <script src="js/price-config.js" defer></script>
+  <script src="js/live-prices.js" defer></script>
+  <script type="module" src="js/builder.js"></script>
+</head>
+<body class="workspace-page">
+  <header class="site-header workspace-header">
+    <a class="brand" href="index.html">
+      <span class="brand-mark" aria-hidden="true">R</span>
+      <span>rigwise<span class="brand-period">.</span></span>
+    </a>
+    <a class="back-link" href="build-options.html">← Build options</a>
+  </header>
+  <main class="workspace-main">
+    <section class="custom-builder-section custom-workspace" id="custom-builder" aria-labelledby="custom-builder-title">
+      <div class="section-heading builder-heading">
+        <div>
+          <p class="eyebrow">CUSTOM PC CONFIGURATOR</p>
+          <h1 id="custom-builder-title">Every part. Your call.</h1>
+        </div>
+        <p class="section-intro">Choose components one step at a time. Your parts list and estimated total stay together as you build.</p>
+      </div>
+      <div class="builder-budget-strip">
+        <div class="builder-budget-copy">
+          <label for="budget">YOUR PC BUDGET</label>
+          <span>Adjust at any time; estimates update with your build.</span>
+        </div>
+        <div class="builder-budget-controls">
+          <label class="budget-input-wrap workspace-budget-wrap">
+            <span class="select-prefix" aria-hidden="true">₹</span>
+            <input id="budget" name="budget" type="number" min="20000" max="1000000" step="1" value="100000" inputmode="numeric" aria-label="Your total PC budget">
+            <span class="budget-currency" aria-hidden="true">INR</span>
+          </label>
+          <input class="budget-slider" id="budget-slider" type="range" min="20000" max="1000000" step="1000" value="100000" aria-label="Adjust your PC budget">
+        </div>
+      </div>
+      <div class="builder-layout">
+        <div class="builder-main">
+          <div class="builder-toolbar">
+            <div><span class="builder-live-dot" aria-hidden="true"></span><span>YOUR BUILD</span></div>
+            <div class="live-price-controls">
+              <span id="live-price-status" class="live-price-status" role="status" aria-live="polite">Catalog estimates shown until live prices are refreshed.</span>
+              <button class="live-price-refresh" id="refresh-build-prices" type="button">Refresh selected prices</button>
+            </div>
+          </div>
+          <div class="builder-step-count" id="builder-step-count" aria-live="polite"></div>
+          <nav class="builder-step-nav" id="builder-step-nav" aria-label="PC component steps"></nav>
+          <div class="builder-parts" id="builder-parts" aria-describedby="builder-price-note"></div>
+          <div class="builder-step-controls">
+            <a class="step-button step-previous" id="previous-step">← Previous</a>
+            <a class="step-button step-next" id="next-step">Next component →</a>
+          </div>
+          <p class="builder-price-note" id="builder-price-note">Refresh to compare current Google Shopping offers from Indian retailers. Live listings can be out of date or refer to a different variant; verify the exact model, stock and delivery cost before buying.</p>
+        </div>
+        <aside class="build-summary" aria-labelledby="summary-title">
+          <div class="summary-topline">
+            <span class="summary-kicker">BUILD SUMMARY</span>
+            <span class="summary-indicator"><span></span> BUILD TOTAL</span>
+          </div>
+          <h2 id="summary-title">Your parts list</h2>
+          <p class="summary-intro">Selected parts with refreshed offers where available; otherwise catalog estimates.</p>
+          <div class="summary-budget-row"><span>YOUR BUDGET</span><strong id="builder-budget">₹1,00,000</strong></div>
+          <div class="budget-progress" id="budget-progress" role="progressbar" aria-label="Budget used by displayed prices" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="budget-progress-fill"></span></div>
+          <div class="summary-total-row"><span>PARTS TOTAL · LIVE + EST.</span><strong id="build-total">₹0</strong></div>
+          <p class="budget-remaining" id="budget-remaining"></p>
+          <p class="builder-alert" id="builder-alert" role="status" hidden></p>
+          <details class="summary-details">
+            <summary>Review selected parts <span aria-hidden="true">⌄</span></summary>
+            <div class="summary-items" id="summary-items"></div>
+            <button class="summary-reset" id="reset-build" type="button">Start over <span aria-hidden="true">↻</span></button>
+            <p class="summary-disclaimer">Catalog estimates and live offers are indicative. Verify exact models and compatibility with the manufacturer before purchasing.</p>
+          </details>
+        </aside>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer workspace-footer">
+    <a class="brand footer-brand" href="index.html"><span class="brand-mark" aria-hidden="true">R</span><span>rigwise<span class="brand-period">.</span></span></a>
+    <p>Build at your own pace. Your selections are saved in this browser.</p>
+    <a class="footer-build-link" href="recommended-builds.html">See budget builds <span aria-hidden="true">→</span></a>
+  </footer>
+</body>
+</html>

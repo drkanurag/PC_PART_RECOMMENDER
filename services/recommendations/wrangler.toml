@@ -1,0 +1,6 @@
+name = "rigwise-recommendations"
+main = "worker.js"
+compatibility_date = "2026-10-09"
+
+[vars]
+ALLOWED_ORIGIN = "https://drkanurag.github.io"

@@ -1,0 +1,1 @@
+window.RIGWISE_PRICE_API_URL = "";

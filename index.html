@@ -1,121 +1,62 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PcPartRecommender</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
-<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-<link rel="stylesheet" type="text/css" href="css/style.css">
-<link rel="stylesheet" type="text/css" href="css/responsive.css">
-
-<!-- ChatBot -->
-<link rel="stylesheet" type="text/css" href="css/jquery.convform.css">
-<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
-<script type="text/javascript" src="js/jquery.convform.js"></script>
-<script type="text/javascript" src="js/custom.js"></script>
-
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f5f2">
+  <meta name="description" content="Build a custom PC, find a budget recommendation, or shop individual PC parts.">
+  <title>Rigwise — your next PC, your way</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
-  <video autoplay muted loop id="myVideo">
-    <source src="assets/livewally.mp4" type="video/mp4">
-  </video>
-<!-- ChatBot -->
-<div class="chat_icon">
-	<i class="fa fa-comments-o" aria-hidden="true"></i>
-</div>
-
-<div class="chat_box">
-	<div class="my-conv-form-wrapper">
-		<form action="" method="GET" class="hidden">
-
-      <select data-conv-question="Hello! Are you here to find out a setup for your PC?" name="category">
-        <option value="YES">YES</option>
-        <option value="NO">NO</option>
-      </select>
-
-      <div data-conv-fork="category">
-        <div data-conv-case="YES">
-          <input type="text" name="name" data-conv-question="Please, Enter your name">
-          <select data-conv-question="Hi {name}, What is your range options?" name="subcategory">
-            <option value="LOW">LOW(Ranges under 50K)</option>
-            <option value="MID">MID(Ranges from 50K to 70K)</option>
-            <option value="MODEST">MODEST(Ranges from 70K to 1 Lakh)</option>
-            <option value="HIGH">HIGH(Ranges from 1 lakh to 1.5 lakh)</option>
-            <option value="EXTREME">EXTREME(Ranges above 1.5 lakh)</option>
-          </select>
-        </div>
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Rigwise home">
+      <span class="brand-mark" aria-hidden="true">R</span>
+      <span>rigwise<span class="brand-period">.</span></span>
+    </a>
+    <a class="header-cta" href="build-options.html">Start building <span aria-hidden="true">↗</span></a>
+  </header>
+  <main class="landing-main">
+    <section class="hero landing-hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> YOUR BUILD STARTS HERE</p>
+        <h1 id="hero-title">A PC that fits<br><span>your kind of you.</span></h1>
+        <p class="hero-description">Build a complete PC your way, start from a budget recommendation, or shop only the parts you need. Your choices, your pace.</p>
+        <a class="primary-button landing-button" href="build-options.html">Choose how to build <span aria-hidden="true">→</span></a>
+        <p class="form-footnote landing-note">Choose a path and continue in this tab.</p>
       </div>
-      <div data-conv-fork="subcategory">
-        <div data-conv-case="LOW">
-          <input type="text" data-conv-question="Hi {name}, <br> It's a pleasure to meet you.<br> 
-          The MotherBoard you will be buying is ASRock B660M Pro RS.<br>
-          The CPU you will be buying is Intel Core i3-12100F.<br>
-          The GPU you will be buying is Radeon RX 6600.<br>
-          The RAM stick you will be buying is Silicon Power SP016GXLZU320BDAAD 16 GB.<br>
-          The Storage ssd you will be buying is Patriot P310 480 GB M.2-2280 PCIe.<br>
-          The Power unit you will be buying is SeaSonic S12III 500 W 80+ Bronze Certified.<br>" data-no-answer="true">
+      <div class="hero-art" aria-label="Illustration of a desktop computer">
+        <div class="orbit orbit-one"></div>
+        <div class="orbit orbit-two"></div>
+        <div class="art-glow"></div>
+        <div class="computer">
+          <div class="computer-screen">
+            <div class="screen-top"><span></span><span></span><span></span></div>
+            <div class="screen-content">
+              <div class="screen-bars"><i></i><i></i><i></i></div>
+              <div class="screen-graphic"><span></span><span></span><span></span><span></span><span></span></div>
+              <div class="screen-caption"></div>
+            </div>
+          </div>
+          <div class="screen-stand"></div>
+          <div class="screen-base"></div>
+          <div class="computer-tower"><span></span><span></span><span></span></div>
         </div>
-        <div data-conv-case="MID">
-          <input type="text" data-conv-question="Hi {name}, <br> It's a pleasure to meet you.<br> 
-          The MotherBoard you will be buying is ASRock B660M Pro RS.<br>
-          The CPU you will be buying is Intel Core i5-12400.<br>
-          The GPU you will be buying is Radeon RX 6600 XT.<br>
-          The RAM stick you will be buying is Silicon Power SP016GXLZU320BDAAD 16 GB.<br>
-          The Storage ssd you will be buying is Timetec 35TTFP6PCIE 1 TB M.2-2280 PCIe.<br>
-          The Power unit you will be buying is Antec NeoECO Gold ZEN 600 W 80+ Gold Certified.<br>" data-no-answer="true">
-        </div>
-        <div data-conv-case="MODEST">
-          <input type="text" data-conv-question="Hi {name}, <br> It's a pleasure to meet you.<br> 
-          The MotherBoard you will be buying is ASRock Z690 PG Riptide.<br>
-          The CPU you will be buying is Intel Core i7-12700K.<br>
-          The GPU you will be buying is GeForce RTX 3070 Ti.<br>
-          The RAM stick you will be buying is Silicon Power XPOWER Turbine 32 GB.<br>
-          The Storage ssd you will be buying is Timetec 35TTFP6PCIE 1 TB M.2-2280 PCIe.<br>
-          The Power unit you will be buying is Thermaltake Toughpower GF1 PE 850 W 80+ Gold Certified.<br>" data-no-answer="true">
-        </div>
-        <div data-conv-case="HIGH">
-          <input type="text" data-conv-question="Hi {name}, <br> It's a pleasure to meet you.<br> 
-          The MotherBoard you will be buying is MSI PRO B550-VC.<br>
-          The CPU you will be buying is AMD Ryzen 5 5600X.<br>
-          The GPU you will be buying is Radeon RX 6700 XT.<br>
-          The RAM stick you will be buying is Silicon Power SP016GXLZU320BDAAD 16 GB.<br>
-          The Storage ssd you will be buying is Timetec 35TTFP6PCIE 1 TB M.2-2280 PCIe.<br>
-          The Power unit you will be buying is EVGA SuperNOVA 650 G+ 650 W 80+ Gold Certified.<br>" data-no-answer="true">
-        </div>
-        <div data-conv-case="EXTREME">
-          <input type="text" data-conv-question="Hi {name}, <br> It's a pleasure to meet you.<br> 
-          The MotherBoard you will be buying is MSI PRO Z690-A ATX.<br>
-          The CPU you will be buying is Intel Core i9-12900K.<br>
-          The GPU you will be buying is GeForce RTX 3090.<br>
-          The RAM stick you will be buying is TEAMGROUP Elite Plus 32 GB.<br>
-          The Storage ssd you will be buying is Samsung 970 Evo Plus 2 TB.<br>
-          The Power unit you will be buying is Enermax Revolution D.F. 850 W 80+ Gold Certified.<br>" data-no-answer="true">
-        </div>
+        <span class="art-label art-label-top">THOUGHTFUL BUILDS</span>
+        <span class="art-label art-label-bottom">YOUR BUDGET. YOUR PRIORITIES.</span>
       </div>
-      <select data-conv-question="Please Confirm">
-        <option value="Yes">Confirm</option>
-      </select>
-  	</form>
-	</div>
-</div>
-<!-- ChatBot end -->
-
-<script type="text/javascript">
-	portfolioList = document.querySelectorAll('.portfolio-box');
-	portfolioList.forEach(function(portfolioPic) {
-		portfolioPic.addEventListener('click',function(){
-			bg = this.style.backgroundImage;
-			document.getElementById('port_pop_pic_bg').classList.add("active")
-			document.getElementById('port_pop_pic').style.backgroundImage = bg
-			document.getElementById('port_pop_pic').classList.add("active")
-		});	
-	})
-	document.getElementById('port_pop_pic_bg').addEventListener('click',function(){
-			document.getElementById('port_pop_pic_bg').classList.remove("active")
-			document.getElementById('port_pop_pic').classList.remove("active")
-	})
-</script>
-
+    </section>
+    <section class="landing-highlights" aria-label="How Rigwise helps">
+      <article><span>01</span><strong>Pick your path</strong><p>Build it yourself, get a budget starting point, or shop for individual parts.</p></article>
+      <article><span>02</span><strong>See the full picture</strong><p>Keep component choices and your estimated total easy to review.</p></article>
+      <article><span>03</span><strong>Check before you buy</strong><p>Compare current listings and double-check part compatibility.</p></article>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <a class="brand footer-brand" href="index.html"><span class="brand-mark" aria-hidden="true">R</span><span>rigwise<span class="brand-period">.</span></span></a>
+    <p>Thoughtful PC builds, built around you.</p>
+    <a class="footer-build-link" href="build-options.html">Choose a build <span aria-hidden="true">↗</span></a>
+  </footer>
 </body>
 </html>
