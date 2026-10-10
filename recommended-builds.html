@@ -1,105 +1,762 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html class="dark scroll-smooth" lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f4f5f2">
-  <meta name="description" content="Browse example PC builds at different budgets and see their estimated component lists.">
-  <title>Budget PC recommendations — Rigwise</title>
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/responsive.css">
-  <script src="js/service-config.js"></script>
-  <script src="js/price-config.js" defer></script>
-  <script src="js/live-prices.js" defer></script>
-  <script type="module" src="js/recommendations.js"></script>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Rigwise · Budget Builds | Optimized PC Configurations</title>
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            obsidian: '#090D10',
+            cardBg: '#111820',
+            cardBgHover: '#15202B',
+            surfaceMuted: '#151D24',
+            borderDark: '#1F2937',
+            borderLight: '#2A3644',
+            emeraldAccent: '#10B981',
+            mintAccent: '#34D399',
+            slateText: '#94A3B8'
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+  <style data-purpose="custom-scrollbars-and-glows">
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #090D10;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1F2937;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #10B981;
+    }
+
+    /* Card glow & border animation */
+    .card-transition {
+      transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .card-transition:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 30px -10px rgba(16, 185, 129, 0.08), 0 0 0 1px rgba(52, 211, 153, 0.35);
+    }
+
+    /* Modal Backdrop Blur */
+    .modal-backdrop {
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+  </style>
 </head>
-<body class="workspace-page">
-  <header class="site-header workspace-header">
-    <a class="brand" href="index.html">
-      <span class="brand-mark" aria-hidden="true">R</span>
-      <span>rigwise<span class="brand-period">.</span></span>
-    </a>
-    <nav class="site-nav" aria-label="Main Navigation">
-      <a class="site-nav-link" href="custom-build.html">Custom Builder</a>
-      <a class="site-nav-link is-active" href="recommended-builds.html" aria-current="page">Budget Builds</a>
-      <a class="site-nav-link" href="shop-parts.html">Shop Parts</a>
-    </nav>
-    <div class="nav-actions">
-      <div class="gooey-search-box header-gooey-search" id="header-gooey-search">
-        <div class="gooey-inner">
-          <div class="gooey-search-btn" id="header-gooey-btn" role="button" tabindex="0" aria-label="Search catalog">
-            <span class="gooey-search-label">
-              <svg width="12" height="12" viewBox="0 0 15 15" fill="none"><path d="M10 6.5C10 8.433 8.433 10 6.5 10C4.567 10 3 8.433 3 6.5C3 4.567 4.567 3 6.5 3C8.433 3 10 4.567 10 6.5ZM9.30884 10.0159C8.53901 10.6318 7.56251 11 6.5 11C4.01472 11 2 8.98528 2 6.5C2 4.01472 4.01472 2 6.5 2C8.98528 2 11 4.01472 11 6.5C11 7.56251 10.6318 8.53901 10.0159 9.30884L12.8536 12.1464C13.0488 12.3417 13.0488 12.6583 12.8536 12.8536C12.6583 13.0488 12.3417 13.0488 12.1464 12.8536L9.30884 10.0159Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></svg>
-              <span>Search</span>
-            </span>
-            <input class="gooey-search-input" id="header-search-input" type="search" placeholder="Search parts or builds…" autocomplete="off" aria-label="Search catalog">
-          </div>
-          <div class="gooey-search-bubble" id="header-gooey-bubble" aria-label="Submit search">
-            <svg viewBox="0 0 15 15" fill="none"><path d="M10 6.5C10 8.433 8.433 10 6.5 10C4.567 10 3 8.433 3 6.5C3 4.567 4.567 3 6.5 3C8.433 3 10 4.567 10 6.5ZM9.30884 10.0159C8.53901 10.6318 7.56251 11 6.5 11C4.01472 11 2 8.98528 2 6.5C2 4.01472 4.01472 2 6.5 2C8.98528 2 11 4.01472 11 6.5C11 7.56251 10.6318 8.53901 10.0159 9.30884L12.8536 12.1464C13.0488 12.3417 13.0488 12.6583 12.8536 12.8536C12.6583 13.0488 12.3417 13.0488 12.1464 12.8536L9.30884 10.0159Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></svg>
-          </div>
+<body class="bg-obsidian text-slate-100 font-sans antialiased min-h-screen flex flex-col selection:bg-emeraldAccent/20 selection:text-mintAccent">
+
+<!-- BEGIN: MainHeader -->
+<header class="sticky top-0 z-40 w-full border-b border-borderDark/80 bg-obsidian/90 backdrop-blur-md">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 py-4 flex items-center justify-between gap-4">
+    <!-- Brand Logo -->
+    <div class="flex items-center gap-8">
+      <a aria-label="Rigwise Home" class="flex items-center gap-2.5 group focus:outline-none" href="index.html">
+        <div class="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center font-bold text-obsidian text-lg shadow-[0_0_12px_rgba(16,185,129,0.35)] transition-transform group-hover:scale-105">
+          R
         </div>
-        <div class="gooey-results-dropdown" id="header-gooey-results" role="listbox"></div>
-      </div>
-      <a class="nav-cart-btn" href="shop-parts.html#demo-cart">Cart <span class="nav-cart-count" id="nav-cart-count">0</span></a>
-      <a class="back-link" href="build-options.html">← Build options</a>
+        <span class="text-xl font-bold tracking-tight text-white group-hover:text-mintAccent transition-colors">
+          rigwise<span class="text-emeraldAccent">.</span>
+        </span>
+      </a>
+      <!-- Main Navigation Links -->
+      <nav aria-label="Primary Navigation" class="hidden md:flex items-center gap-1.5">
+        <a class="px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-medium text-slate-400 hover:text-white hover:bg-surfaceMuted/60 transition" href="custom-build.html">
+          Custom Builder
+        </a>
+        <a class="px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-medium text-emeraldAccent bg-emeraldAccent/10 border border-emeraldAccent/25 transition" href="recommended-builds.html" aria-current="page">
+          Budget Builds
+        </a>
+        <a class="px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-medium text-slate-400 hover:text-white hover:bg-surfaceMuted/60 transition" href="shop-parts.html">
+          Shop Parts
+        </a>
+      </nav>
     </div>
-  </header>
-  <main class="recommendations-main">
-    <section class="recommendations-section" aria-labelledby="recommendations-title">
-      <div class="section-heading recommendations-heading">
+
+    <!-- Header Action Items -->
+    <div class="flex items-center gap-3">
+      <!-- Search Form -->
+      <form class="relative hidden sm:flex items-center" onsubmit="event.preventDefault(); const q = document.getElementById('header-search-input').value.trim(); if(q) window.location.href = 'shop-parts.html?search=' + encodeURIComponent(q);">
+        <div class="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surfaceMuted border border-borderDark text-xs text-slate-400 focus-within:border-emerald-500 focus-within:text-white transition">
+          <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+          </svg>
+          <input id="header-search-input" type="search" placeholder="Search catalog..." class="bg-transparent border-none p-0 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-0 w-24 sm:w-32" />
+        </div>
+      </form>
+
+      <!-- Cart Badge -->
+      <a class="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surfaceMuted border border-borderDark text-xs font-medium text-slate-300 hover:border-slate-600 transition" href="shop-parts.html#demo-cart">
+        <span>Cart</span>
+        <span id="header-cart-count" class="w-4 h-4 rounded-full bg-obsidian border border-borderDark text-[10px] flex items-center justify-center font-mono text-emeraldAccent font-semibold">0</span>
+      </a>
+
+      <!-- Build Options CTA -->
+      <a class="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-full bg-white/5 border border-white/10 text-slate-200 hover:text-white hover:bg-white/10 transition" href="build-options.html">
+        <span>Build options</span>
+        <span class="text-emeraldAccent text-sm">↗</span>
+      </a>
+    </div>
+  </div>
+</header>
+<!-- END: MainHeader -->
+
+<!-- BEGIN: MainContent -->
+<main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+  <!-- Hero Section -->
+  <section class="mb-10 sm:mb-12">
+    <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-8 border-b border-borderDark/50">
+      <div class="max-w-2xl">
+        <!-- Tag pill -->
+        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wider uppercase text-emerald-400 bg-emerald-950/60 border border-emerald-800/40 mb-3">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+          Builds by Budget
+        </div>
+        <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
+          Find your price point<span class="text-emeraldAccent">.</span>
+        </h1>
+        <p class="text-sm text-slate-400 mt-2 max-w-xl">
+          Carefully balanced component lists for every budget tier, optimized for compatibility and performance.
+        </p>
+      </div>
+
+      <!-- Right Side Note -->
+      <div class="lg:max-w-sm">
+        <p class="text-xs leading-relaxed text-slate-400 border-l-2 border-emeraldAccent/40 pl-3">
+          Showing the locally bundled recommendations. Configure the recommendations service for an independently deployed build catalog.
+        </p>
+      </div>
+    </div>
+
+    <!-- Filter Tabs Bar -->
+    <div aria-label="Budget categories" class="mt-6 flex flex-wrap items-center gap-2" role="tablist">
+      <button aria-selected="true" class="filter-pill px-4 py-1.5 rounded-full text-xs font-medium bg-emerald-900/60 border border-emerald-500/50 text-white shadow-sm transition active" data-filter="all" type="button">
+        All Budgets
+      </button>
+      <button aria-selected="false" class="filter-pill px-4 py-1.5 rounded-full text-xs font-medium bg-surfaceMuted/80 border border-borderDark text-slate-400 hover:text-white hover:border-slate-600 transition" data-filter="entry" type="button">
+        Entry · Under ₹70k
+      </button>
+      <button aria-selected="false" class="filter-pill px-4 py-1.5 rounded-full text-xs font-medium bg-surfaceMuted/80 border border-borderDark text-slate-400 hover:text-white hover:border-slate-600 transition" data-filter="mid" type="button">
+        Mid-Range · ₹80k–₹1.4L
+      </button>
+      <button aria-selected="false" class="filter-pill px-4 py-1.5 rounded-full text-xs font-medium bg-surfaceMuted/80 border border-borderDark text-slate-400 hover:text-white hover:border-slate-600 transition" data-filter="enthusiast" type="button">
+        Enthusiast · ₹1.5L+
+      </button>
+    </div>
+  </section>
+
+  <!-- BEGIN: BuildsGrid -->
+  <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" data-purpose="build-cards-container" id="builds-grid">
+    
+    <!-- Card 1: 50,000 (Entry) -->
+    <article class="build-card card-transition bg-cardBg border border-borderDark rounded-xl p-6 flex flex-col justify-between" data-build-id="starter" data-category="entry">
+      <div>
+        <!-- Tags Header -->
+        <div class="flex items-center justify-between text-[11px] font-semibold tracking-wider text-slate-400 uppercase mb-4 pb-2 border-b border-borderDark/40">
+          <span class="text-slate-300 font-mono">Everyday</span>
+          <span class="text-slate-500 truncate ml-2">Study, Work &amp; First PC</span>
+        </div>
+        <!-- Main Title & Subtitle -->
+        <div class="mb-3">
+          <h2 class="text-2xl font-bold tracking-tight text-white mb-1">Around ₹50,000</h2>
+          <p class="text-xs font-semibold text-emeraldAccent uppercase tracking-wide">The everyday starter</p>
+        </div>
+        <!-- Description -->
+        <p class="text-xs text-slate-400 leading-relaxed mb-5 min-h-[44px]">
+          A practical integrated-graphics build for study, work and everyday use, with room left to add a dedicated graphics card later.
+        </p>
+        <!-- Component Chips -->
+        <div class="mb-6 flex flex-wrap gap-1.5">
+          <span class="px-2 py-0.5 rounded bg-surfaceMuted text-[10px] font-mono text-slate-300 border border-borderDark/60">Ryzen 5 5600G</span>
+          <span class="px-2 py-0.5 rounded bg-surfaceMuted text-[10px] font-mono text-slate-300 border border-borderDark/60">16GB DDR4</span>
+          <span class="px-2 py-0.5 rounded bg-surfaceMuted text-[10px] font-mono text-slate-300 border border-borderDark/60">1TB NVMe</span>
+          <span class="px-2 py-0.5 rounded bg-surfaceMuted text-[10px] font-mono text-slate-300 border border-borderDark/60">650W PSU</span>
+        </div>
+      </div>
+      <!-- Footer Price and Action -->
+      <div class="pt-4 border-t border-borderDark/60">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-[10px] font-mono tracking-wider uppercase text-slate-400 font-medium">Live / Est. Parts Total</span>
+          <span class="text-base font-bold font-mono text-white">₹47,500</span>
+        </div>
+        <button class="w-full flex items-center justify-between text-xs font-medium text-slate-300 hover:text-emeraldAccent transition py-1 group/btn" onclick="openBuildModal('starter')" type="button">
+          <span>See components</span>
+          <span class="text-emeraldAccent transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform">↗</span>
+        </button>
+      </div>
+    </article>
+
+    <!-- Card 2: 80,000 (Mid-Range) -->
+    <article class="build-card card-transition bg-cardBg border border-emeraldAccent/30 relative rounded-xl p-6 flex flex-col justify-between shadow-[0_0_20px_rgba(16,185,129,0.06)]" data-build-id="esports" data-category="mid">
+      <div>
+        <!-- Tags Header -->
+        <div class="flex items-center justify-between text-[11px] font-semibold tracking-wider text-slate-400 uppercase mb-4 pb-2 border-b border-borderDark/40">
+          <span class="inline-flex items-center gap-1 text-mintAccent font-mono">
+            <span class="w-1.5 h-1.5 rounded-full bg-mintAccent animate-pulse"></span>
+            Popular
+          </span>
+          <span class="text-slate-500 truncate ml-2">Gaming &amp; Everyday</span>
+        </div>
+        <!-- Main Title & Subtitle -->
+        <div class="mb-3">
+          <h2 class="text-2xl font-bold tracking-tight text-white mb-1">Around ₹80,000</h2>
+          <p class="text-xs font-semibold text-emeraldAccent uppercase tracking-wide">The 1080p gamer</p>
+        </div>
+        <!-- Description -->
+        <p class="text-xs text-slate-400 leading-relaxed mb-5 min-h-[44px]">
+          A value-focused 1080p gaming example with a dedicated graphics card and balanced DDR4 components.
+        </p>
+        <!-- Component Chips -->
+        <div class="mb-6 flex flex-wrap gap-1.5">
+          <span class="px-2 py-0.5 rounded bg-surfaceMuted text-[10px] font-mono text-slate-300 border border-borderDark/60">Ryzen 5 5600</span>
+          <span class="px-2 py-0.5 rounded bg-emerald-950/40 text-[10px] font-mono text-emerald-300 border border-emerald-800/40">RX 7600 8GB</span>
+          <span class="px-2 py-0.5 rounded bg-surfaceMuted text-[10px] font-mono text-slate-300 border border-borderDark/60">32GB DDR4</span>
+          <span class="px-2 py-0.5 rounded bg-surfaceMuted text-[10px] font-mono text-slate-300 border border-borderDark/60">1TB NVMe</span>
+          <span class="px-2 py-0.5 rounded bg-surfaceMuted text-[10px] font-mono text-slate-300 border border-borderDark/60">650W Bronze</span>
+        </div>
+      </div>
+      <!-- Footer Price and Action -->
+      <div class="pt-4 border-t border-borderDark/60">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-[10px] font-mono tracking-wider uppercase text-slate-400 font-medium">Live / Est. Parts Total</span>
+          <span class="text-base font-bold font-mono text-white">₹84,200</span>
+        </div>
+        <button class="w-full flex items-center justify-between text-xs font-medium text-slate-300 hover:text-emeraldAccent transition py-1 group/btn" onclick="openBuildModal('esports')" type="button">
+          <span>See components</span>
+          <span class="text-emeraldAccent transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform">↗</span>
+        </button>
+      </div>
+    </article>
+
+    <!-- Card 3: 1,00,000 (Mid-Range) -->
+    <article class="build-card card-transition bg-cardBg border border-borderDark rounded-xl p-6 flex flex-col justify-between" data-build-id="balanced" data-category="mid">
+      <div>
+        <!-- Tags Header -->
+        <div class="flex items-center justify-between text-[11px] font-semibold tracking-wider text-slate-400 uppercase mb-4 pb-2 border-b border-borderDark/40">
+          <span class="text-slate-300 font-mono">Balanced</span>
+          <span class="text-slate-500 truncate ml-2">Gaming, Work &amp; Creation</span>
+        </div>
+        <!-- Main Title & Subtitle -->
+        <div class="mb-3">
+          <h2 class="text-2xl font-bold tracking-tight text-white mb-1">Around ₹1,00,000</h2>
+          <p class="text-xs font-semibold text-emeraldAccent uppercase tracking-wide">The balanced all-rounder</p>
+        </div>
+        <!-- Description -->
+        <p class="text-xs text-slate-400 leading-relaxed mb-5 min-h-[44px]">
+          A modern DDR5 platform and dedicated graphics, designed as a balanced starting point for gaming and general creative work.
+        </p>
+        <!-- Component Chips -->
+        <div class="mb-6 flex flex-wrap gap-1.5">
+          <span class="px-2 py-0.5 rounded bg-surfaceMuted text-[10px] font-mono text-slate-300 border border-borderDark/60">Ryzen 5 7500F</span>
+          <span class="px-2 py-0.5 rounded bg-emerald-950/40 text-[10px] font-mono text-emerald-300 border border-emerald-800/40">RTX 5060 8GB</span>
+          <span class="px-2 py-0.5 rounded bg-surfaceMuted text-[10px] font-mono text-slate-300 border border-borderDark/60">32GB DDR5</span>
+          <span class="px-2 py-0.5 rounded bg-surfaceMuted text-[10px] font-mono text-slate-300 border border-borderDark/60">1TB Gen4</span>
+          <span class="px-2 py-0.5 rounded bg-surfaceMuted text-[10px] font-mono text-slate-300 border border-borderDark/60">650W Bronze</span>
+        </div>
+      </div>
+      <!-- Footer Price and Action -->
+      <div class="pt-4 border-t border-borderDark/60">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-[10px] font-mono tracking-wider uppercase text-slate-400 font-medium">Live / Est. Parts Total</span>
+          <span class="text-base font-bold font-mono text-white">₹1,01,400</span>
+        </div>
+        <button class="w-full flex items-center justify-between text-xs font-medium text-slate-300 hover:text-emeraldAccent transition py-1 group/btn" onclick="openBuildModal('balanced')" type="button">
+          <span>See components</span>
+          <span class="text-emeraldAccent transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform">↗</span>
+        </button>
+      </div>
+    </article>
+
+    <!-- Card 4: 1,50,000 (Enthusiast) -->
+    <article class="build-card card-transition bg-cardBg border border-borderDark rounded-xl p-6 flex flex-col justify-between" data-build-id="creator" data-category="enthusiast">
+      <div>
+        <!-- Tags Header -->
+        <div class="flex items-center justify-between text-[11px] font-semibold tracking-wider text-slate-400 uppercase mb-4 pb-2 border-b border-borderDark/40">
+          <span class="text-slate-300 font-mono">Creator</span>
+          <span class="text-slate-500 truncate ml-2">Editing, Games &amp; Multitasking</span>
+        </div>
+        <!-- Main Title & Subtitle -->
+        <div class="mb-3">
+          <h2 class="text-2xl font-bold tracking-tight text-white mb-1">Around ₹1,50,000</h2>
+          <p class="text-xs font-semibold text-emeraldAccent uppercase tracking-wide">The creator &amp; gamer</p>
+        </div>
+        <!-- Description -->
+        <p class="text-xs text-slate-400 leading-relaxed mb-5 min-h-[44px]">
+          More processor, memory and storage headroom for heavier editing and multitasking alongside gaming.
+        </p>
+        <!-- Component Chips -->
+        <div class="mb-6 flex flex-wrap gap-1.5">
+          <span class="px-2 py-0.5 rounded bg-surfaceMuted text-[10px] font-mono text-slate-300 border border-borderDark/60">Ryzen 5 9600X</span>
+          <span class="px-2 py-0.5 rounded bg-emerald-950/40 text-[10px] font-mono text-emerald-300 border border-emerald-800/40">RX 9060 XT 16GB</span>
+          <span class="px-2 py-0.5 rounded bg-surfaceMuted text-[10px] font-mono text-slate-300 border border-borderDark/60">64GB DDR5</span>
+          <span class="px-2 py-0.5 rounded bg-surfaceMuted text-[10px] font-mono text-slate-300 border border-borderDark/60">2TB Gen4 NVMe</span>
+          <span class="px-2 py-0.5 rounded bg-surfaceMuted text-[10px] font-mono text-slate-300 border border-borderDark/60">850W Gold</span>
+        </div>
+      </div>
+      <!-- Footer Price and Action -->
+      <div class="pt-4 border-t border-borderDark/60">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-[10px] font-mono tracking-wider uppercase text-slate-400 font-medium">Live / Est. Parts Total</span>
+          <span class="text-base font-bold font-mono text-white">₹1,54,000</span>
+        </div>
+        <button class="w-full flex items-center justify-between text-xs font-medium text-slate-300 hover:text-emeraldAccent transition py-1 group/btn" onclick="openBuildModal('creator')" type="button">
+          <span>See components</span>
+          <span class="text-emeraldAccent transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform">↗</span>
+        </button>
+      </div>
+    </article>
+
+    <!-- Card 5: 2,50,000 (Enthusiast) -->
+    <article class="build-card card-transition bg-cardBg border border-borderDark rounded-xl p-6 flex flex-col justify-between" data-build-id="enthusiast" data-category="enthusiast">
+      <div>
+        <!-- Tags Header -->
+        <div class="flex items-center justify-between text-[11px] font-semibold tracking-wider text-slate-400 uppercase mb-4 pb-2 border-b border-borderDark/40">
+          <span class="text-slate-300 font-mono">Enthusiast</span>
+          <span class="text-slate-500 truncate ml-2">High-End Gaming &amp; Production</span>
+        </div>
+        <!-- Main Title & Subtitle -->
+        <div class="mb-3">
+          <h2 class="text-2xl font-bold tracking-tight text-white mb-1">Around ₹2,50,000</h2>
+          <p class="text-xs font-semibold text-emeraldAccent uppercase tracking-wide">The enthusiast</p>
+        </div>
+        <!-- Description -->
+        <p class="text-xs text-slate-400 leading-relaxed mb-5 min-h-[44px]">
+          A high-end example with a gaming-focused processor, larger graphics, 64 GB memory and extra storage.
+        </p>
+        <!-- Component Chips -->
+        <div class="mb-6 flex flex-wrap gap-1.5">
+          <span class="px-2 py-0.5 rounded bg-emerald-950/40 text-[10px] font-mono text-emerald-300 border border-emerald-800/40">Ryzen 7 7800X3D</span>
+          <span class="px-2 py-0.5 rounded bg-emerald-950/40 text-[10px] font-mono text-emerald-300 border border-emerald-800/40">RTX 5070 Ti 16GB</span>
+          <span class="px-2 py-0.5 rounded bg-surfaceMuted text-[10px] font-mono text-slate-300 border border-borderDark/60">64GB DDR5</span>
+          <span class="px-2 py-0.5 rounded bg-surfaceMuted text-[10px] font-mono text-slate-300 border border-borderDark/60">2TB Gen4 Pro</span>
+          <span class="px-2 py-0.5 rounded bg-surfaceMuted text-[10px] font-mono text-slate-300 border border-borderDark/60">1000W Gold</span>
+        </div>
+      </div>
+      <!-- Footer Price and Action -->
+      <div class="pt-4 border-t border-borderDark/60">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-[10px] font-mono tracking-wider uppercase text-slate-400 font-medium">Live / Est. Parts Total</span>
+          <span class="text-base font-bold font-mono text-white">₹2,44,500</span>
+        </div>
+        <button class="w-full flex items-center justify-between text-xs font-medium text-slate-300 hover:text-emeraldAccent transition py-1 group/btn" onclick="openBuildModal('enthusiast')" type="button">
+          <span>See components</span>
+          <span class="text-emeraldAccent transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform">↗</span>
+        </button>
+      </div>
+    </article>
+
+  </section>
+  <!-- END: BuildsGrid -->
+
+  <!-- Disclaimer Section -->
+  <div class="mt-12 text-[11px] text-slate-500 leading-relaxed max-w-4xl">
+    Builds use catalog estimates until you refresh live offers. Google Shopping results are indicative—not guaranteed prices, stock, compatibility or performance. Verify the exact part, seller, delivery and return terms before buying.
+  </div>
+</main>
+<!-- END: MainContent -->
+
+<!-- BEGIN: MainFooter -->
+<footer class="border-t border-borderDark bg-obsidian py-8 px-4 sm:px-6 lg:px-8 mt-16">
+  <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+    <!-- Logo in footer -->
+    <div class="flex items-center gap-2">
+      <div class="w-6 h-6 rounded bg-emerald-600 flex items-center justify-center font-bold text-obsidian text-sm">
+        R
+      </div>
+      <span class="font-bold tracking-tight text-white">rigwise<span class="text-emeraldAccent">.</span></span>
+    </div>
+    <!-- Center notice -->
+    <p class="text-slate-500 text-center">
+      Refresh retailer offers before buying; prices and stock can change.
+    </p>
+    <!-- CTA -->
+    <a class="font-medium text-emeraldAccent hover:text-mintAccent transition flex items-center gap-1.5" href="custom-build.html">
+      <span>Build your own</span>
+      <span>→</span>
+    </a>
+  </div>
+</footer>
+<!-- END: MainFooter -->
+
+<!-- BEGIN: ComponentsModal -->
+<div aria-modal="true" class="fixed inset-0 z-50 hidden transition-opacity duration-300" id="components-modal" role="dialog">
+  <!-- Backdrop -->
+  <div class="fixed inset-0 bg-obsidian/85 modal-backdrop" onclick="closeBuildModal()"></div>
+  <!-- Modal Content Center Dialog -->
+  <div class="fixed inset-0 z-10 overflow-y-auto flex items-center justify-center p-4">
+    <div class="relative w-full max-w-2xl bg-cardBg border border-borderLight rounded-2xl shadow-2xl p-6 sm:p-7 overflow-hidden text-slate-100">
+      <!-- Header -->
+      <div class="flex items-start justify-between pb-4 border-b border-borderDark">
         <div>
-          <p class="eyebrow">BUILDS BY BUDGET</p>
-          <h1 id="recommendations-title">Find your price point.</h1>
+          <div class="flex items-center gap-2 mb-1">
+            <span class="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-emerald-950/60 border border-emerald-800/50 text-emerald-300" id="modal-tag"></span>
+            <span class="text-xs text-slate-400 font-medium" id="modal-category"></span>
+          </div>
+          <h3 class="text-xl font-bold text-white" id="modal-title"></h3>
+          <p class="text-xs text-emeraldAccent font-medium" id="modal-subtitle"></p>
         </div>
-        <p class="section-intro" id="recommendations-service-status" role="status" aria-live="polite">Loading build recommendations…</p>
+        <button aria-label="Close dialog" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-surfaceMuted transition focus:outline-none" onclick="closeBuildModal()" type="button">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+          </svg>
+        </button>
       </div>
-      <div class="tier-filter-bar" role="toolbar" aria-label="Filter builds by budget tier">
-        <button type="button" class="tier-filter-btn is-active" id="tier-filter-all" data-tier="all">All Budgets</button>
-        <button type="button" class="tier-filter-btn" id="tier-filter-entry" data-tier="entry">Entry · Under ₹70k</button>
-        <button type="button" class="tier-filter-btn" id="tier-filter-mid" data-tier="mid">Mid-Range · ₹80k–₹1.4L</button>
-        <button type="button" class="tier-filter-btn" id="tier-filter-enthusiast" data-tier="enthusiast">Enthusiast · ₹1.5L+</button>
+
+      <!-- Parts Breakdown List -->
+      <div class="mt-5 max-h-[50vh] overflow-y-auto pr-1 space-y-2.5 font-sans" id="modal-parts-list">
+        <!-- Dynamically populated by JS -->
       </div>
-      <div class="tier-grid" id="tier-grid"></div>
-      <section class="tier-detail" id="tier-detail" aria-live="polite" hidden>
-        <div class="tier-detail-header">
-          <div>
-            <a class="back-link detail-back" href="recommended-builds.html">← All price points</a>
-            <p class="eyebrow" id="tier-eyebrow"></p>
-            <h2 id="tier-title"></h2>
-            <p id="tier-description"></p>
-          </div>
-          <div class="tier-total">
-            <span>ESTIMATED PARTS TOTAL</span>
-            <strong id="tier-total"></strong>
-            <small id="tier-budget"></small>
-          </div>
+
+      <!-- Total Price & Actions -->
+      <div class="mt-6 pt-4 border-t border-borderDark flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>
+          <span class="text-[10px] font-mono uppercase tracking-wider text-slate-400 block">Calculated Total (All Parts)</span>
+          <span class="text-xl font-bold font-mono text-emerald-400" id="modal-total"></span>
         </div>
-        <div class="tier-parts" id="tier-parts"></div>
-        <div class="tier-actions">
-          <div class="tier-price-controls">
-            <button class="live-price-refresh shiny-cta shiny-cta-compact" id="refresh-tier-prices" type="button"><span>Refresh this build's prices</span></button>
-            <span id="tier-price-status" class="live-price-status" role="status" aria-live="polite">Catalog estimates shown until live prices are refreshed.</span>
-          </div>
-          <div class="summary-actions-grid" style="grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); width: 100%; max-width: 480px;">
-            <a class="primary-button tier-custom-link shiny-cta" id="tier-custom-link" href="custom-build.html"><span>Customize this build <span aria-hidden="true">→</span></span></a>
-            <button class="summary-action-btn" id="copy-tier-specs" type="button">📋 Copy specs</button>
-            <button class="summary-action-btn" id="print-tier-quotation" type="button">🖨️ Print quotation</button>
-          </div>
-          <p>Offers are indicative and may change. Verify the exact part, stock, delivery and compatibility with the retailer.</p>
+        <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+          <button id="modal-copy-btn" class="px-3.5 py-2 rounded-xl text-xs font-semibold bg-surfaceMuted text-slate-300 hover:text-white hover:bg-slate-800 border border-borderDark transition flex items-center gap-1.5" type="button">
+            <span>📋</span>
+            <span>Copy specs</span>
+          </button>
+          <button id="modal-add-cart-btn" class="px-3.5 py-2 rounded-xl text-xs font-semibold bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 border border-emerald-500/40 transition flex items-center gap-1.5" type="button">
+            <span>🛒</span>
+            <span>Add to Cart</span>
+          </button>
+          <a id="modal-custom-link" class="px-4 py-2 rounded-xl text-xs font-semibold bg-emerald-500 hover:bg-emerald-400 text-obsidian font-bold transition flex items-center justify-center gap-1.5 shadow-[0_0_15px_rgba(16,185,129,0.3)]" href="custom-build.html">
+            <span>Open in Custom Builder</span>
+            <span>↗</span>
+          </a>
         </div>
-      </section>
-      <p class="recommendations-disclaimer">Builds use catalog estimates until you refresh live offers. Google Shopping results are indicative—not guaranteed prices, stock, compatibility or performance. Verify the exact part, seller, delivery and return terms before buying.</p>
-    </section>
-  </main>
-  <footer class="site-footer workspace-footer">
-    <a class="brand footer-brand" href="index.html"><span class="brand-mark" aria-hidden="true">R</span><span>rigwise<span class="brand-period">.</span></span></a>
-    <p>Refresh retailer offers before buying; prices and stock can change.</p>
-    <a class="footer-build-link" href="custom-build.html">Build your own <span aria-hidden="true">→</span></a>
-  </footer>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/DrawSVGPlugin.min.js"></script>
-  <script type="module" src="js/ui-enhancements.js"></script>
-  <script type="module" src="js/gooey-search.js"></script>
-  <script type="module" src="js/draw-underline.js"></script>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END: ComponentsModal -->
+
+<!-- BEGIN: InteractiveScripts -->
+<script data-purpose="budget-builds-store-and-filtering">
+  // Authentic Rigwise Builds Database (100% matched with canonical catalog data)
+  const buildsDatabase = {
+    'starter': {
+      id: 'starter',
+      budget: 50000,
+      title: 'Around ₹50,000',
+      subtitle: 'The everyday starter',
+      tag: 'Everyday',
+      category: 'Study, work & first PC',
+      total: '₹47,500',
+      description: 'A practical integrated-graphics build for study, work and everyday use, with room left to add a dedicated graphics card later.',
+      parts: [
+        { type: 'Processor with integrated graphics', name: 'AMD Ryzen 5 5600G · 6-core APU', price: '₹14,500', rawPrice: 14500 },
+        { type: 'Motherboard', name: 'MSI B550M PRO-VDH WIFI · AM4 / DDR4', price: '₹10,500', rawPrice: 10500 },
+        { type: 'Memory', name: 'Kingston FURY Beast · 16 GB DDR4', price: '₹5,800', rawPrice: 5800 },
+        { type: 'Storage', name: 'Kingston NV3 · 1 TB NVMe SSD', price: '₹6,500', rawPrice: 6500 },
+        { type: 'Graphics', name: 'Integrated graphics · no separate GPU', price: 'Included (₹0)', rawPrice: 0 },
+        { type: 'Power supply', name: 'Corsair CV650 · 650 W', price: '₹6,000', rawPrice: 6000 },
+        { type: 'PC case', name: 'Ant Esports ICE-110 · mATX', price: '₹4,200', rawPrice: 4200 },
+        { type: 'CPU cooler', name: 'Processor boxed cooler · included', price: 'Included (₹0)', rawPrice: 0 }
+      ]
+    },
+    'esports': {
+      id: 'esports',
+      budget: 80000,
+      title: 'Around ₹80,000',
+      subtitle: 'The 1080p gamer',
+      tag: 'Popular',
+      category: 'Gaming & everyday',
+      total: '₹84,200',
+      description: 'A value-focused 1080p gaming example with a dedicated graphics card and balanced DDR4 components.',
+      parts: [
+        { type: 'Processor', name: 'AMD Ryzen 5 5600 · 6-core', price: '₹11,500', rawPrice: 11500 },
+        { type: 'Motherboard', name: 'MSI B550M PRO-VDH WIFI · AM4 / DDR4', price: '₹10,500', rawPrice: 10500 },
+        { type: 'Memory', name: 'Crucial Pro · 32 GB DDR4', price: '₹7,600', rawPrice: 7600 },
+        { type: 'Storage', name: 'Crucial P3 Plus · 1 TB NVMe SSD', price: '₹7,000', rawPrice: 7000 },
+        { type: 'Graphics card', name: 'Sapphire Radeon RX 7600 · 8 GB', price: '₹33,000', rawPrice: 33000 },
+        { type: 'Power supply', name: 'MSI MAG A650BN · 650 W', price: '₹7,600', rawPrice: 7600 },
+        { type: 'PC case', name: 'DeepCool Matrexx 40 · mATX', price: '₹7,000', rawPrice: 7000 },
+        { type: 'CPU cooler', name: 'Processor boxed cooler · included', price: 'Included (₹0)', rawPrice: 0 }
+      ]
+    },
+    'balanced': {
+      id: 'balanced',
+      budget: 100000,
+      title: 'Around ₹1,00,000',
+      subtitle: 'The balanced all-rounder',
+      tag: 'Balanced',
+      category: 'Gaming, work & creation',
+      total: '₹1,01,400',
+      description: 'A modern DDR5 platform and dedicated graphics, designed as a balanced starting point for gaming and general creative work.',
+      parts: [
+        { type: 'Processor', name: 'AMD Ryzen 5 7500F · 6-core', price: '₹18,500', rawPrice: 18500 },
+        { type: 'Motherboard', name: 'ASRock B650M-HDV/M.2 · AM5 / DDR5', price: '₹13,000', rawPrice: 13000 },
+        { type: 'Memory', name: 'Kingston FURY Beast · 32 GB DDR5', price: '₹9,500', rawPrice: 9500 },
+        { type: 'Storage', name: 'Kingston NV3 · 1 TB NVMe SSD', price: '₹8,200', rawPrice: 8200 },
+        { type: 'Graphics card', name: 'MSI GeForce RTX 5060 · 8 GB', price: '₹34,000', rawPrice: 34000 },
+        { type: 'Power supply', name: 'MSI MAG A650BN · 650 W', price: '₹7,800', rawPrice: 7800 },
+        { type: 'PC case', name: 'DeepCool CC560 V2 · ATX', price: '₹7,600', rawPrice: 7600 },
+        { type: 'CPU cooler', name: 'DeepCool AG400 · air cooler', price: '₹2,800', rawPrice: 2800 }
+      ]
+    },
+    'creator': {
+      id: 'creator',
+      budget: 150000,
+      title: 'Around ₹1,50,000',
+      subtitle: 'The creator & gamer',
+      tag: 'Creator',
+      category: 'Editing, games & multitasking',
+      total: '₹1,54,000',
+      description: 'More processor, memory and storage headroom for heavier editing and multitasking alongside gaming.',
+      parts: [
+        { type: 'Processor', name: 'AMD Ryzen 5 9600X · 6-core', price: '₹30,000', rawPrice: 30000 },
+        { type: 'Motherboard', name: 'MSI PRO B650M-A WIFI · AM5 / DDR5', price: '₹17,500', rawPrice: 17500 },
+        { type: 'Memory', name: 'G.Skill Trident Z5 Neo · 64 GB DDR5', price: '₹20,000', rawPrice: 20000 },
+        { type: 'Storage', name: 'WD Blue SN580 · 2 TB NVMe SSD', price: '₹12,000', rawPrice: 12000 },
+        { type: 'Graphics card', name: 'Sapphire Radeon RX 9060 XT · 16 GB', price: '₹47,000', rawPrice: 47000 },
+        { type: 'Power supply', name: 'MSI MAG A850GL PCIE5 · 850 W', price: '₹12,000', rawPrice: 12000 },
+        { type: 'PC case', name: 'DeepCool CC560 V2 · ATX', price: '₹8,500', rawPrice: 8500 },
+        { type: 'CPU cooler', name: 'Noctua NH-U12S redux · air cooler', price: '₹7,000', rawPrice: 7000 }
+      ]
+    },
+    'enthusiast': {
+      id: 'enthusiast',
+      budget: 250000,
+      title: 'Around ₹2,50,000',
+      subtitle: 'The enthusiast',
+      tag: 'Enthusiast',
+      category: 'High-end gaming & production',
+      total: '₹2,44,500',
+      description: 'A high-end example with a gaming-focused processor, larger graphics, 64 GB memory and extra storage.',
+      parts: [
+        { type: 'Processor', name: 'AMD Ryzen 7 7800X3D · 8-core', price: '₹42,000', rawPrice: 42000 },
+        { type: 'Motherboard', name: 'MSI PRO B650M-A WIFI · AM5 / DDR5', price: '₹18,000', rawPrice: 18000 },
+        { type: 'Memory', name: 'G.Skill Trident Z5 Neo · 64 GB DDR5', price: '₹22,000', rawPrice: 22000 },
+        { type: 'Storage', name: 'Samsung 990 PRO · 2 TB NVMe SSD', price: '₹19,000', rawPrice: 19000 },
+        { type: 'Graphics card', name: 'MSI GeForce RTX 5070 Ti · 16 GB', price: '₹1,01,000', rawPrice: 101000 },
+        { type: 'Power supply', name: 'Gigabyte UD1000GM PG5 · 1000 W', price: '₹20,000', rawPrice: 20000 },
+        { type: 'PC case', name: 'Corsair 3000D Airflow · ATX', price: '₹15,000', rawPrice: 15000 },
+        { type: 'CPU cooler', name: 'Noctua NH-U12S redux · air cooler', price: '₹7,500', rawPrice: 7500 }
+      ]
+    }
+  };
+
+  // Filter Functionality
+  const filterButtons = document.querySelectorAll('.filter-pill');
+  const cards = document.querySelectorAll('.build-card');
+
+  filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const filter = button.getAttribute('data-filter');
+
+      // Update Pill Styles
+      filterButtons.forEach(btn => {
+        btn.classList.remove('bg-emerald-900/60', 'border-emerald-500/50', 'text-white');
+        btn.classList.add('bg-surfaceMuted/80', 'border-borderDark', 'text-slate-400');
+        btn.setAttribute('aria-selected', 'false');
+      });
+
+      button.classList.remove('bg-surfaceMuted/80', 'border-borderDark', 'text-slate-400');
+      button.classList.add('bg-emerald-900/60', 'border-emerald-500/50', 'text-white');
+      button.setAttribute('aria-selected', 'true');
+
+      // Filter Cards with fade
+      cards.forEach(card => {
+        const category = card.getAttribute('data-category');
+        if (filter === 'all' || category === filter) {
+          card.style.display = 'flex';
+          setTimeout(() => {
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+          }, 10);
+        } else {
+          card.style.opacity = '0';
+          card.style.transform = 'translateY(8px)';
+          setTimeout(() => {
+            card.style.display = 'none';
+          }, 200);
+        }
+      });
+    });
+  });
+
+  // Modal Details Functions
+  const modal = document.getElementById('components-modal');
+  let activeBuildKey = null;
+
+  function openBuildModal(buildKey) {
+    activeBuildKey = buildKey;
+    const data = buildsDatabase[buildKey];
+    if (!data) return;
+
+    document.getElementById('modal-title').textContent = data.title;
+    document.getElementById('modal-subtitle').textContent = data.subtitle;
+    document.getElementById('modal-tag').textContent = data.tag;
+    document.getElementById('modal-category').textContent = data.category;
+    document.getElementById('modal-total').textContent = data.total;
+
+    const customLink = document.getElementById('modal-custom-link');
+    if (customLink) {
+      customLink.href = `custom-build.html?budget=${data.budget}`;
+    }
+
+    const listContainer = document.getElementById('modal-parts-list');
+    listContainer.innerHTML = '';
+
+    data.parts.forEach(part => {
+      const row = document.createElement('div');
+      row.className = 'flex items-center justify-between p-2.5 rounded-lg bg-surfaceMuted/60 border border-borderDark/60 hover:border-slate-600 transition text-xs';
+      row.innerHTML = `
+        <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
+          <span class="font-mono text-[10px] uppercase text-emerald-400 min-w-[120px] font-semibold">${part.type}</span>
+          <span class="text-slate-200 font-medium">${part.name}</span>
+        </div>
+        <span class="font-mono font-semibold text-slate-300 ml-2 whitespace-nowrap">${part.price}</span>
+      `;
+      listContainer.appendChild(row);
+    });
+
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeBuildModal() {
+    modal.classList.add('hidden');
+    document.body.style.overflow = 'auto';
+  }
+
+  // Close on escape key
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+      closeBuildModal();
+    }
+  });
+
+  // Copy specs action
+  const modalCopyBtn = document.getElementById('modal-copy-btn');
+  if (modalCopyBtn) {
+    modalCopyBtn.addEventListener('click', () => {
+      const data = buildsDatabase[activeBuildKey];
+      if (!data) return;
+      let text = `Rigwise Budget Build (${data.title}):\n`;
+      data.parts.forEach(p => {
+        text += `• ${p.type}: ${p.name} (${p.price})\n`;
+      });
+      text += `\nTotal: ${data.total}`;
+      navigator.clipboard.writeText(text).then(() => {
+        const orig = modalCopyBtn.innerHTML;
+        modalCopyBtn.innerHTML = `<span>✓</span><span>Copied!</span>`;
+        setTimeout(() => modalCopyBtn.innerHTML = orig, 1800);
+      });
+    });
+  }
+
+  // Add all parts to cart action
+  const modalAddCartBtn = document.getElementById('modal-add-cart-btn');
+  if (modalAddCartBtn) {
+    modalAddCartBtn.addEventListener('click', () => {
+      const data = buildsDatabase[activeBuildKey];
+      if (!data) return;
+      const STORAGE_KEY = 'rigwise-demo-cart-v1';
+      let cart = [];
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) cart = JSON.parse(raw);
+        if (!Array.isArray(cart)) cart = [];
+      } catch (e) { cart = []; }
+
+      data.parts.forEach((p, idx) => {
+        const itemId = `build-${data.id}-${idx}`;
+        const existing = cart.find(item => item.id === itemId);
+        if (existing) {
+          existing.quantity = Math.min(25, (existing.quantity || 1) + 1);
+        } else {
+          cart.push({
+            id: itemId,
+            name: `${p.name}`,
+            category: p.type,
+            price: p.rawPrice || 0,
+            quantity: 1,
+            offer: null
+          });
+        }
+      });
+
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
+        window.dispatchEvent(new CustomEvent('rigwise:cart-updated', { detail: cart }));
+        window.dispatchEvent(new Event('storage'));
+      } catch (e) {}
+
+      updateCartCount();
+
+      const orig = modalAddCartBtn.innerHTML;
+      modalAddCartBtn.innerHTML = `<span>✓</span><span>Added 8 Parts!</span>`;
+      setTimeout(() => modalAddCartBtn.innerHTML = orig, 2000);
+    });
+  }
+
+  // Cart badge update
+  function updateCartCount() {
+    const countBadge = document.getElementById('header-cart-count');
+    if (!countBadge) return;
+    try {
+      const raw = localStorage.getItem('rigwise-demo-cart-v1');
+      if (raw) {
+        const cart = JSON.parse(raw);
+        if (Array.isArray(cart)) {
+          const total = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+          countBadge.textContent = total;
+          return;
+        }
+      }
+    } catch(e) {}
+    countBadge.textContent = '0';
+  }
+
+  updateCartCount();
+  window.addEventListener('storage', updateCartCount);
+  window.addEventListener('rigwise:cart-updated', updateCartCount);
+
+  // Check URL params for direct tier selection (e.g. ?tier=esports or ?budget=80000)
+  const urlParams = new URLSearchParams(window.location.search);
+  const tierParam = urlParams.get('tier');
+  const budgetParam = urlParams.get('budget');
+
+  if (tierParam && buildsDatabase[tierParam]) {
+    openBuildModal(tierParam);
+  } else if (budgetParam) {
+    const bNum = parseInt(budgetParam, 10);
+    let matchedTier = 'starter';
+    if (bNum >= 200000) matchedTier = 'enthusiast';
+    else if (bNum >= 130000) matchedTier = 'creator';
+    else if (bNum >= 95000) matchedTier = 'balanced';
+    else if (bNum >= 75000) matchedTier = 'esports';
+    openBuildModal(matchedTier);
+  }
+</script>
+<!-- END: InteractiveScripts -->
+
 </body>
 </html>

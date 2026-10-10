@@ -1,149 +1,724 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html class="scroll-smooth dark" lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f4f5f2">
-  <meta name="description" content="Build a custom PC, find a budget recommendation, or shop individual PC parts.">
-  <title>Rigwise — your next PC, your way</title>
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/responsive.css">
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta name="description" content="Build a custom PC, find a budget recommendation, or shop individual PC parts. Your choices, your pace."/>
+  <title>Rigwise - A PC that fits your kind of you</title>
+  <!-- Tailwind CSS v3 with forms and container queries -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              green: '#10b981',
+              lightGreen: '#34d399',
+              darkGreen: '#064e3b',
+              accent: '#059669',
+              tint: '#022c22',
+              dark: '#080d11',
+              cardBg: '#10161d',
+              elevated: '#151e27',
+              border: 'rgba(16, 185, 129, 0.15)',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+          },
+          animation: {
+            'pulse-subtle': 'pulseSlow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'spin-slow': 'spin 18s linear infinite',
+            'spin-reverse-slow': 'spinReverse 24s linear infinite',
+            'float-slow': 'float 7s ease-in-out infinite',
+            'float-slow-2': 'floatAlt 9s ease-in-out infinite',
+            'glow-line': 'shimmer 2.5s infinite',
+            'eq-1': 'eq1 2.2s ease-in-out infinite alternate',
+            'eq-2': 'eq2 1.8s ease-in-out infinite alternate',
+            'eq-3': 'eq3 2.5s ease-in-out infinite alternate',
+            'aurora': 'auroraMove 14s ease-in-out infinite alternate',
+          },
+          keyframes: {
+            pulseSlow: {
+              '0%, 100%': { transform: 'scale(1)', opacity: '0.4' },
+              '50%': { transform: 'scale(1.08)', opacity: '0.85' }
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0px) translateX(0px)' },
+              '50%': { transform: 'translateY(-14px) translateX(8px)' }
+            },
+            floatAlt: {
+              '0%, 100%': { transform: 'translateY(0px) translateX(0px)' },
+              '50%': { transform: 'translateY(12px) translateX(-10px)' }
+            },
+            spinReverse: {
+              from: { transform: 'rotate(360deg)' },
+              to: { transform: 'rotate(0deg)' }
+            },
+            auroraMove: {
+              '0%': { transform: 'translate(0, 0) scale(1)' },
+              '50%': { transform: 'translate(40px, -30px) scale(1.15)' },
+              '100%': { transform: 'translate(-20px, 20px) scale(0.95)' }
+            },
+            eq1: {
+              '0%': { height: '35%' },
+              '100%': { height: '85%' }
+            },
+            eq2: {
+              '0%': { height: '50%' },
+              '100%': { height: '95%' }
+            },
+            eq3: {
+              '0%': { height: '25%' },
+              '100%': { height: '70%' }
+            },
+            shimmer: {
+              '0%': { backgroundPosition: '-200% 0' },
+              '100%': { backgroundPosition: '200% 0' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style data-purpose="typography">
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+  </style>
+  <style data-purpose="layout-tweaks">
+    .card-dark {
+      background: radial-gradient(130% 100% at 50% 0%, rgba(26, 38, 49, 0.72) 0%, rgba(13, 19, 25, 0.88) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5), inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
+    }
+    .card-dark:hover {
+      border-color: rgba(52, 211, 153, 0.35);
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.7), 0 0 20px -2px rgba(16, 185, 129, 0.18), inset 0 1px 0 0 rgba(52, 211, 153, 0.2);
+    }
+    .hero-panel-dark {
+      background: radial-gradient(circle at 75% 25%, rgba(16, 36, 32, 0.8) 0%, rgba(11, 19, 22, 0.95) 70%, rgba(8, 14, 17, 0.98) 100%);
+      border: 1px solid rgba(52, 211, 153, 0.2);
+      box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.8), inset 0 1px 1px 0 rgba(52, 211, 153, 0.25);
+    }
+    .ambient-mesh-dark {
+      background: 
+        radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.09) 0px, transparent 50%),
+        radial-gradient(at 100% 10%, rgba(5, 150, 105, 0.08) 0px, transparent 45%),
+        radial-gradient(at 50% 60%, rgba(4, 120, 87, 0.06) 0px, transparent 60%),
+        radial-gradient(at 80% 100%, rgba(16, 185, 129, 0.07) 0px, transparent 50%),
+        #090e13;
+    }
+    /* Smooth accordion content transition */
+    .faq-answer {
+      transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, margin 0.3s ease;
+    }
+    /* Glow text effect */
+    .glow-mint {
+      text-shadow: 0 0 18px rgba(52, 211, 153, 0.4);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
 </head>
-<body>
-  <header class="site-header">
-    <a class="brand" href="index.html" aria-label="Rigwise home">
-      <span class="brand-mark" aria-hidden="true">R</span>
-      <span>rigwise<span class="brand-period">.</span></span>
-    </a>
-    <nav class="site-nav" aria-label="Main Navigation">
-      <a class="site-nav-link" href="custom-build.html">Custom Builder</a>
-      <a class="site-nav-link" href="recommended-builds.html">Budget Builds</a>
-      <a class="site-nav-link" href="shop-parts.html">Shop Parts</a>
-    </nav>
-    <div class="nav-actions">
-      <div class="gooey-search-box header-gooey-search" id="header-gooey-search">
-        <div class="gooey-inner">
-          <div class="gooey-search-btn" id="header-gooey-btn" role="button" tabindex="0" aria-label="Search catalog">
-            <span class="gooey-search-label">
-              <svg width="12" height="12" viewBox="0 0 15 15" fill="none"><path d="M10 6.5C10 8.433 8.433 10 6.5 10C4.567 10 3 8.433 3 6.5C3 4.567 4.567 3 6.5 3C8.433 3 10 4.567 10 6.5ZM9.30884 10.0159C8.53901 10.6318 7.56251 11 6.5 11C4.01472 11 2 8.98528 2 6.5C2 4.01472 4.01472 2 6.5 2C8.98528 2 11 4.01472 11 6.5C11 7.56251 10.6318 8.53901 10.0159 9.30884L12.8536 12.1464C13.0488 12.3417 13.0488 12.6583 12.8536 12.8536C12.6583 13.0488 12.3417 13.0488 12.1464 12.8536L9.30884 10.0159Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></svg>
-              <span>Search</span>
-            </span>
-            <input class="gooey-search-input" id="header-search-input" type="search" placeholder="Search parts or builds…" autocomplete="off" aria-label="Search catalog">
-          </div>
-          <div class="gooey-search-bubble" id="header-gooey-bubble" aria-label="Submit search">
-            <svg viewBox="0 0 15 15" fill="none"><path d="M10 6.5C10 8.433 8.433 10 6.5 10C4.567 10 3 8.433 3 6.5C3 4.567 4.567 3 6.5 3C8.433 3 10 4.567 10 6.5ZM9.30884 10.0159C8.53901 10.6318 7.56251 11 6.5 11C4.01472 11 2 8.98528 2 6.5C2 4.01472 4.01472 2 6.5 2C8.98528 2 11 4.01472 11 6.5C11 7.56251 10.6318 8.53901 10.0159 9.30884L12.8536 12.1464C13.0488 12.3417 13.0488 12.6583 12.8536 12.8536C12.6583 13.0488 12.3417 13.0488 12.1464 12.8536L9.30884 10.0159Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></svg>
+<body class="bg-[#090e13] text-[#f1f5f9] min-h-screen selection:bg-emerald-500 selection:text-black relative ambient-mesh-dark">
+  <!-- Ambient Lighting Accents behind sections with floating glow keyframes -->
+  <div aria-hidden="true" class="pointer-events-none fixed inset-0 overflow-hidden -z-10">
+    <div class="absolute -top-40 right-[-5%] w-[700px] h-[700px] rounded-full bg-emerald-500/10 blur-[130px] animate-aurora"></div>
+    <div class="absolute top-[32%] -left-44 w-[600px] h-[600px] rounded-full bg-teal-500/10 blur-[140px] animate-float-slow"></div>
+    <div class="absolute bottom-10 right-5 w-[650px] h-[650px] rounded-full bg-emerald-600/8 blur-[150px] animate-float-slow-2"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[850px] rounded-full bg-emerald-950/20 blur-[160px] pointer-events-none"></div>
+  </div>
+
+  <!-- BEGIN: Navigation -->
+  <header class="sticky top-0 z-50 w-full bg-[#090e13]/85 backdrop-blur-xl border-b border-white/10 transition-all duration-200" data-purpose="main-navigation">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
+      <!-- Brand Logo -->
+      <a class="flex items-center gap-2.5 group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded-lg p-1" data-purpose="brand-logo" href="index.html" aria-label="Rigwise Home">
+        <div class="w-7 h-7 bg-emerald-500 rounded-md flex items-center justify-center text-black font-extrabold text-sm tracking-tight shadow-[0_0_16px_rgba(16,185,129,0.55)] transition-all duration-300 group-hover:scale-105 group-hover:bg-emerald-400 group-hover:shadow-[0_0_24px_rgba(52,211,153,0.8)]">
+          R
+        </div>
+        <span class="text-xl font-bold tracking-tight text-white">rigwise<span class="text-emerald-400 glow-mint">.</span></span>
+      </a>
+
+      <!-- Center Nav Links -->
+      <nav class="hidden md:flex items-center gap-8 text-[13.5px] font-medium text-slate-300" aria-label="Main Navigation">
+        <a class="relative py-1 hover:text-emerald-400 transition-colors after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1.5px] after:bg-emerald-400 hover:after:w-full after:transition-all after:duration-200" href="custom-build.html">Custom Builder</a>
+        <a class="relative py-1 hover:text-emerald-400 transition-colors after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1.5px] after:bg-emerald-400 hover:after:w-full after:transition-all after:duration-200" href="recommended-builds.html">Budget Builds</a>
+        <a class="relative py-1 hover:text-emerald-400 transition-colors after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1.5px] after:bg-emerald-400 hover:after:w-full after:transition-all after:duration-200" href="shop-parts.html">Shop Parts</a>
+      </nav>
+
+      <!-- Right Action Buttons -->
+      <div class="flex items-center gap-3">
+        <!-- Interactive Search Input & Button -->
+        <div class="relative group" id="search-wrapper">
+          <button aria-label="Search components" class="flex items-center gap-2 px-3 py-1.5 text-xs font-semibold text-slate-200 bg-[#141c24]/90 rounded-full border border-white/10 hover:border-emerald-500/50 hover:bg-[#1a2530] hover:text-white hover:shadow-[0_0_12px_rgba(16,185,129,0.2)] focus:outline-none focus:ring-2 focus:ring-emerald-400/40 transition-all shadow-xs" id="search-toggle-btn" type="button">
+            <svg class="w-3.5 h-3.5 text-slate-400 group-hover:text-emerald-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M21 21l-4.35-4.35M16.65 11a5.65 5.65 0 11-11.3 0 5.65 5.65 0 0111.3 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+            </svg>
+            <span id="search-label">Search</span>
+          </button>
+          <div class="hidden absolute right-0 top-0 w-64 h-full bg-[#121a22] rounded-full border border-emerald-500 shadow-[0_0_18px_rgba(16,185,129,0.3)] flex items-center px-3 z-20" id="search-expanded-bar">
+            <svg class="w-3.5 h-3.5 text-emerald-400 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M21 21l-4.35-4.35M16.65 11a5.65 5.65 0 11-11.3 0 5.65 5.65 0 0111.3 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+            </svg>
+            <input class="w-full text-xs bg-transparent border-0 focus:ring-0 p-0 text-white placeholder-slate-400 focus:outline-none" id="search-input" placeholder="Search RTX 4070, Ryzen, SSD..." type="text" autocomplete="off"/>
+            <button aria-label="Close search" class="text-xs text-slate-400 hover:text-slate-200 ml-1 px-1 cursor-pointer" id="search-close-btn" type="button">✕</button>
           </div>
         </div>
-        <div class="gooey-results-dropdown" id="header-gooey-results" role="listbox"></div>
+
+        <!-- Cart Button with interactive notification micro-interaction -->
+        <div class="relative">
+          <button class="relative flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-200 bg-[#141c24]/90 rounded-full border border-white/10 hover:border-emerald-500/50 hover:bg-[#1a2530] hover:text-white hover:shadow-[0_0_12px_rgba(16,185,129,0.2)] focus:outline-none focus:ring-2 focus:ring-emerald-400/40 transition-all shadow-xs group cursor-pointer" id="cart-button" type="button" aria-label="View build cart">
+            <span>Cart</span>
+            <span class="text-[11px] font-bold text-emerald-300 bg-emerald-950/80 px-1.5 py-0.2 rounded-full border border-emerald-500/40 group-hover:bg-emerald-500 group-hover:text-black transition-all shadow-[0_0_6px_rgba(16,185,129,0.25)]" id="cart-counter">0</span>
+          </button>
+          <!-- Cart preview tooltip popup -->
+          <div class="hidden absolute right-0 mt-2 w-64 p-3.5 bg-[#121a22] rounded-xl shadow-2xl border border-emerald-500/25 z-50 text-xs backdrop-blur-xl" id="cart-popup">
+            <div class="font-bold text-white mb-1.5 flex items-center justify-between">
+              <span class="flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Your Build Cart
+              </span>
+              <span class="text-[10px] text-emerald-300" id="cart-popup-total">₹0</span>
+            </div>
+            <div class="text-[11px] text-slate-400 leading-relaxed mb-2" id="cart-popup-msg">Your custom configuration is currently empty. Start building below!</div>
+            <a class="block text-center py-1.5 px-3 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 font-semibold text-[11px] border border-emerald-500/30 transition-colors" href="shop-parts.html#demo-cart">
+              Open Demo Cart ↗
+            </a>
+          </div>
+        </div>
+
+        <!-- Start Building Primary Action Button -->
+        <a class="relative inline-flex items-center gap-1.5 bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-black text-xs font-bold px-4 py-2 rounded-full transition-all duration-300 shadow-[0_0_18px_rgba(16,185,129,0.4)] hover:shadow-[0_0_26px_rgba(52,211,153,0.7)] hover:scale-[1.03] active:scale-[0.98] group overflow-hidden" href="build-options.html">
+          <span class="relative z-10">Start building</span>
+          <span class="relative z-10 text-xs font-black transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">↗</span>
+          <div class="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out"></div>
+        </a>
       </div>
-      <a class="nav-cart-btn" href="shop-parts.html#demo-cart">Cart <span class="nav-cart-count" id="nav-cart-count">0</span></a>
-      <a class="header-cta shiny-cta shiny-cta-compact" href="build-options.html"><span>Start building <span aria-hidden="true">↗</span></span></a>
     </div>
   </header>
-  <main class="landing-main">
-    <section class="hero landing-hero" aria-labelledby="hero-title">
-      <div class="hero-copy">
-        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> YOUR BUILD STARTS HERE</p>
-        <h1 id="hero-title">A PC that fits<br><span>your kind of you.</span></h1>
-        <p class="hero-description">Build a complete PC your way, start from a budget recommendation, or shop only the parts you need. Your choices, your pace.</p>
-        <a class="primary-button landing-button shiny-cta" href="build-options.html"><span>Choose how to build <span aria-hidden="true">→</span></span></a>
-        <div class="hero-quick-tags" aria-label="Popular budget targets">
-          <span class="hero-quick-label">POPULAR BUDGETS:</span>
-          <a class="hero-quick-pill" href="recommended-builds.html?tier=starter#tier-detail">₹50k · Everyday Starter</a>
-          <a class="hero-quick-pill" href="recommended-builds.html?tier=esports#tier-detail">₹80k · 1080p Gaming</a>
-          <a class="hero-quick-pill" href="recommended-builds.html?tier=balanced#tier-detail">₹1L · 1440p All-Rounder</a>
-          <a class="hero-quick-pill" href="recommended-builds.html?tier=enthusiast#tier-detail">₹2.5L · 4K Enthusiast</a>
+  <!-- END: Navigation -->
+
+  <!-- BEGIN: MainContent -->
+  <main class="max-w-7xl mx-auto px-6 lg:px-12 pt-10 pb-20 space-y-16">
+    <!-- BEGIN: HeroSection -->
+    <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center" data-purpose="hero-section">
+      <!-- Left Column: Copy & Actions -->
+      <div class="lg:col-span-7 pr-0 lg:pr-6">
+        <!-- Status indicator tag with glowing pulse dot -->
+        <div class="inline-flex items-center gap-2 mb-6 px-3.5 py-1.5 rounded-full bg-emerald-950/60 border border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.15)] backdrop-blur-md">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]"></span>
+          </span>
+          <span class="text-[11px] font-bold tracking-wider text-emerald-300 uppercase">Your Build Starts Here</span>
+        </div>
+
+        <!-- Main Heading -->
+        <h1 class="text-5xl lg:text-[62px] font-extrabold tracking-tight text-white leading-[1.12] mb-6">
+          A PC that fits <br/>
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-300 relative inline-block">
+            your kind of you.
+            <span class="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500/40 via-emerald-400/80 to-transparent rounded-full blur-[1px]"></span>
+          </span>
+        </h1>
+
+        <!-- Subheading -->
+        <p class="text-slate-300 text-sm md:text-base leading-relaxed max-w-xl mb-8 font-normal">
+          Build a complete PC your way, start from a budget recommendation, or shop only the parts you need. Your choices, your pace.
+        </p>
+
+        <!-- Primary CTA Button & Preset Preview -->
+        <div class="mb-10 flex items-center gap-4 flex-wrap">
+          <a class="relative inline-flex items-center gap-3 bg-gradient-to-r from-emerald-500 to-emerald-400 hover:from-emerald-400 hover:to-teal-300 text-black text-sm font-bold px-6 py-3.5 rounded-full transition-all duration-300 shadow-[0_0_24px_rgba(16,185,129,0.45)] hover:shadow-[0_0_36px_rgba(52,211,153,0.75)] hover:-translate-y-0.5 active:translate-y-0 group overflow-hidden" href="build-options.html">
+            <span class="relative z-10">Choose how to build</span>
+            <span class="relative z-10 group-hover:translate-x-1 transition-transform duration-200">→</span>
+            <div class="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out"></div>
+          </a>
+
+          <!-- Interactive Active Preset Spec Preview Pill -->
+          <a class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#121a22]/90 border border-emerald-500/40 text-xs text-slate-200 shadow-[0_0_15px_rgba(16,185,129,0.12)] backdrop-blur-md transition-all duration-300 hover:border-emerald-400 cursor-pointer group/pill" id="preset-spec-pill" href="recommended-builds.html?tier=esports#tier-detail">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.9)] animate-pulse"></span>
+            <span class="text-[11.5px] font-medium text-slate-300" id="preset-spec-text">Preset: <strong class="text-emerald-300 font-semibold">1080p Esports &amp; High FPS</strong></span>
+            <span class="text-[10px] text-emerald-400 font-bold ml-1 transition-transform group-hover/pill:translate-x-0.5">View ↗</span>
+          </a>
+        </div>
+
+        <!-- Popular Budgets Chips with Rich Interactive Selector -->
+        <div class="space-y-3" id="budget-selector-section">
+          <div class="flex items-center gap-2 flex-wrap text-xs">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mr-1">Popular Budgets:</span>
+            <button class="budget-pill px-3.5 py-1.5 rounded-full bg-[#131b23] border border-white/10 text-slate-300 text-xs font-medium cursor-pointer hover:border-emerald-500/60 hover:text-white hover:shadow-[0_0_12px_rgba(16,185,129,0.2)] transition-all duration-200 focus:outline-none" data-budget="50k" data-tier="starter" data-spec="Everyday Multitasker (Ryzen 5 5600G · 6-core APU)" type="button">
+              ₹50k - Everyday Starter
+            </button>
+            <button class="budget-pill active-pill px-3.5 py-1.5 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 text-black border border-emerald-400 text-xs font-bold cursor-pointer shadow-[0_0_18px_rgba(16,185,129,0.5)] hover:brightness-110 transition-all duration-200 focus:outline-none" data-budget="80k" data-tier="esports" data-spec="1080p Esports &amp; High FPS (Ryzen 5 5600 + RX 7600)" type="button">
+              ₹80k - 1080p Gaming
+            </button>
+            <button class="budget-pill px-3.5 py-1.5 rounded-full bg-[#131b23] border border-white/10 text-slate-300 text-xs font-medium cursor-pointer hover:border-emerald-500/60 hover:text-white hover:shadow-[0_0_12px_rgba(16,185,129,0.2)] transition-all duration-200 focus:outline-none" data-budget="1L" data-tier="balanced" data-spec="1440p High-Setting All-Rounder (Ryzen 5 7500F + RTX 5060)" type="button">
+              ₹1L - 1440p All-Rounder
+            </button>
+          </div>
+          <div>
+            <button class="budget-pill inline-block px-3.5 py-1.5 rounded-full bg-[#131b23] border border-white/10 text-slate-300 text-xs font-medium cursor-pointer hover:border-emerald-500/60 hover:text-white hover:shadow-[0_0_12px_rgba(16,185,129,0.2)] transition-all duration-200 focus:outline-none" data-budget="2.5L" data-tier="enthusiast" data-spec="4K Ultra Ray-Tracing &amp; Workstation (Ryzen 7 7800X3D + 64GB DDR5)" type="button">
+              ₹2.5L - 4K Enthusiast
+            </button>
+          </div>
         </div>
       </div>
-      <div class="hero-art" aria-label="Illustration of a desktop computer">
-        <div class="orbit orbit-one"></div>
-        <div class="orbit orbit-two"></div>
-        <div class="art-glow"></div>
-        <div class="computer">
-          <div class="computer-screen">
-            <div class="screen-top"><span></span><span></span><span></span></div>
-            <div class="screen-content">
-              <div class="screen-bars"><i></i><i></i><i></i></div>
-              <div class="screen-graphic"><span></span><span></span><span></span><span></span><span></span></div>
-              <div class="screen-caption"></div>
+
+      <!-- Right Column: Hero Graphic Canvas / Mockup -->
+      <div class="lg:col-span-5">
+        <div class="hero-panel-dark rounded-2xl p-6 lg:p-8 relative overflow-hidden flex flex-col justify-between min-h-[380px] hover:shadow-[0_0_40px_rgba(16,185,129,0.25)] hover:border-emerald-400/50 transition-all duration-500 group">
+          <!-- Ambient internal glowing aura -->
+          <div class="absolute -top-12 -right-12 w-52 h-52 bg-emerald-500/20 rounded-full blur-3xl group-hover:bg-emerald-400/30 transition-all duration-500"></div>
+          <div class="absolute -bottom-12 -left-12 w-52 h-52 bg-teal-500/15 rounded-full blur-3xl"></div>
+
+          <!-- Top Tag -->
+          <div class="flex justify-end relative z-10">
+            <span class="text-[10px] font-bold uppercase tracking-widest text-emerald-300 bg-emerald-950/80 px-2.5 py-0.5 rounded-full border border-emerald-500/40 backdrop-blur-md shadow-[0_0_10px_rgba(16,185,129,0.2)]">Thoughtful Builds</span>
+          </div>
+
+          <!-- Stylized Rig & Monitor Graphic Centerpiece -->
+          <div class="my-auto py-4 flex items-center justify-center relative">
+            <!-- Decorative backdrop animated rings with breathing pulse -->
+            <div class="absolute w-52 h-52 rounded-full border border-emerald-500/30 bg-emerald-500/5 animate-pulse-subtle -z-0 shadow-[0_0_30px_rgba(16,185,129,0.1)]"></div>
+            <div class="absolute w-64 h-64 rounded-full border border-emerald-500/20 animate-spin-reverse-slow -z-0"></div>
+            <div class="absolute w-80 h-80 rounded-full border border-dashed border-emerald-400/25 animate-spin-slow -z-0"></div>
+
+            <div class="flex items-end justify-center gap-3 relative z-10 scale-95 md:scale-100 transition-transform duration-300 group-hover:scale-[1.03]">
+              <!-- Monitor -->
+              <div class="flex flex-col items-center">
+                <div class="w-48 h-32 bg-[#0a1210] rounded-lg p-2.5 shadow-[0_12px_30px_rgba(0,0,0,0.85)] border border-emerald-500/40 flex flex-col justify-between relative overflow-hidden group/screen backdrop-blur-md">
+                  <!-- Subtle monitor glare -->
+                  <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-white/10 to-transparent pointer-events-none"></div>
+
+                  <!-- Header dot -->
+                  <div class="flex gap-1 items-center">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)] animate-pulse"></span>
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400/50"></span>
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400/50"></span>
+                    <span class="ml-auto text-[8px] font-mono text-emerald-300 font-bold tracking-wider">FPS: 165</span>
+                  </div>
+
+                  <!-- Chart bars with interactive hover and smooth visual heights -->
+                  <div class="flex items-end justify-center gap-2 h-14 pb-1">
+                    <div class="w-3 bg-gradient-to-t from-emerald-600 to-emerald-400 rounded-xs h-7 hover:h-9 hover:brightness-125 transition-all duration-300 shadow-[0_0_6px_rgba(52,211,153,0.4)] animate-eq-1"></div>
+                    <div class="w-3 bg-gradient-to-t from-emerald-500 to-teal-300 rounded-xs h-11 hover:h-12 hover:brightness-125 shadow-[0_0_12px_rgba(52,211,153,0.8)] transition-all duration-300 animate-eq-2"></div>
+                    <div class="w-3 bg-gradient-to-t from-emerald-600 to-emerald-400 rounded-xs h-9 hover:h-11 hover:brightness-125 transition-all duration-300 shadow-[0_0_6px_rgba(52,211,153,0.4)] animate-eq-3"></div>
+                    <div class="w-3 bg-gradient-to-t from-emerald-500 to-teal-300 rounded-xs h-13 hover:h-14 hover:brightness-125 shadow-[0_0_12px_rgba(52,211,153,0.8)] transition-all duration-300 animate-eq-2"></div>
+                    <div class="w-3 bg-gradient-to-t from-emerald-600 to-emerald-400 rounded-xs h-6 hover:h-8 hover:brightness-125 transition-all duration-300 shadow-[0_0_6px_rgba(52,211,153,0.4)] animate-eq-1"></div>
+                  </div>
+
+                  <div class="w-full h-1 bg-[#152720] rounded-full overflow-hidden">
+                    <div class="h-full bg-gradient-to-r from-emerald-500 to-teal-300 w-3/4 rounded-full shadow-[0_0_8px_rgba(52,211,153,0.6)]"></div>
+                  </div>
+                </div>
+
+                <!-- Monitor Stand -->
+                <div class="w-3 h-7 bg-[#22303c] border-x border-white/5 shadow-inner"></div>
+                <div class="w-16 h-2 bg-[#2a3c4a] rounded-full shadow-md border border-white/10"></div>
+              </div>
+
+              <!-- Tower Case -->
+              <div class="w-16 h-36 bg-[#0c1613] rounded-xl p-2 border border-emerald-500/40 shadow-[0_12px_30px_rgba(0,0,0,0.85)] flex flex-col justify-between items-center pb-3 relative">
+                <!-- Power LED button with glowing aura -->
+                <div class="w-2.5 h-2.5 rounded-full border border-emerald-300 bg-emerald-400 shadow-[0_0_14px_rgba(52,211,153,1)] animate-pulse"></div>
+                <!-- Fan cooling ring with animated rotation feel -->
+                <div class="w-8 h-8 rounded-full border border-emerald-500/50 flex items-center justify-center bg-emerald-950/60 relative shadow-[0_0_15px_rgba(16,185,129,0.3)]">
+                  <div class="w-6 h-6 rounded-full border border-dashed border-emerald-400/80 animate-spin-slow"></div>
+                  <div class="absolute w-2 h-2 rounded-full bg-emerald-300 shadow-[0_0_8px_rgba(52,211,153,1)]"></div>
+                </div>
+                <!-- Mesh Vent lines -->
+                <div class="space-y-1 w-full px-1">
+                  <div class="h-0.5 bg-emerald-500/60 rounded shadow-[0_0_4px_rgba(16,185,129,0.4)]"></div>
+                  <div class="h-0.5 bg-emerald-500/60 rounded shadow-[0_0_4px_rgba(16,185,129,0.4)]"></div>
+                  <div class="h-0.5 bg-emerald-500/40 rounded"></div>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="screen-stand"></div>
-          <div class="screen-base"></div>
-          <div class="computer-tower"><span></span><span></span><span></span></div>
-        </div>
-        <span class="art-label art-label-top">THOUGHTFUL BUILDS</span>
-        <span class="art-label art-label-bottom">YOUR BUDGET. YOUR PRIORITIES.</span>
-      </div>
-    </section>
-    <section class="landing-highlights" aria-label="How Rigwise helps">
-      <article><span>01</span><strong>Pick your path</strong><p>Build it yourself, get a budget starting point, or shop for individual parts.</p></article>
-      <article><span>02</span><strong>See the full picture</strong><p>Keep component choices and your estimated total easy to review.</p></article>
-      <article><span>03</span><strong>Check before you buy</strong><p>Compare current listings and double-check part compatibility.</p></article>
-    </section>
-    <section class="landing-stats" aria-label="Platform statistics">
-      <div class="stat-item">
-        <strong class="stat-number">541+</strong>
-        <span>PC Components</span>
-      </div>
-      <div class="stat-item">
-        <strong class="stat-number">15+</strong>
-        <span>Categories</span>
-      </div>
-      <div class="stat-item">
-        <strong class="stat-number">5</strong>
-        <span>Budget Tiers</span>
-      </div>
-      <div class="stat-item">
-        <strong class="stat-number">₹20K–10L</strong>
-        <span>Budget Range</span>
-      </div>
-    </section>
-    <section class="faq-section" aria-labelledby="faq-title">
-      <div class="faq-grid">
-        <div class="faq-copy">
-          <p class="eyebrow">HELP & BUYING GUIDE</p>
-          <h2 id="faq-title">Frequently asked questions.</h2>
-          <p>Everything you need to know about building, comparing live retailer prices, and selecting compatible PC parts.</p>
-        </div>
-        <div class="faq-accordion">
-          <details class="faq-item" open>
-            <summary>How does Rigwise check component compatibility?</summary>
-            <div class="faq-answer">
-              Rigwise cross-verifies processor sockets (e.g. AM4, LGA1700) with matching motherboards, checks memory generation (DDR4 vs DDR5), validates display outputs (APU vs dedicated GPU), and calculates real-time power draw against power supply ratings with a safe headroom margin.
-            </div>
-          </details>
-          <details class="faq-item">
-            <summary>Where do the live prices come from?</summary>
-            <div class="faq-answer">
-              Our pricing service aggregates real-time product listings and shopping search results across premier Indian retailers such as MDComputers and Amazon. In addition, we maintain a baseline catalog estimate so you can design builds even offline.
-            </div>
-          </details>
-          <details class="faq-item">
-            <summary>What budget should I target for gaming in 2026?</summary>
-            <div class="faq-answer">
-              For solid 1080p competitive esports gaming (CS2, Valorant, GTA V), ₹40,000–₹50,000 is a sweet spot. For AAA titles at high 1080p/1440p settings, target ₹70,000–₹1,00,000. Enthusiast 1440p/4K rigs typically range from ₹1,20,000 to ₹1,80,000+.
-            </div>
-          </details>
-          <details class="faq-item">
-            <summary>Can I export or print my quotation to buy locally?</summary>
-            <div class="faq-answer">
-              Yes! You can copy a formatted specification sheet to your clipboard or print a clean quotation with a single click in both the Custom Builder and the Shop Demo Cart. Take it directly to Nehru Place, Lamington Road, SP Road, or order online.
-            </div>
-          </details>
+
+          <!-- Bottom Caption -->
+          <div class="pt-2 flex items-center justify-between relative z-10">
+            <span class="text-[9.5px] font-bold tracking-widest text-slate-400 uppercase">Your budget. Your priorities.</span>
+            <span class="inline-flex items-center gap-1.5 text-[9.5px] font-semibold text-emerald-300">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.9)] animate-pulse"></span> Live Verification
+            </span>
+          </div>
         </div>
       </div>
     </section>
+    <!-- END: HeroSection -->
+
+    <!-- BEGIN: ValuePropositionCards -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-5" data-purpose="three-step-features">
+      <!-- Step 01 -->
+      <a href="build-options.html" class="group card-dark rounded-2xl p-6 transition-all duration-300 flex flex-col justify-between h-40 relative overflow-hidden cursor-pointer hover:-translate-y-1 block">
+        <div class="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-emerald-400 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+        <div>
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold text-emerald-400 tracking-wider">01</span>
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-70 group-hover:opacity-100"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]"></span>
+            </span>
+          </div>
+          <h3 class="text-sm font-bold text-white mt-1 group-hover:text-emerald-300 transition-colors">Pick your path</h3>
+        </div>
+        <p class="text-xs leading-relaxed text-slate-300 group-hover:text-slate-200 transition-colors">
+          Build it yourself, get a budget starting point, or shop for individual parts.
+        </p>
+      </a>
+
+      <!-- Step 02 -->
+      <a href="custom-build.html" class="group card-dark rounded-2xl p-6 transition-all duration-300 flex flex-col justify-between h-40 relative overflow-hidden cursor-pointer hover:-translate-y-1 block">
+        <div class="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-emerald-400 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+        <div>
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold text-emerald-400 tracking-wider">02</span>
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-70 group-hover:opacity-100"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]"></span>
+            </span>
+          </div>
+          <h3 class="text-sm font-bold text-white mt-1 group-hover:text-emerald-300 transition-colors">See the full picture</h3>
+        </div>
+        <p class="text-xs leading-relaxed text-slate-300 group-hover:text-slate-200 transition-colors">
+          Keep component choices and your estimated total easy to review.
+        </p>
+      </a>
+
+      <!-- Step 03 -->
+      <a href="recommended-builds.html" class="group card-dark rounded-2xl p-6 transition-all duration-300 flex flex-col justify-between h-40 relative overflow-hidden cursor-pointer hover:-translate-y-1 block">
+        <div class="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-emerald-400 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+        <div>
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold text-emerald-400 tracking-wider">03</span>
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-70 group-hover:opacity-100"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]"></span>
+            </span>
+          </div>
+          <h3 class="text-sm font-bold text-white mt-1 group-hover:text-emerald-300 transition-colors">Check before you buy</h3>
+        </div>
+        <p class="text-xs leading-relaxed text-slate-300 group-hover:text-slate-200 transition-colors">
+          Compare current listings and double-check part compatibility.
+        </p>
+      </a>
+    </section>
+    <!-- END: ValuePropositionCards -->
+
+    <!-- BEGIN: MetricsSection -->
+    <section class="grid grid-cols-2 md:grid-cols-4 gap-4" data-purpose="metrics-counter">
+      <!-- Metric 1 -->
+      <div class="group card-dark rounded-2xl py-8 px-4 text-center transition-all duration-300 cursor-default hover:-translate-y-1">
+        <div class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-200 tracking-tight group-hover:scale-105 transition-transform duration-300 drop-shadow-[0_0_12px_rgba(52,211,153,0.35)]">541+</div>
+        <div class="text-[11px] font-medium text-slate-300 mt-2 group-hover:text-white transition-colors">PC Components</div>
+      </div>
+      <!-- Metric 2 -->
+      <div class="group card-dark rounded-2xl py-8 px-4 text-center transition-all duration-300 cursor-default hover:-translate-y-1">
+        <div class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-200 tracking-tight group-hover:scale-105 transition-transform duration-300 drop-shadow-[0_0_12px_rgba(52,211,153,0.35)]">15+</div>
+        <div class="text-[11px] font-medium text-slate-300 mt-2 group-hover:text-white transition-colors">Categories</div>
+      </div>
+      <!-- Metric 3 -->
+      <div class="group card-dark rounded-2xl py-8 px-4 text-center transition-all duration-300 cursor-default hover:-translate-y-1">
+        <div class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-200 tracking-tight group-hover:scale-105 transition-transform duration-300 drop-shadow-[0_0_12px_rgba(52,211,153,0.35)]">5</div>
+        <div class="text-[11px] font-medium text-slate-300 mt-2 group-hover:text-white transition-colors">Budget Tiers</div>
+      </div>
+      <!-- Metric 4 -->
+      <div class="group card-dark rounded-2xl py-8 px-4 text-center transition-all duration-300 cursor-default hover:-translate-y-1">
+        <div class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-200 tracking-tight group-hover:scale-105 transition-transform duration-300 drop-shadow-[0_0_12px_rgba(52,211,153,0.35)]">₹20K–10L</div>
+        <div class="text-[11px] font-medium text-slate-300 mt-2 group-hover:text-white transition-colors">Budget Range</div>
+      </div>
+    </section>
+    <!-- END: MetricsSection -->
+
+    <!-- BEGIN: FAQSection -->
+    <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-4" data-purpose="faq-section">
+      <!-- Left Column: FAQ Header Text -->
+      <div class="lg:col-span-5 pr-4">
+        <div class="text-[10.5px] font-bold uppercase tracking-wider text-emerald-400 mb-2">Help &amp; Buying Guide</div>
+        <h2 class="text-3xl lg:text-4xl font-extrabold text-white tracking-tight mb-4">
+          Frequently asked questions.
+        </h2>
+        <p class="text-xs text-slate-300 leading-relaxed max-w-sm">
+          Everything you need to know about building, comparing live retailer prices, and selecting compatible PC parts.
+        </p>
+      </div>
+
+      <!-- Right Column: Accordion List with Smooth Toggle -->
+      <div class="lg:col-span-7 space-y-3" data-purpose="accordion-container" id="faq-accordion-group">
+        <!-- Accordion Item 1 (Initially Expanded) -->
+        <div class="faq-item card-dark rounded-xl overflow-hidden transition-all duration-200 border-emerald-500/40 shadow-[0_0_15px_rgba(16,185,129,0.1)]" data-open="true">
+          <button aria-expanded="true" class="faq-button w-full py-4 px-5 text-left flex items-center justify-between text-xs font-semibold text-white cursor-pointer focus:outline-none focus:bg-white/5" type="button">
+            <span>How does Rigwise check component compatibility?</span>
+            <span class="faq-icon text-emerald-400 text-sm font-bold leading-none transition-transform duration-300 rotate-45">✕</span>
+          </button>
+          <div class="faq-answer px-5 pb-5 pt-0 text-[11px] text-slate-300 leading-relaxed border-t border-transparent" style="max-height: 200px; opacity: 1;">
+            Rigwise cross-verifies processor sockets (e.g. AM4, LGA1700) with matching motherboards, checks memory generation (DDR4 vs DDR5), validates display outputs (APU vs dedicated GPU), and calculates real-time power draw against power supply ratings with a safe headroom margin.
+          </div>
+        </div>
+
+        <!-- Accordion Item 2 -->
+        <div class="faq-item card-dark rounded-xl overflow-hidden transition-all duration-200" data-open="false">
+          <button aria-expanded="false" class="faq-button w-full py-4 px-5 text-left flex items-center justify-between text-xs font-semibold text-white cursor-pointer hover:bg-white/5 transition-colors focus:outline-none focus:bg-white/5" type="button">
+            <span>Where do the live prices come from?</span>
+            <span class="faq-icon text-slate-400 text-base leading-none font-normal transition-transform duration-300">+</span>
+          </button>
+          <div class="faq-answer px-5 pb-0 pt-0 text-[11px] text-slate-300 leading-relaxed overflow-hidden" style="max-height: 0px; opacity: 0;">
+            Prices are refreshed continuously from authorized Indian hardware retailers, e-commerce distributors, and official brand outlets to present genuine stock availability and best available deal coupons.
+          </div>
+        </div>
+
+        <!-- Accordion Item 3 -->
+        <div class="faq-item card-dark rounded-xl overflow-hidden transition-all duration-200" data-open="false">
+          <button aria-expanded="false" class="faq-button w-full py-4 px-5 text-left flex items-center justify-between text-xs font-semibold text-white cursor-pointer hover:bg-white/5 transition-colors focus:outline-none focus:bg-white/5" type="button">
+            <span>What budget should I target for gaming in 2026?</span>
+            <span class="faq-icon text-slate-400 text-base leading-none font-normal transition-transform duration-300">+</span>
+          </button>
+          <div class="faq-answer px-5 pb-0 pt-0 text-[11px] text-slate-300 leading-relaxed overflow-hidden" style="max-height: 0px; opacity: 0;">
+            For competitive 1080p esports, ₹50k–₹65k is a strong sweet spot. For smooth 1440p gaming with high fidelity and ray tracing on newer titles, targeting ₹80k–₹1.1L ensures longevity and current DDR5 platform support.
+          </div>
+        </div>
+
+        <!-- Accordion Item 4 -->
+        <div class="faq-item card-dark rounded-xl overflow-hidden transition-all duration-200" data-open="false">
+          <button aria-expanded="false" class="faq-button w-full py-4 px-5 text-left flex items-center justify-between text-xs font-semibold text-white cursor-pointer hover:bg-white/5 transition-colors focus:outline-none focus:bg-white/5" type="button">
+            <span>Can I export or print my quotation to buy locally?</span>
+            <span class="faq-icon text-slate-400 text-base leading-none font-normal transition-transform duration-300">+</span>
+          </button>
+          <div class="faq-answer px-5 pb-0 pt-0 text-[11px] text-slate-300 leading-relaxed overflow-hidden" style="max-height: 0px; opacity: 0;">
+            Yes! Rigwise enables one-click PDF quotation exports, sharable configuration links, and printable itemized component checklists designed specifically for verifying prices at local offline computer markets.
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- END: FAQSection -->
   </main>
-  <footer class="site-footer">
-    <a class="brand footer-brand" href="index.html"><span class="brand-mark" aria-hidden="true">R</span><span>rigwise<span class="brand-period">.</span></span></a>
-    <p>Thoughtful PC builds, built around you.</p>
-    <a class="footer-build-link" href="build-options.html">Choose a build <span aria-hidden="true">↗</span></a>
+  <!-- END: MainContent -->
+
+  <!-- BEGIN: MainFooter -->
+  <footer class="w-full bg-[#080d11]/95 border-t border-white/10 py-8 backdrop-blur-md" data-purpose="footer">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+      <!-- Logo in footer -->
+      <a class="flex items-center gap-2 group" href="index.html">
+        <div class="w-5 h-5 bg-emerald-500 rounded flex items-center justify-center text-black font-extrabold text-[10px] shadow-[0_0_10px_rgba(16,185,129,0.5)] transition-transform group-hover:scale-105">
+          R
+        </div>
+        <span class="text-sm font-bold tracking-tight text-white">rigwise<span class="text-emerald-400 glow-mint">.</span></span>
+      </a>
+
+      <!-- Slogan -->
+      <div class="text-slate-400 text-[11px]">
+        Thoughtful PC builds, built around you.
+      </div>
+
+      <!-- Footer Link -->
+      <div>
+        <a class="font-semibold text-slate-200 hover:text-emerald-400 transition-colors flex items-center gap-1 text-[11px] group" href="build-options.html">
+          <span>Choose a build</span> <span class="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform text-emerald-400">↗</span>
+        </a>
+      </div>
+    </div>
   </footer>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/DrawSVGPlugin.min.js"></script>
-  <script type="module" src="js/ui-enhancements.js"></script>
-  <script type="module" src="js/gooey-search.js"></script>
-  <script type="module" src="js/draw-underline.js"></script>
+  <!-- END: MainFooter -->
+
+  <!-- INTERACTIVITY SCRIPT -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Budget Pills Interactive Selector & Deep Linking
+      const budgetPills = document.querySelectorAll('.budget-pill');
+      const specPill = document.getElementById('preset-spec-pill');
+      const specText = document.getElementById('preset-spec-text');
+
+      const tierLinks = {
+        '50k': 'recommended-builds.html?tier=starter#tier-detail',
+        '80k': 'recommended-builds.html?tier=esports#tier-detail',
+        '1L': 'recommended-builds.html?tier=balanced#tier-detail',
+        '2.5L': 'recommended-builds.html?tier=enthusiast#tier-detail'
+      };
+
+      budgetPills.forEach(pill => {
+        pill.addEventListener('click', () => {
+          // Reset all pills
+          budgetPills.forEach(p => {
+            p.classList.remove('bg-gradient-to-r', 'from-emerald-500', 'to-teal-500', 'text-black', 'border-emerald-400', 'active-pill', 'shadow-[0_0_18px_rgba(16,185,129,0.5)]', 'font-bold');
+            p.classList.add('bg-[#131b23]', 'border-white/10', 'text-slate-300', 'font-medium');
+          });
+
+          // Set active pill
+          pill.classList.remove('bg-[#131b23]', 'border-white/10', 'text-slate-300', 'font-medium');
+          pill.classList.add('bg-gradient-to-r', 'from-emerald-500', 'to-teal-500', 'text-black', 'border-emerald-400', 'active-pill', 'shadow-[0_0_18px_rgba(16,185,129,0.5)]', 'font-bold');
+
+          // Dynamic spec teaser update with soft micro-bounce
+          const spec = pill.getAttribute('data-spec');
+          const budgetKey = pill.getAttribute('data-budget');
+          if (spec && specText && specPill) {
+            specPill.classList.add('scale-105', 'border-emerald-400', 'shadow-[0_0_20px_rgba(16,185,129,0.35)]');
+            specText.innerHTML = `Preset: <strong class="text-emerald-300 font-semibold">${spec}</strong>`;
+            if (tierLinks[budgetKey]) {
+              specPill.setAttribute('href', tierLinks[budgetKey]);
+            }
+            setTimeout(() => {
+              specPill.classList.remove('scale-105', 'border-emerald-400', 'shadow-[0_0_20px_rgba(16,185,129,0.35)]');
+            }, 300);
+          }
+        });
+      });
+
+      // 2. FAQ Accordion behavior
+      const faqItems = document.querySelectorAll('.faq-item');
+      faqItems.forEach(item => {
+        const button = item.querySelector('.faq-button');
+        const answer = item.querySelector('.faq-answer');
+        const icon = item.querySelector('.faq-icon');
+
+        button.addEventListener('click', () => {
+          const isOpen = item.getAttribute('data-open') === 'true';
+
+          // Close other items for neat accordion behavior
+          faqItems.forEach(otherItem => {
+            if (otherItem !== item) {
+              otherItem.setAttribute('data-open', 'false');
+              otherItem.classList.remove('border-emerald-500/40', 'shadow-[0_0_15px_rgba(16,185,129,0.1)]');
+              const otherBtn = otherItem.querySelector('.faq-button');
+              const otherAns = otherItem.querySelector('.faq-answer');
+              const otherIcon = otherItem.querySelector('.faq-icon');
+              if (otherAns) {
+                otherAns.style.maxHeight = '0px';
+                otherAns.style.opacity = '0';
+                otherAns.classList.remove('pb-5');
+              }
+              if (otherBtn) otherBtn.setAttribute('aria-expanded', 'false');
+              if (otherIcon) {
+                otherIcon.textContent = '+';
+                otherIcon.classList.remove('rotate-45', 'text-emerald-400', 'font-bold');
+                otherIcon.classList.add('text-slate-400', 'font-normal');
+              }
+            }
+          });
+
+          // Toggle current item
+          if (isOpen) {
+            item.setAttribute('data-open', 'false');
+            item.classList.remove('border-emerald-500/40', 'shadow-[0_0_15px_rgba(16,185,129,0.1)]');
+            button.setAttribute('aria-expanded', 'false');
+            answer.style.maxHeight = '0px';
+            answer.style.opacity = '0';
+            answer.classList.remove('pb-5');
+            icon.textContent = '+';
+            icon.classList.remove('rotate-45', 'text-emerald-400', 'font-bold');
+            icon.classList.add('text-slate-400', 'font-normal');
+          } else {
+            item.setAttribute('data-open', 'true');
+            item.classList.add('border-emerald-500/40', 'shadow-[0_0_15px_rgba(16,185,129,0.1)]');
+            button.setAttribute('aria-expanded', 'true');
+            answer.style.maxHeight = answer.scrollHeight + 30 + 'px';
+            answer.style.opacity = '1';
+            answer.classList.add('pb-5');
+            icon.textContent = '✕';
+            icon.classList.remove('text-slate-400', 'font-normal');
+            icon.classList.add('rotate-45', 'text-emerald-400', 'font-bold');
+          }
+        });
+      });
+
+      // 3. Search Bar Expansion & Live Submission
+      const searchToggleBtn = document.getElementById('search-toggle-btn');
+      const searchExpandedBar = document.getElementById('search-expanded-bar');
+      const searchInput = document.getElementById('search-input');
+      const searchCloseBtn = document.getElementById('search-close-btn');
+
+      if (searchToggleBtn && searchExpandedBar && searchInput) {
+        searchToggleBtn.addEventListener('click', () => {
+          searchExpandedBar.classList.remove('hidden');
+          searchInput.focus();
+        });
+
+        searchCloseBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          searchExpandedBar.classList.add('hidden');
+        });
+
+        document.addEventListener('click', (e) => {
+          if (!document.getElementById('search-wrapper').contains(e.target)) {
+            searchExpandedBar.classList.add('hidden');
+          }
+        });
+
+        searchInput.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            const query = searchInput.value.trim();
+            if (query) {
+              window.location.href = `shop-parts.html?search=${encodeURIComponent(query)}`;
+            }
+          } else if (e.key === 'Escape') {
+            searchExpandedBar.classList.add('hidden');
+          }
+        });
+      }
+
+      // 4. Cart Live Counter & Hover / Click preview
+      const cartBtn = document.getElementById('cart-button');
+      const cartPopup = document.getElementById('cart-popup');
+      const cartCounter = document.getElementById('cart-counter');
+      const cartPopupTotal = document.getElementById('cart-popup-total');
+      const cartPopupMsg = document.getElementById('cart-popup-msg');
+
+      function syncCartState() {
+        try {
+          const raw = localStorage.getItem('rigwise-demo-cart-v1');
+          const cart = raw ? JSON.parse(raw) : [];
+          const count = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+          const total = cart.reduce((sum, item) => sum + (item.price || 0) * (item.quantity || 1), 0);
+
+          if (cartCounter) cartCounter.textContent = String(count);
+          if (cartPopupTotal) {
+            cartPopupTotal.textContent = new Intl.NumberFormat('en-IN', {
+              style: 'currency',
+              currency: 'INR',
+              maximumFractionDigits: 0
+            }).format(total);
+          }
+          if (cartPopupMsg) {
+            if (count > 0) {
+              cartPopupMsg.textContent = `${count} component${count > 1 ? 's' : ''} in your demo build list.`;
+            } else {
+              cartPopupMsg.textContent = 'Your custom configuration is currently empty. Start building below!';
+            }
+          }
+        } catch (e) {
+          // graceful fallback
+        }
+      }
+
+      syncCartState();
+      window.addEventListener('storage', syncCartState);
+
+      if (cartBtn && cartPopup) {
+        cartBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          syncCartState();
+          cartPopup.classList.toggle('hidden');
+        });
+
+        document.addEventListener('click', (e) => {
+          if (!cartBtn.contains(e.target) && !cartPopup.contains(e.target)) {
+            cartPopup.classList.add('hidden');
+          }
+        });
+      }
+    });
+  </script>
 </body>
 </html>

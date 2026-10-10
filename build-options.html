@@ -1,106 +1,390 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html class="dark scroll-smooth" lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f4f5f2">
-  <meta name="description" content="Choose a custom PC build, a budget recommendation, or shop individual PC parts.">
-  <title>Choose your build — Rigwise</title>
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/responsive.css">
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta name="description" content="Choose your build path: custom configurator, budget recommendations, or individual PC parts."/>
+  <title>Rigwise - Build Path Selector</title>
+  <!-- Tailwind CSS v3 with Plugins -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <!-- Tailwind Configuration -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              emerald: '#10B981',
+              mint: '#34D399',
+              glow: 'rgba(16, 185, 129, 0.15)',
+              obsidian: '#090D10',
+              surface: '#111820',
+              surfaceElevated: '#151D24',
+              surfaceBorder: '#1E293B'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+          },
+          boxShadow: {
+            'glow-emerald': '0 0 25px -5px rgba(16, 185, 129, 0.25)',
+            'glow-subtle': '0 10px 30px -10px rgba(0, 0, 0, 0.6)',
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Google Font Inter -->
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+  <!-- Custom Styles for Ambient Glow & Micro-animations -->
+  <style data-purpose="custom-ambience">
+    body {
+      background-color: #090D10;
+      font-family: 'Inter', sans-serif;
+    }
+    
+    /* Radial background gradient glows */
+    .bg-mesh-glow {
+      background: radial-gradient(circle at 50% 15%, rgba(16, 185, 129, 0.08) 0%, transparent 60%),
+                  radial-gradient(circle at 85% 80%, rgba(16, 185, 129, 0.04) 0%, transparent 40%);
+    }
+
+    /* Ambient card corner glow accents */
+    .corner-ambient-glow {
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      width: 140px;
+      height: 140px;
+      background: radial-gradient(circle, rgba(52, 211, 153, 0.12) 0%, transparent 70%);
+      pointer-events: none;
+      border-radius: 9999px;
+    }
+  </style>
 </head>
-<body class="options-page">
-  <header class="site-header">
-    <a class="brand" href="index.html">
-      <span class="brand-mark" aria-hidden="true">R</span>
-      <span>rigwise<span class="brand-period">.</span></span>
-    </a>
-    <nav class="site-nav" aria-label="Main Navigation">
-      <a class="site-nav-link" href="custom-build.html">Custom Builder</a>
-      <a class="site-nav-link" href="recommended-builds.html">Budget Builds</a>
-      <a class="site-nav-link" href="shop-parts.html">Shop Parts</a>
-    </nav>
-    <div class="nav-actions">
-      <div class="gooey-search-box header-gooey-search" id="header-gooey-search">
-        <div class="gooey-inner">
-          <div class="gooey-search-btn" id="header-gooey-btn" role="button" tabindex="0" aria-label="Search catalog">
-            <span class="gooey-search-label">
-              <svg width="12" height="12" viewBox="0 0 15 15" fill="none"><path d="M10 6.5C10 8.433 8.433 10 6.5 10C4.567 10 3 8.433 3 6.5C3 4.567 4.567 3 6.5 3C8.433 3 10 4.567 10 6.5ZM9.30884 10.0159C8.53901 10.6318 7.56251 11 6.5 11C4.01472 11 2 8.98528 2 6.5C2 4.01472 4.01472 2 6.5 2C8.98528 2 11 4.01472 11 6.5C11 7.56251 10.6318 8.53901 10.0159 9.30884L12.8536 12.1464C13.0488 12.3417 13.0488 12.6583 12.8536 12.8536C12.6583 13.0488 12.3417 13.0488 12.1464 12.8536L9.30884 10.0159Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></svg>
-              <span>Search</span>
-            </span>
-            <input class="gooey-search-input" id="header-search-input" type="search" placeholder="Search parts or builds…" autocomplete="off" aria-label="Search catalog">
-          </div>
-          <div class="gooey-search-bubble" id="header-gooey-bubble" aria-label="Submit search">
-            <svg viewBox="0 0 15 15" fill="none"><path d="M10 6.5C10 8.433 8.433 10 6.5 10C4.567 10 3 8.433 3 6.5C3 4.567 4.567 3 6.5 3C8.433 3 10 4.567 10 6.5ZM9.30884 10.0159C8.53901 10.6318 7.56251 11 6.5 11C4.01472 11 2 8.98528 2 6.5C2 4.01472 4.01472 2 6.5 2C8.98528 2 11 4.01472 11 6.5C11 7.56251 10.6318 8.53901 10.0159 9.30884L12.8536 12.1464C13.0488 12.3417 13.0488 12.6583 12.8536 12.8536C12.6583 13.0488 12.3417 13.0488 12.1464 12.8536L9.30884 10.0159Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"/></svg>
+<body class="bg-[#090D10] text-slate-100 min-h-screen flex flex-col selection:bg-emerald-500 selection:text-slate-900 bg-mesh-glow relative overflow-x-hidden">
+  <!-- BEGIN: TopNavigationBar -->
+  <header class="w-full border-b border-slate-800/80 backdrop-blur-md bg-[#090D10]/80 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between" data-purpose="header-container">
+      <!-- Brand Logo -->
+      <a aria-label="Rigwise Homepage" class="flex items-center gap-2.5 group transition-transform active:scale-95" href="index.html">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-700 flex items-center justify-center font-bold text-white shadow-lg shadow-emerald-500/20 group-hover:shadow-emerald-500/40 transition-shadow">
+          <span class="text-xl tracking-tight">R</span>
+        </div>
+        <span class="text-xl font-bold tracking-tight text-white flex items-center">
+          rigwise<span class="text-emerald-400">.</span>
+        </span>
+      </a>
+
+      <!-- Center Navigation Links -->
+      <nav aria-label="Main Navigation" class="hidden md:flex items-center gap-8">
+        <a class="text-sm font-medium text-slate-400 hover:text-emerald-400 transition-colors" href="custom-build.html">Custom Builder</a>
+        <a class="text-sm font-medium text-slate-400 hover:text-emerald-400 transition-colors" href="recommended-builds.html">Budget Builds</a>
+        <a class="text-sm font-medium text-slate-400 hover:text-emerald-400 transition-colors" href="shop-parts.html">Shop Parts</a>
+      </nav>
+
+      <!-- Right Action Controls -->
+      <div class="flex items-center gap-3.5">
+        <!-- Search Trigger / Quick Search Bar -->
+        <div class="relative" id="search-wrapper">
+          <button id="search-toggle-btn" class="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-slate-300 hover:border-slate-700 hover:text-white text-xs font-medium transition-all shadow-sm active:scale-95 cursor-pointer" type="button" aria-label="Search catalog">
+            <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+            </svg>
+            <span>Search</span>
+          </button>
+          <div id="search-expanded-bar" class="hidden absolute right-0 top-0 w-64 h-full bg-[#121a22] rounded-full border border-emerald-500 shadow-[0_0_18px_rgba(16,185,129,0.3)] flex items-center px-3 z-20">
+            <svg class="w-3.5 h-3.5 text-emerald-400 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M21 21l-4.35-4.35M16.65 11a5.65 5.65 0 11-11.3 0 5.65 5.65 0 0111.3 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+            </svg>
+            <input class="w-full text-xs bg-transparent border-0 focus:ring-0 p-0 text-white placeholder-slate-400 focus:outline-none" id="search-input" placeholder="Search parts or builds..." type="text" autocomplete="off"/>
+            <button aria-label="Close search" class="text-xs text-slate-400 hover:text-slate-200 ml-1 px-1 cursor-pointer" id="search-close-btn" type="button">✕</button>
           </div>
         </div>
-        <div class="gooey-results-dropdown" id="header-gooey-results" role="listbox"></div>
+
+        <!-- Cart Counter Pill -->
+        <a href="shop-parts.html#demo-cart" class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900/90 hover:bg-slate-800 border border-slate-800 text-xs text-slate-300 hover:text-white font-medium transition-colors" aria-label="View build cart">
+          <span>Cart</span>
+          <span id="cart-counter" class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 font-semibold flex items-center justify-center text-[11px] border border-emerald-500/30">0</span>
+        </a>
+
+        <!-- Back Link -->
+        <a class="text-xs font-medium text-slate-400 hover:text-emerald-400 transition-colors flex items-center gap-1.5 ml-1" href="index.html">
+          <span>←</span> Home
+        </a>
       </div>
-      <a class="nav-cart-btn" href="shop-parts.html#demo-cart">Cart <span class="nav-cart-count" id="nav-cart-count">0</span></a>
-      <a class="back-link" href="index.html">← Home</a>
     </div>
   </header>
-  <main class="options-main">
-    <div class="options-heading">
-      <p class="eyebrow">YOUR NEXT STEP</p>
-      <h1>How would you like<br>to build your PC?</h1>
-      <p>Pick a path. We’ll open a focused workspace with everything you need for that build.</p>
-    </div>
-    <div class="build-choice-grid">
-      <a class="build-choice-card custom-choice" href="custom-build.html">
-        <span class="choice-number">01 / BUILD YOUR OWN</span>
-        <span class="choice-icon choice-icon-custom" aria-hidden="true">⊞</span>
-        <strong>Custom PC build</strong>
-        <span class="choice-description">Pick your processor, graphics, memory, storage and every other part. Filter by brand and keep an eye on compatibility and your total.</span>
-        <span class="choice-tags"><span>Choose every part</span><span>Compare brands</span><span>Running total</span></span>
-        <span class="choice-action shiny-cta shiny-cta-compact"><span>Open custom builder <span aria-hidden="true">↗</span></span></span>
-      </a>
-      <a class="build-choice-card recommended-choice" href="recommended-builds.html">
-        <span class="choice-number">02 / START WITH A BUDGET</span>
-        <span class="choice-icon choice-icon-recommended" aria-hidden="true">↗</span>
-        <strong>Recommended PC builds</strong>
-        <span class="choice-description">Browse thoughtfully balanced example builds at popular price points, then see the parts, estimate and current shopping searches.</span>
-        <span class="choice-tags"><span>Choose a price point</span><span>See full parts list</span><span>Easy to compare</span></span>
-        <span class="choice-action shiny-cta shiny-cta-compact"><span>Browse recommendations <span aria-hidden="true">↗</span></span></span>
-      </a>
-      <a class="build-choice-card parts-choice" href="shop-parts.html">
-        <span class="choice-number">03 / SHOP INDIVIDUAL ITEMS</span>
-        <span class="choice-icon choice-icon-parts" aria-hidden="true">＋</span>
-        <strong>Shop PC parts</strong>
-        <span class="choice-description">Browse graphics cards, cabinets, processors, RAM, storage, power supplies, cooling and accessories. Add the items you want to a demo cart.</span>
-        <span class="choice-tags"><span>Shop by category</span><span>Compare brands</span><span>Build a cart</span></span>
-        <span class="choice-action shiny-cta shiny-cta-compact"><span>Browse individual parts <span aria-hidden="true">↗</span></span></span>
-      </a>
-    </div>
-    <div class="options-features-strip">
-      <div class="options-feature">
-        <span aria-hidden="true">⚙️</span>
-        <strong>Step-by-step guidance</strong>
+  <!-- END: TopNavigationBar -->
+
+  <!-- BEGIN: HeroSection -->
+  <main class="flex-1 max-w-7xl mx-auto w-full px-6 pt-12 pb-20 flex flex-col items-center">
+    <!-- Hero Heading Area -->
+    <section aria-labelledby="hero-title" class="text-center max-w-3xl mx-auto mb-14" data-purpose="hero-header">
+      <!-- Subtitle Badge -->
+      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[11px] font-semibold tracking-wider uppercase mb-5 shadow-sm">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+        YOUR NEXT STEP
       </div>
-      <div class="options-feature">
-        <span aria-hidden="true">📊</span>
-        <strong>Real-time budget tracking</strong>
+
+      <!-- Main Headline -->
+      <h1 class="text-4xl sm:text-5xl lg:text-[54px] font-extrabold text-white tracking-tight leading-[1.15] mb-5" id="hero-title">
+        How would you like<br class="hidden sm:inline"/> to build your PC?
+      </h1>
+
+      <!-- Description Subtext -->
+      <p class="text-slate-400 text-sm sm:text-base font-normal max-w-xl mx-auto leading-relaxed">
+        Pick a path. We'll open a focused workspace with everything you need for that build.
+      </p>
+    </section>
+    <!-- END: HeroSection -->
+
+    <!-- BEGIN: BuildPathCardsGrid -->
+    <section aria-label="Build Paths Selection" class="grid grid-cols-1 lg:grid-cols-3 gap-6 w-full mb-12" data-purpose="selection-cards">
+      <!-- Card 1: Custom PC Build -->
+      <article class="group relative rounded-2xl bg-[#111820] border border-slate-800 hover:border-emerald-500/50 p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 hover:shadow-glow-emerald overflow-hidden" data-purpose="path-card-custom">
+        <div class="corner-ambient-glow group-hover:scale-125 transition-transform duration-500"></div>
+        <div>
+          <!-- Header Category Tag -->
+          <span class="text-[11px] font-semibold tracking-wider text-slate-400 uppercase block mb-6">
+            01 / BUILD YOUR OWN
+          </span>
+          <!-- Icon Container -->
+          <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 mb-6 group-hover:bg-emerald-500/20 group-hover:scale-105 transition-all">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
+            </svg>
+          </div>
+          <!-- Card Title -->
+          <h2 class="text-2xl font-bold text-white mb-3 group-hover:text-emerald-300 transition-colors">
+            Custom PC build
+          </h2>
+          <!-- Card Description -->
+          <p class="text-slate-400 text-sm leading-relaxed mb-6 font-normal">
+            Pick your processor, graphics, memory, storage and every other part. Filter by brand and keep an eye on compatibility and your total.
+          </p>
+          <!-- Feature Pills -->
+          <div class="flex flex-wrap gap-2 mb-8">
+            <span class="px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-[11px] font-medium text-slate-300">Choose every part</span>
+            <span class="px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-[11px] font-medium text-slate-300">Compare brands</span>
+            <span class="px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-[11px] font-medium text-slate-300">Running total</span>
+          </div>
+        </div>
+        <!-- Primary Action Button -->
+        <a class="w-full py-3.5 px-5 rounded-full bg-[#151D24] border border-slate-700/80 text-white font-medium text-sm flex items-center justify-center gap-2 group-hover:bg-emerald-600 group-hover:border-emerald-500 group-hover:shadow-lg group-hover:shadow-emerald-600/30 transition-all duration-200" href="custom-build.html">
+          <span>Open custom builder</span>
+          <span class="text-base leading-none">↗</span>
+        </a>
+      </article>
+
+      <!-- Card 2: Recommended PC Builds -->
+      <article class="group relative rounded-2xl bg-[#111820] border border-slate-800 hover:border-emerald-500/50 p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 hover:shadow-glow-emerald overflow-hidden" data-purpose="path-card-recommended">
+        <div class="corner-ambient-glow group-hover:scale-125 transition-transform duration-500"></div>
+        <div>
+          <!-- Header Category Tag -->
+          <span class="text-[11px] font-semibold tracking-wider text-slate-400 uppercase block mb-6">
+            02 / START WITH A BUDGET
+          </span>
+          <!-- Icon Container -->
+          <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 mb-6 group-hover:bg-emerald-500/20 group-hover:scale-105 transition-all">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M7 17L17 7M17 7H9M17 7V15" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
+            </svg>
+          </div>
+          <!-- Card Title -->
+          <h2 class="text-2xl font-bold text-white mb-3 group-hover:text-emerald-300 transition-colors">
+            Recommended PC builds
+          </h2>
+          <!-- Card Description -->
+          <p class="text-slate-400 text-sm leading-relaxed mb-6 font-normal">
+            Browse thoughtfully balanced example builds at popular price points, then see the parts, estimate and current shopping searches.
+          </p>
+          <!-- Feature Pills -->
+          <div class="flex flex-wrap gap-2 mb-8">
+            <span class="px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-[11px] font-medium text-slate-300">Choose a price point</span>
+            <span class="px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-[11px] font-medium text-slate-300">See full parts list</span>
+            <span class="px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-[11px] font-medium text-slate-300">Easy to compare</span>
+          </div>
+        </div>
+        <!-- Primary Action Button -->
+        <a class="w-full py-3.5 px-5 rounded-full bg-[#151D24] border border-slate-700/80 text-white font-medium text-sm flex items-center justify-center gap-2 group-hover:bg-emerald-600 group-hover:border-emerald-500 group-hover:shadow-lg group-hover:shadow-emerald-600/30 transition-all duration-200" href="recommended-builds.html">
+          <span>Browse recommendations</span>
+          <span class="text-base leading-none">↗</span>
+        </a>
+      </article>
+
+      <!-- Card 3: Shop PC Parts -->
+      <article class="group relative rounded-2xl bg-[#111820] border border-slate-800 hover:border-emerald-500/50 p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 hover:shadow-glow-emerald overflow-hidden" data-purpose="path-card-shop">
+        <div class="corner-ambient-glow group-hover:scale-125 transition-transform duration-500"></div>
+        <div>
+          <!-- Header Category Tag -->
+          <span class="text-[11px] font-semibold tracking-wider text-slate-400 uppercase block mb-6">
+            03 / SHOP INDIVIDUAL ITEMS
+          </span>
+          <!-- Icon Container -->
+          <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 mb-6 group-hover:bg-emerald-500/20 group-hover:scale-105 transition-all">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M12 6v12m6-6H6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+            </svg>
+          </div>
+          <!-- Card Title -->
+          <h2 class="text-2xl font-bold text-white mb-3 group-hover:text-emerald-300 transition-colors">
+            Shop PC parts
+          </h2>
+          <!-- Card Description -->
+          <p class="text-slate-400 text-sm leading-relaxed mb-6 font-normal">
+            Browse graphics cards, cabinets, processors, RAM, storage, power supplies, cooling and accessories. Add the items you want to a demo cart.
+          </p>
+          <!-- Feature Pills -->
+          <div class="flex flex-wrap gap-2 mb-8">
+            <span class="px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-[11px] font-medium text-slate-300">Shop by category</span>
+            <span class="px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-[11px] font-medium text-slate-300">Compare brands</span>
+            <span class="px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-[11px] font-medium text-slate-300">Build a cart</span>
+          </div>
+        </div>
+        <!-- Primary Action Button -->
+        <a class="w-full py-3.5 px-5 rounded-full bg-[#151D24] border border-slate-700/80 text-white font-medium text-sm flex items-center justify-center gap-2 group-hover:bg-emerald-600 group-hover:border-emerald-500 group-hover:shadow-lg group-hover:shadow-emerald-600/30 transition-all duration-200" href="shop-parts.html">
+          <span>Browse individual parts</span>
+          <span class="text-base leading-none">↗</span>
+        </a>
+      </article>
+    </section>
+    <!-- END: BuildPathCardsGrid -->
+
+    <!-- BEGIN: TrustPillarsRow -->
+    <section aria-label="Feature Guarantees" class="w-full space-y-4" data-purpose="trust-badges-container">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- Trust Item 1 -->
+        <div class="rounded-xl bg-[#111820]/90 border border-slate-800/80 p-4 flex items-center gap-3.5 hover:border-slate-700 transition-colors">
+          <div class="w-9 h-9 rounded-lg bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center shrink-0">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
+              <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
+            </svg>
+          </div>
+          <span class="text-xs font-semibold text-slate-200">Step-by-step guidance</span>
+        </div>
+        <!-- Trust Item 2 -->
+        <div class="rounded-xl bg-[#111820]/90 border border-slate-800/80 p-4 flex items-center gap-3.5 hover:border-slate-700 transition-colors">
+          <div class="w-9 h-9 rounded-lg bg-pink-500/10 border border-pink-500/20 text-pink-400 flex items-center justify-center shrink-0">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
+            </svg>
+          </div>
+          <span class="text-xs font-semibold text-slate-200">Real-time budget tracking</span>
+        </div>
+        <!-- Trust Item 3 -->
+        <div class="rounded-xl bg-[#111820]/90 border border-slate-800/80 p-4 flex items-center gap-3.5 hover:border-slate-700 transition-colors">
+          <div class="w-9 h-9 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-400 flex items-center justify-center shrink-0">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
+            </svg>
+          </div>
+          <span class="text-xs font-semibold text-slate-200">Compare across retailers</span>
+        </div>
+        <!-- Trust Item 4 -->
+        <div class="rounded-xl bg-[#111820]/90 border border-slate-800/80 p-4 flex items-center gap-3.5 hover:border-slate-700 transition-colors">
+          <div class="w-9 h-9 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+            </svg>
+          </div>
+          <span class="text-xs font-semibold text-slate-200">Compatibility checks</span>
+        </div>
       </div>
-      <div class="options-feature">
-        <span aria-hidden="true">🔄</span>
-        <strong>Compare across retailers</strong>
-      </div>
-      <div class="options-feature">
-        <span aria-hidden="true">✅</span>
-        <strong>Compatibility checks</strong>
-      </div>
-    </div>
-    <p class="options-note">Your selected workspace opens here in the same tab. Estimates are planning guides, not live store quotes.</p>
+      <!-- Footer Disclaimer Footnote -->
+      <p class="text-center text-[12px] text-slate-400 pt-2 font-normal" data-purpose="disclaimer-text">
+        Your selected workspace opens here in the same tab. Estimates are planning guides, not live store quotes.
+      </p>
+    </section>
+    <!-- END: TrustPillarsRow -->
   </main>
-  <footer class="site-footer options-footer">
-    <a class="brand footer-brand" href="index.html"><span class="brand-mark" aria-hidden="true">R</span><span>rigwise<span class="brand-period">.</span></span></a>
-    <p>Choose a build path that works for you.</p>
-    <a class="footer-build-link" href="index.html">Back to home <span aria-hidden="true">↑</span></a>
+
+  <!-- BEGIN: MainFooter -->
+  <footer class="w-full border-t border-slate-800/60 bg-[#090D10]/90 mt-auto py-7" data-purpose="site-footer">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <!-- Brand Logo Small -->
+      <a href="index.html" class="flex items-center gap-2 group">
+        <div class="w-6 h-6 rounded-md bg-emerald-600 flex items-center justify-center font-bold text-white text-xs group-hover:bg-emerald-500 transition-colors">
+          R
+        </div>
+        <span class="text-sm font-semibold tracking-tight text-white">
+          rigwise<span class="text-emerald-400">.</span>
+        </span>
+      </a>
+      <!-- Tagline -->
+      <span class="text-xs text-slate-400 text-center">
+        Choose a build path that works for you.
+      </span>
+      <!-- Back to Top Action -->
+      <a class="text-xs font-medium text-slate-400 hover:text-emerald-400 transition-colors flex items-center gap-1" href="index.html">
+        Back to home <span class="text-sm">↑</span>
+      </a>
+    </div>
   </footer>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/DrawSVGPlugin.min.js"></script>
-  <script type="module" src="js/ui-enhancements.js"></script>
-  <script type="module" src="js/gooey-search.js"></script>
-  <script type="module" src="js/draw-underline.js"></script>
+  <!-- END: MainFooter -->
+
+  <!-- Interactive Scripts (Keyboard & Micro-interactions) -->
+  <script data-purpose="card-interactions">
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Synchronize Live Cart Count
+      try {
+        const raw = localStorage.getItem('rigwise-demo-cart-v1');
+        const cart = raw ? JSON.parse(raw) : [];
+        const count = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+        const counter = document.getElementById('cart-counter');
+        if (counter) counter.textContent = String(count);
+      } catch (e) {}
+
+      // 2. Interactive Search Bar in Header
+      const searchToggleBtn = document.getElementById('search-toggle-btn');
+      const searchExpandedBar = document.getElementById('search-expanded-bar');
+      const searchInput = document.getElementById('search-input');
+      const searchCloseBtn = document.getElementById('search-close-btn');
+
+      if (searchToggleBtn && searchExpandedBar && searchInput) {
+        searchToggleBtn.addEventListener('click', () => {
+          searchExpandedBar.classList.remove('hidden');
+          searchInput.focus();
+        });
+
+        searchCloseBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          searchExpandedBar.classList.add('hidden');
+        });
+
+        document.addEventListener('click', (e) => {
+          if (!document.getElementById('search-wrapper').contains(e.target)) {
+            searchExpandedBar.classList.add('hidden');
+          }
+        });
+
+        searchInput.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            const query = searchInput.value.trim();
+            if (query) {
+              window.location.href = `shop-parts.html?search=${encodeURIComponent(query)}`;
+            }
+          } else if (e.key === 'Escape') {
+            searchExpandedBar.classList.add('hidden');
+          }
+        });
+      }
+
+      // 3. Focus state styling for cards
+      const cards = document.querySelectorAll('[data-purpose^="path-card"]');
+      cards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+          card.classList.add('border-emerald-500/40');
+        });
+        card.addEventListener('mouseleave', () => {
+          card.classList.remove('border-emerald-500/40');
+        });
+      });
+    });
+  </script>
 </body>
 </html>
