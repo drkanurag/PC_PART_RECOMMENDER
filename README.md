@@ -51,7 +51,7 @@ To connect live pricing:
    ```
 
    Copy the namespace ID printed by Wrangler into the `id` property under `[[kv_namespaces]]` in [`price-api/wrangler.toml`](./price-api/wrangler.toml). The ID belongs to your Cloudflare account, so it should not be copied from another deployment.
-3. Confirm `ALLOWED_ORIGIN` in `price-api/wrangler.toml` matches the website origin exactly (`https://drkanurak.github.io` for the project Pages URL). Deploy the Worker and add the API key as a Cloudflare secret:
+3. Confirm `ALLOWED_ORIGIN` in `price-api/wrangler.toml` matches your website origin exactly without trailing slash (`https://drkanurag.github.io` for production, or comma-separated allowed origins including `http://localhost:8000` for local testing). Deploy the Worker and add the API key as a Cloudflare secret:
 
    ```powershell
    npx wrangler deploy --config price-api/wrangler.toml

@@ -4,6 +4,12 @@ compatibility_date = "2026-10-09"
 
 [vars]
 ALLOWED_ORIGIN = "https://drkanurag.github.io"
+ALLOWED_ORIGINS = "https://drkanurag.github.io,http://localhost:8000,http://127.0.0.1:8000,http://localhost:3000"
+LIVE_PRICES_ENABLED = "true"
+MONTHLY_SEARCH_LIMIT = "250"
+DAILY_SEARCH_LIMIT = "30"
 
 [[kv_namespaces]]
 binding = "PRICE_DATA"
+# Replace with your KV namespace ID created via 'npx wrangler kv namespace create PRICE_DATA'
+# id = "your_namespace_id_here"

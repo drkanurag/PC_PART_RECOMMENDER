@@ -1,6 +1,7 @@
 window.RigwiseLivePrices = (() => {
   const CACHE_KEY = "rigwise-live-price-cache-v1";
   const CACHE_TTL_MS = 60 * 60 * 1000;
+  const REFRESH_COOLDOWN_MS = 5 * 60 * 1000; // 5-minute cooldown before forced provider search
   const configuredEndpoint = window.RIGWISE_PRICE_API_URL || window.RIGWISE_SERVICE_URLS?.pricing;
   const endpoint = typeof configuredEndpoint === "string"
     ? configuredEndpoint.trim().replace(/\/+$/, "")
@@ -98,6 +99,7 @@ window.RigwiseLivePrices = (() => {
       currency: "INR",
       maximumFractionDigits: 0
     });
+
     const details = document.createElement("details");
     details.className = "live-offer-list";
     const summary = document.createElement("summary");
@@ -122,7 +124,7 @@ window.RigwiseLivePrices = (() => {
     return details;
   }
 
-  async function refresh(products) {
+  async function refresh(products, options = {}) {
     if (!endpoint) {
       throw new Error("Live prices are not connected. Deploy the price API and set its URL in js/price-config.js.");
     }
@@ -130,10 +132,22 @@ window.RigwiseLivePrices = (() => {
       throw new Error("A price refresh must contain between one and eight selected parts.");
     }
 
-    const response = await fetch(`${endpoint}/api/prices`, {
+    // Default to false. Only allow forced refresh if requested AND cache is older than cooldown
+    let shouldForce = options.forceRefresh === true;
+    if (shouldForce) {
+      const anyRecent = products.some((p) => {
+        const entry = cachedOffers.get(p.query);
+        return entry && (Date.now() - Date.parse(entry.updatedAt) < REFRESH_COOLDOWN_MS);
+      });
+      if (anyRecent) {
+        shouldForce = false;
+      }
+    }
+
+    const response = await fetch(`${endpoint}/api/v1/prices`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ products, forceRefresh: true }),
+      body: JSON.stringify({ products, forceRefresh: shouldForce }),
       signal: AbortSignal.timeout(20000)
     });
 

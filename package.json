@@ -1,0 +1,30 @@
+{
+  "name": "rigwise-pc-part-recommender",
+  "version": "1.0.0",
+  "description": "Custom PC configurator, curated budget builds, and live price comparison for India.",
+  "author": "Anurag",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/drkanurag/PC_PART_RECOMMENDER"
+  },
+  "keywords": [
+    "pc-builder",
+    "pc-part-picker",
+    "hardware",
+    "recommendations",
+    "india",
+    "cloudflare-workers"
+  ],
+  "scripts": {
+    "dev": "python -m http.server 8000",
+    "deploy:price-api": "wrangler deploy --config price-api/wrangler.toml",
+    "deploy:catalog": "wrangler deploy --config services/catalog/wrangler.toml",
+    "deploy:recommendations": "wrangler deploy --config services/recommendations/wrangler.toml",
+    "deploy:all": "npm run deploy:price-api && npm run deploy:catalog && npm run deploy:recommendations"
+  },
+  "devDependencies": {
+    "wrangler": "^3.90.0"
+  }
+}
+

@@ -304,7 +304,7 @@
 
 <span>₹40,000</span>
 
-<span>₹1,50,000</span>
+<span>₹1,70,000</span>
 
 <span>₹3,00,000</span>
 
@@ -643,33 +643,19 @@
 </div>
 
 <!-- Compatibility checkmarks -->
-
 <ul class="text-xs space-y-1.5 text-slate-300 font-medium">
-
-<li class="flex items-center space-x-2 text-[11px]">
-
-<span class="text-emerald-400 font-bold">✓</span>
-
-<span>Socket &amp; Motherboard matched</span>
-
+<li class="flex items-center space-x-2 text-[11px]" id="compat-socket-item">
+<span class="text-emerald-400 font-bold" id="compat-socket-icon">✓</span>
+<span id="compat-socket-text">Socket: Matched (AM4 / AM5 / LGA)</span>
 </li>
-
-<li class="flex items-center space-x-2 text-[11px]">
-
-<span class="text-emerald-400 font-bold">✓</span>
-
-<span>Display output verified</span>
-
+<li class="flex items-center space-x-2 text-[11px]" id="compat-display-item">
+<span class="text-emerald-400 font-bold" id="compat-display-icon">✓</span>
+<span id="compat-display-text">Display: Output verified</span>
 </li>
-
-<li class="flex items-center space-x-2 text-[11px]">
-
-<span class="text-emerald-400 font-bold">✓</span>
-
-<span>PSU safe margin (+450W headroom)</span>
-
+<li class="flex items-center space-x-2 text-[11px]" id="compat-psu-item">
+<span class="text-emerald-400 font-bold" id="compat-psu-icon">✓</span>
+<span id="compat-psu-text">PSU: Safe operating margin</span>
 </li>
-
 </ul>
 
 </div>
@@ -692,26 +678,20 @@
 
 </div>
 
-<!-- Secondary Actions (Copy Specs & Print Quotation) -->
-
-<div class="grid grid-cols-2 gap-2 pt-1">
-
-<button class="py-2 px-3 rounded-lg bg-surface border border-surface-border hover:bg-surface-hover text-xs font-semibold text-slate-300 hover:text-white transition-colors flex items-center justify-center space-x-1.5" id="copySpecsBtn" type="button">
-
+<!-- Secondary Actions (Share Link, Copy Specs & Print Quotation) -->
+<div class="grid grid-cols-3 gap-2 pt-1">
+<button class="py-2 px-2 rounded-lg bg-surface border border-surface-border hover:bg-surface-hover text-[11px] font-semibold text-slate-300 hover:text-white transition-colors flex items-center justify-center space-x-1" id="shareBuildBtn" type="button" title="Share direct build link">
+<span>🔗</span>
+<span>Share link</span>
+</button>
+<button class="py-2 px-2 rounded-lg bg-surface border border-surface-border hover:bg-surface-hover text-[11px] font-semibold text-slate-300 hover:text-white transition-colors flex items-center justify-center space-x-1" id="copySpecsBtn" type="button" title="Copy specs to clipboard">
 <span>📋</span>
-
 <span>Copy specs</span>
-
 </button>
-
-<button class="py-2 px-3 rounded-lg bg-surface border border-surface-border hover:bg-surface-hover text-xs font-semibold text-slate-300 hover:text-white transition-colors flex items-center justify-center space-x-1.5" id="printQuoteBtn" type="button">
-
+<button class="py-2 px-2 rounded-lg bg-surface border border-surface-border hover:bg-surface-hover text-[11px] font-semibold text-slate-300 hover:text-white transition-colors flex items-center justify-center space-x-1" id="printQuoteBtn" type="button" title="Print formal quotation">
 <span>🖨️</span>
-
-<span>Print quotation</span>
-
+<span>Print quote</span>
 </button>
-
 </div>
 
 <!-- Collapsible: Review Selected Parts -->
@@ -844,7 +824,7 @@
     <div class="flex items-center space-x-3">
       <span class="font-extrabold text-sm text-white">rigwise<span class="text-emerald-400">.</span></span>
       <span>|</span>
-      <span>Precision PC Configurator · Real-time 3D Rig Visualization</span>
+      <span>Precision Custom PC Configurator · Live Compatibility Verification</span>
     </div>
     <div class="flex items-center space-x-5">
       <a href="index.html" class="hover:text-emerald-400 transition-colors">Home</a>
@@ -869,7 +849,7 @@ const pcParts = window.pcParts = {
       { id: "amd-5600x", brand: "AMD", model: "Ryzen 5 5600X · 6-core", socket: "AM4", memory: "DDR4", graphics: false, graphicsRequired: true, watts: 65, coolerIncluded: true, price: 12500 },
       { id: "amd-5700x-tray", brand: "AMD", model: "Ryzen 7 5700X · 8-core · OEM tray pack", socket: "AM4", memory: "DDR4", graphics: false, graphicsRequired: true, watts: 65, coolerIncluded: false, price: 14000 },
       { id: "amd-5700x", brand: "AMD", model: "Ryzen 7 5700X · 8-core", socket: "AM4", memory: "DDR4", graphics: false, graphicsRequired: true, watts: 65, coolerIncluded: false, price: 14500 },
-      { id: "amd-5800x3d-anniversary", brand: "AMD", model: "Ryzen 7 5800X3D · 10th Anniversary Edition", socket: "AM4", memory: "DDR4", graphics: false, graphicsRequired: true, watts: 105, coolerIncluded: false, price: 32000 },
+      { id: "amd-5800x3d-anniversary", brand: "AMD", model: "Ryzen 7 5800X3D · 8-core", socket: "AM4", memory: "DDR4", graphics: false, graphicsRequired: true, watts: 105, coolerIncluded: false, price: 32000 },
       { id: "amd-7500x3d-tray", brand: "AMD", model: "Ryzen 5 7500X3D · 6-core · OEM tray pack", socket: "AM5", memory: "DDR5", graphics: true, graphicsRequired: false, watts: 65, coolerIncluded: false, price: 22000 },
       { id: "amd-7600", brand: "AMD", model: "Ryzen 5 7600 · 6-core", socket: "AM5", memory: "DDR5", graphics: true, graphicsRequired: false, watts: 65, coolerIncluded: true, price: 19000 },
       { id: "amd-7600x", brand: "AMD", model: "Ryzen 5 7600X · 6-core", socket: "AM5", memory: "DDR5", graphics: true, graphicsRequired: false, watts: 105, coolerIncluded: false, price: 22000 },
@@ -886,7 +866,7 @@ const pcParts = window.pcParts = {
       { id: "amd-7800x3d", brand: "AMD", model: "Ryzen 7 7800X3D · 8-core", socket: "AM5", memory: "DDR5", graphics: true, graphicsRequired: false, watts: 120, coolerIncluded: false, price: 38000 },
       { id: "amd-9700x", brand: "AMD", model: "Ryzen 7 9700X · 8-core", socket: "AM5", memory: "DDR5", graphics: true, graphicsRequired: false, watts: 65, coolerIncluded: false, price: 33000 },
       { id: "amd-9800x3d", brand: "AMD", model: "Ryzen 7 9800X3D · 8-core", socket: "AM5", memory: "DDR5", graphics: true, graphicsRequired: false, watts: 120, coolerIncluded: false, price: 45000 },
-      { id: "amd-9850x3d", brand: "AMD", model: "Ryzen 7 9850X3D · 8-core", socket: "AM5", memory: "DDR5", graphics: true, graphicsRequired: false, watts: 120, coolerIncluded: false, price: 50000 },
+      { id: "amd-9850x3d", brand: "AMD", model: "Ryzen 9 9900X · 12-core", socket: "AM5", memory: "DDR5", graphics: true, graphicsRequired: false, watts: 120, coolerIncluded: false, price: 50000 },
       { id: "amd-7900x", brand: "AMD", model: "Ryzen 9 7900X · 12-core", socket: "AM5", memory: "DDR5", graphics: true, graphicsRequired: false, watts: 170, coolerIncluded: false, price: 44000 },
       { id: "amd-9900x-tray", brand: "AMD", model: "Ryzen 9 9900X · 12-core · OEM tray pack", socket: "AM5", memory: "DDR5", graphics: true, graphicsRequired: false, watts: 120, coolerIncluded: false, price: 43000 },
       { id: "amd-9900x", brand: "AMD", model: "Ryzen 9 9900X · 12-core", socket: "AM5", memory: "DDR5", graphics: true, graphicsRequired: false, watts: 120, coolerIncluded: false, price: 46000 },
@@ -895,23 +875,23 @@ const pcParts = window.pcParts = {
       { id: "amd-9950x", brand: "AMD", model: "Ryzen 9 9950X · 16-core", socket: "AM5", memory: "DDR5", graphics: true, graphicsRequired: false, watts: 170, coolerIncluded: false, price: 58000 },
       { id: "amd-9950x3d-tray", brand: "AMD", model: "Ryzen 9 9950X3D · 16-core · OEM tray pack", socket: "AM5", memory: "DDR5", graphics: true, graphicsRequired: false, watts: 170, coolerIncluded: false, price: 65000 },
       { id: "amd-9950x3d", brand: "AMD", model: "Ryzen 9 9950X3D · 16-core", socket: "AM5", memory: "DDR5", graphics: true, graphicsRequired: false, watts: 170, coolerIncluded: false, price: 68000 },
-      { id: "amd-9950x3d2", brand: "AMD", model: "Ryzen 9 9950X3D2 · 16-core", socket: "AM5", memory: "DDR5", graphics: true, graphicsRequired: false, watts: 170, coolerIncluded: false, price: 75000 },
-      { id: "intel-12100f", brand: "Intel", model: "Core i3-12100F · 4-core", socket: "LGA1700", memory: "DDR4", graphics: false, graphicsRequired: true, watts: 89, coolerIncluded: true, price: 7000 },
-      { id: "intel-12400f", brand: "Intel", model: "Core i5-12400F · 6-core", socket: "LGA1700", memory: "DDR4", graphics: false, graphicsRequired: true, watts: 117, coolerIncluded: true, price: 10500 },
-      { id: "intel-12400", brand: "Intel", model: "Core i5-12400 · 6-core", socket: "LGA1700", memory: "DDR4", graphics: true, graphicsRequired: false, watts: 117, coolerIncluded: true, price: 12500 },
-      { id: "intel-12490f", brand: "Intel", model: "Core i5-12490F · 6-core", socket: "LGA1700", memory: "DDR4", graphics: false, graphicsRequired: true, watts: 120, coolerIncluded: true, price: 14800 },
-      { id: "intel-14400f", brand: "Intel", model: "Core i5-14400F · 10-core", socket: "LGA1700", memory: "DDR5", graphics: false, graphicsRequired: true, watts: 148, coolerIncluded: true, price: 18500 },
-      { id: "intel-14400", brand: "Intel", model: "Core i5-14400 · 10-core", socket: "LGA1700", memory: "DDR5", graphics: true, graphicsRequired: false, watts: 148, coolerIncluded: true, price: 20500 },
-      { id: "intel-14600k", brand: "Intel", model: "Core i5-14600K · 14-core", socket: "LGA1700", memory: "DDR5", graphics: true, graphicsRequired: false, watts: 181, coolerIncluded: false, price: 28500 },
+      { id: "amd-9950x3d2", brand: "AMD", model: "Ryzen 9 7950X3D · 16-core", socket: "AM5", memory: "DDR5", graphics: true, graphicsRequired: false, watts: 170, coolerIncluded: false, price: 75000 },
+      { id: "intel-12100f", brand: "Intel", model: "Core i3-12100F · 4-core", socket: "LGA1700", memory: "DDR4 / DDR5", memoryTypes: ["DDR4", "DDR5"], graphics: false, graphicsRequired: true, watts: 89, coolerIncluded: true, price: 7000 },
+      { id: "intel-12400f", brand: "Intel", model: "Core i5-12400F · 6-core", socket: "LGA1700", memory: "DDR4 / DDR5", memoryTypes: ["DDR4", "DDR5"], graphics: false, graphicsRequired: true, watts: 117, coolerIncluded: true, price: 10500 },
+      { id: "intel-12400", brand: "Intel", model: "Core i5-12400 · 6-core", socket: "LGA1700", memory: "DDR4 / DDR5", memoryTypes: ["DDR4", "DDR5"], graphics: true, graphicsRequired: false, watts: 117, coolerIncluded: true, price: 12500 },
+      { id: "intel-12490f", brand: "Intel", model: "Core i5-12490F · 6-core", socket: "LGA1700", memory: "DDR4 / DDR5", memoryTypes: ["DDR4", "DDR5"], graphics: false, graphicsRequired: true, watts: 120, coolerIncluded: true, price: 14800 },
+      { id: "intel-14400f", brand: "Intel", model: "Core i5-14400F · 10-core", socket: "LGA1700", memory: "DDR4 / DDR5", memoryTypes: ["DDR4", "DDR5"], graphics: false, graphicsRequired: true, watts: 148, coolerIncluded: true, price: 18500 },
+      { id: "intel-14400", brand: "Intel", model: "Core i5-14400 · 10-core", socket: "LGA1700", memory: "DDR4 / DDR5", memoryTypes: ["DDR4", "DDR5"], graphics: true, graphicsRequired: false, watts: 148, coolerIncluded: true, price: 20500 },
+      { id: "intel-14600k", brand: "Intel", model: "Core i5-14600K · 14-core", socket: "LGA1700", memory: "DDR4 / DDR5", memoryTypes: ["DDR4", "DDR5"], graphics: true, graphicsRequired: false, watts: 181, coolerIncluded: false, price: 28500 },
       { id: "intel-225f", brand: "Intel", model: "Core Ultra 5 225F · 10-core", socket: "LGA1851", memory: "DDR5", graphics: false, graphicsRequired: true, watts: 121, coolerIncluded: true, price: 19000 },
-      { id: "intel-14700k", brand: "Intel", model: "Core i7-14700K · 20-core", socket: "LGA1700", memory: "DDR5", graphics: true, graphicsRequired: false, watts: 253, coolerIncluded: false, price: 42000 },
-      { id: "intel-14700f", brand: "Intel", model: "Core i7-14700F · 20-core", socket: "LGA1700", memory: "DDR5", graphics: false, graphicsRequired: true, watts: 219, coolerIncluded: true, price: 38000 },
-      { id: "intel-14700", brand: "Intel", model: "Core i7-14700 · 20-core", socket: "LGA1700", memory: "DDR5", graphics: true, graphicsRequired: false, watts: 219, coolerIncluded: true, price: 40000 },
+      { id: "intel-14700k", brand: "Intel", model: "Core i7-14700K · 20-core", socket: "LGA1700", memory: "DDR4 / DDR5", memoryTypes: ["DDR4", "DDR5"], graphics: true, graphicsRequired: false, watts: 253, coolerIncluded: false, price: 42000 },
+      { id: "intel-14700f", brand: "Intel", model: "Core i7-14700F · 20-core", socket: "LGA1700", memory: "DDR4 / DDR5", memoryTypes: ["DDR4", "DDR5"], graphics: false, graphicsRequired: true, watts: 219, coolerIncluded: true, price: 38000 },
+      { id: "intel-14700", brand: "Intel", model: "Core i7-14700 · 20-core", socket: "LGA1700", memory: "DDR4 / DDR5", memoryTypes: ["DDR4", "DDR5"], graphics: true, graphicsRequired: false, watts: 219, coolerIncluded: true, price: 40000 },
       { id: "intel-245k", brand: "Intel", model: "Core Ultra 5 245K · 14-core", socket: "LGA1851", memory: "DDR5", graphics: true, graphicsRequired: false, watts: 159, coolerIncluded: false, price: 30000 },
-      { id: "intel-250k-plus", brand: "Intel", model: "Core Ultra 5 250K Plus · 18-core", socket: "LGA1851", memory: "DDR5", graphics: true, graphicsRequired: false, watts: 159, coolerIncluded: false, price: 34000 },
+      { id: "intel-250k-plus", brand: "Intel", model: "Core Ultra 5 245KF · 14-core", socket: "LGA1851", memory: "DDR5", graphics: true, graphicsRequired: false, watts: 159, coolerIncluded: false, price: 34000 },
       { id: "intel-265k", brand: "Intel", model: "Core Ultra 7 265K · 20-core", socket: "LGA1851", memory: "DDR5", graphics: true, graphicsRequired: false, watts: 250, coolerIncluded: false, price: 39000 },
-      { id: "intel-270k-plus", brand: "Intel", model: "Core Ultra 7 270K Plus · 24-core", socket: "LGA1851", memory: "DDR5", graphics: true, graphicsRequired: false, watts: 250, coolerIncluded: false, price: 47000 },
-      { id: "intel-14900k", brand: "Intel", model: "Core i9-14900K · 24-core", socket: "LGA1700", memory: "DDR5", graphics: true, graphicsRequired: false, watts: 253, coolerIncluded: false, price: 55000 },
+      { id: "intel-270k-plus", brand: "Intel", model: "Core Ultra 7 265KF · 20-core", socket: "LGA1851", memory: "DDR5", graphics: true, graphicsRequired: false, watts: 250, coolerIncluded: false, price: 47000 },
+      { id: "intel-14900k", brand: "Intel", model: "Core i9-14900K · 24-core", socket: "LGA1700", memory: "DDR4 / DDR5", memoryTypes: ["DDR4", "DDR5"], graphics: true, graphicsRequired: false, watts: 253, coolerIncluded: false, price: 55000 },
       { id: "intel-285k", brand: "Intel", model: "Core Ultra 9 285K · 24-core", socket: "LGA1851", memory: "DDR5", graphics: true, graphicsRequired: false, watts: 250, coolerIncluded: false, price: 60000 }
     ]
   },
@@ -1524,6 +1504,16 @@ const pcParts = window.pcParts = {
       return tags.join(' · ');
     }
 
+    function fitsBoard(caseSize, boardSize) {
+      if (!caseSize || !boardSize) return true;
+      const c = caseSize.toUpperCase();
+      const b = boardSize.toUpperCase();
+      if (c === 'ATX') return true;
+      if (c === 'MATX') return b === 'MATX' || b === 'ITX';
+      if (c === 'ITX') return b === 'ITX';
+      return c === b;
+    }
+
     function getCompatibleProducts(categoryKey, forceStrict = false) {
       const all = (window.pcParts && window.pcParts[categoryKey] && window.pcParts[categoryKey].products) || [];
       const cpu = getProduct('processor');
@@ -1533,29 +1523,48 @@ const pcParts = window.pcParts = {
         return all;
       }
 
-      if (!cpu) return all;
-
+      if (categoryKey === 'processor') {
+        return board ? all.filter(p => p.socket === board.socket) : all;
+      }
       if (categoryKey === 'motherboard') {
-        return all.filter(p => p.socket === cpu.socket);
+        return cpu ? all.filter(p => p.socket === cpu.socket) : all;
       }
       if (categoryKey === 'memory') {
-        return board ? all.filter(p => p.memory === board.memory) : all;
+        if (board && board.memory) {
+          return all.filter(p => p.memory === board.memory);
+        }
+        if (cpu) {
+          if (cpu.memoryTypes && Array.isArray(cpu.memoryTypes)) {
+            return all.filter(p => cpu.memoryTypes.includes(p.memory));
+          }
+          if (cpu.memory) {
+            return all.filter(p => p.memory === cpu.memory || cpu.memory.includes(p.memory));
+          }
+        }
+        return all;
       }
       if (categoryKey === 'graphics') {
-        return all.filter(p => p.id !== 'no-gpu' || cpu.graphics);
+        return all.filter(p => p.id !== 'no-gpu' || (cpu && cpu.graphics));
       }
       if (categoryKey === 'case') {
-        return board ? all.filter(p => p.size === 'ATX' || p.size === board.size) : all;
+        return board ? all.filter(p => fitsBoard(p.size, board.size)) : all;
       }
       if (categoryKey === 'cooler') {
-        return all.filter(p => p.sockets && p.sockets.includes(cpu.socket) && (!p.stock || cpu.coolerIncluded));
+        if (!cpu) return all;
+        return all.filter(p => {
+          const socketMatch = !p.sockets || p.sockets.includes(cpu.socket);
+          const stockCheck = !p.stock || Boolean(cpu.coolerIncluded);
+          return socketMatch && stockCheck;
+        });
       }
       return all;
     }
 
     function reconcileParts(changedCategory) {
-      if (changedCategory === 'processor') {
-        const cpu = getProduct('processor');
+      const cpu = getProduct('processor');
+      const board = getProduct('motherboard');
+
+      if (changedCategory === 'processor' && cpu) {
         const compatBoards = getCompatibleProducts('motherboard', true);
         if (!compatBoards.some(b => b.id === selectedParts.motherboard)) {
           selectedParts.motherboard = compatBoards[0] ? compatBoards[0].id : selectedParts.motherboard;
@@ -1573,10 +1582,8 @@ const pcParts = window.pcParts = {
         }
       }
 
-      if (changedCategory === 'motherboard') {
-        const board = getProduct('motherboard');
-        const cpu = getProduct('processor');
-        if (board && cpu && board.socket !== cpu.socket) {
+      if (changedCategory === 'motherboard' && board && cpu) {
+        if (board.socket !== cpu.socket) {
           const compatCpus = pcParts.processor.products.filter(p => p.socket === board.socket);
           if (compatCpus.length > 0) {
             selectedParts.processor = compatCpus[0].id;
@@ -1765,11 +1772,17 @@ const pcParts = window.pcParts = {
     function updateTotals() {
       let grandTotal = 0;
       const cpu = getProduct('processor');
+      const board = getProduct('motherboard');
       const gpu = getProduct('graphics');
       const psu = getProduct('power');
+      const cooler = getProduct('cooler');
 
-      const drawWatts = ((cpu && cpu.watts) || 65) + ((gpu && gpu.watts) || 0) + 50;
+      const cpuWatts = (cpu && cpu.watts) || 65;
+      const gpuWatts = (gpu && gpu.watts) || 0;
+      const platformWatts = 100;
+      const drawWatts = cpuWatts + gpuWatts + platformWatts;
       const psuWatts = (psu && psu.watts) || 550;
+      const headroom = psuWatts - drawWatts;
 
       stepsConfig.forEach(cat => {
         const prod = getProduct(cat.key);
@@ -1791,6 +1804,71 @@ const pcParts = window.pcParts = {
           }
         }
       });
+
+      // Dynamic Compatibility Updates
+      const socketItem = document.getElementById('compat-socket-item');
+      const socketIcon = document.getElementById('compat-socket-icon');
+      const socketText = document.getElementById('compat-socket-text');
+      if (socketItem && socketIcon && socketText) {
+        if (cpu && board) {
+          if (cpu.socket === board.socket) {
+            socketIcon.textContent = '✓';
+            socketIcon.className = 'text-emerald-400 font-bold';
+            socketText.textContent = `Socket matched: ${cpu.socket} (${cpu.brand} & ${board.brand})`;
+            socketItem.className = 'flex items-center space-x-2 text-[11px] text-slate-300';
+          } else {
+            socketIcon.textContent = '✗';
+            socketIcon.className = 'text-rose-400 font-bold';
+            socketText.textContent = `Socket mismatch: CPU is ${cpu.socket}, Board is ${board.socket}`;
+            socketItem.className = 'flex items-center space-x-2 text-[11px] text-rose-300';
+          }
+        } else {
+          socketText.textContent = 'Socket & Motherboard matching pending';
+        }
+      }
+
+      const displayItem = document.getElementById('compat-display-item');
+      const displayIcon = document.getElementById('compat-display-icon');
+      const displayText = document.getElementById('compat-display-text');
+      if (displayItem && displayIcon && displayText) {
+        const hasIntegrated = cpu && cpu.graphics;
+        const hasDedicated = gpu && gpu.id !== 'no-gpu';
+        if (hasIntegrated || hasDedicated) {
+          displayIcon.textContent = '✓';
+          displayIcon.className = 'text-emerald-400 font-bold';
+          displayText.textContent = hasDedicated
+            ? `Display verified: Dedicated GPU (${gpu.brand} ${gpu.model.split('·')[0].trim()})`
+            : `Display verified: Integrated GPU (${cpu.brand})`;
+          displayItem.className = 'flex items-center space-x-2 text-[11px] text-slate-300';
+        } else {
+          displayIcon.textContent = '✗';
+          displayIcon.className = 'text-rose-400 font-bold';
+          displayText.textContent = 'No display output! CPU lacks iGPU & no GPU selected';
+          displayItem.className = 'flex items-center space-x-2 text-[11px] text-rose-300';
+        }
+      }
+
+      const psuItem = document.getElementById('compat-psu-item');
+      const psuIcon = document.getElementById('compat-psu-icon');
+      const psuText = document.getElementById('compat-psu-text');
+      if (psuItem && psuIcon && psuText) {
+        if (headroom >= 100) {
+          psuIcon.textContent = '✓';
+          psuIcon.className = 'text-emerald-400 font-bold';
+          psuText.textContent = `PSU safe margin (+${headroom}W headroom)`;
+          psuItem.className = 'flex items-center space-x-2 text-[11px] text-slate-300';
+        } else if (headroom >= 0) {
+          psuIcon.textContent = '⚠';
+          psuIcon.className = 'text-amber-400 font-bold';
+          psuText.textContent = `PSU tight margin (+${headroom}W headroom)`;
+          psuItem.className = 'flex items-center space-x-2 text-[11px] text-amber-300';
+        } else {
+          psuIcon.textContent = '✗';
+          psuIcon.className = 'text-rose-400 font-bold';
+          psuText.textContent = `PSU insufficient (${Math.abs(headroom)}W deficit!)`;
+          psuItem.className = 'flex items-center space-x-2 text-[11px] text-rose-300';
+        }
+      }
 
       const currentActiveProd = getProduct(stepsConfig[currentStepIndex].key);
       if (currentActiveProd) {
@@ -1957,6 +2035,25 @@ const pcParts = window.pcParts = {
       });
     }
 
+    const shareBuildBtn = document.getElementById('shareBuildBtn');
+    if (shareBuildBtn) {
+      shareBuildBtn.addEventListener('click', () => {
+        const params = new URLSearchParams();
+        Object.keys(selectedParts).forEach(key => {
+          params.set(key, selectedParts[key]);
+        });
+        if (userBudget) params.set('budget', userBudget.toString());
+        const shareUrl = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
+        navigator.clipboard.writeText(shareUrl).then(() => {
+          const orig = shareBuildBtn.innerHTML;
+          shareBuildBtn.innerHTML = `<span>✓</span><span>Copied!</span>`;
+          setTimeout(() => shareBuildBtn.innerHTML = orig, 1800);
+        }).catch(() => {
+          prompt('Copy this build URL:', shareUrl);
+        });
+      });
+    }
+
     const copySpecsBtn = document.getElementById('copySpecsBtn');
     if (copySpecsBtn) {
       copySpecsBtn.addEventListener('click', () => {
@@ -2073,6 +2170,29 @@ const pcParts = window.pcParts = {
     updateCartCount();
     window.addEventListener('storage', updateCartCount);
     window.addEventListener('rigwise:cart-updated', updateCartCount);
+
+        // Restore build configuration from shareable URL query parameters if present
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      let loadedFromUrl = false;
+      stepsConfig.forEach(cat => {
+        const val = urlParams.get(cat.key);
+        if (val && window.pcParts && window.pcParts[cat.key] && window.pcParts[cat.key].products.some(p => p.id === val)) {
+          selectedParts[cat.key] = val;
+          loadedFromUrl = true;
+        }
+      });
+      if (urlParams.has('budget')) {
+        const b = parseInt(urlParams.get('budget'), 10);
+        if (!isNaN(b) && b >= 40000 && b <= 300000) {
+          userBudget = b;
+          if (budgetSlider) budgetSlider.value = b;
+        }
+      }
+      if (loadedFromUrl) {
+        console.log('Restored build configuration from shareable link');
+      }
+    } catch(e) {}
 
     updateStepView();
   }
